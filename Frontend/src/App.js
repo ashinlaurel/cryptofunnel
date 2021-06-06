@@ -10,6 +10,7 @@ import AdminLogin from "../src/pages/Admin/AdminLogin";
 import AdminSignup from "../src/pages/Admin/AdminSignup";
 import Home from "../src/LandingPage/Home";
 import AdminRoute from "./helper/auth/AdminRoutes";
+import SaaSProductLandingPage from "./demos/SaaSProductLandingPage";
 
 const Layout = lazy(() => import("./containers/Layout"));
 const Login = lazy(() => import("./pages/Login"));
@@ -23,7 +24,7 @@ function App() {
         <AccessibleNavigationAnnouncer />
         <Switch>
           <Redirect exact from="/" to="/home" />
-          <Route path="/home" component={Home} />
+          <Route path="/home" component={SaaSProductLandingPage} />
 
           {/* Place new routes over this */}
           <Route path="/admin/signin" component={AdminLogin} />
