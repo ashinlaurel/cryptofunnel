@@ -1,0 +1,23 @@
+{
+  "name": "cryptofunnel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently -n 'client,server' -c 'blue,yellow' \"cd Frontend && npm run start\" \"cd Backend && npm run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashinlaurel/cryptofunnel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashinlaurel/cryptofunnel/issues"
+  },
+  "homepage": "https://github.com/ashinlaurel/cryptofunnel#readme",
+  "dependencies": {
+    "concurrently": "^6.2.0"
+  }
+}
