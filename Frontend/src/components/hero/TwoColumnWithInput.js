@@ -20,12 +20,12 @@ const Heading = tw.h1`font-bold text-3xl md:text-3xl lg:text-4xl xl:text-5xl tex
 const Paragraph = tw.p`my-5 lg:my-8 text-base text-gray-100 xl:text-lg`;
 
 const Actions = styled.div`
-  ${tw`relative max-w-md text-center mx-auto lg:mx-0`}
+  ${tw`relative max-w-md text-center mx-auto lg:-ml-1`}
   input {
-    ${tw`sm:pr-48 pl-8 py-4 sm:py-5 text-gray-300 rounded-full bg-black border-2 w-full border-green-300 font-medium focus:outline-none transition duration-300  focus:border-green-500 hover:border-green-500`}
+    ${tw`sm:pr-48 pl-8 py-4 sm:py-5  text-gray-300 rounded-full bg-gray-900 border-2 w-full border-green-300 font-medium focus:outline-none transition duration-300  focus:border-green-500 hover:border-green-500`}
   }
   button {
-    ${tw`w-full sm:absolute right-0 top-0 bottom-0 bg-green-600 text-gray-100 font-bold mr-2 my-4 sm:my-2 rounded-full py-4 flex items-center justify-center sm:w-40 sm:leading-none focus:outline-none hover:bg-green-800 transition duration-300`}
+    ${tw`w-full  sm:absolute right-0 top-0 bottom-0 bg-green-600 text-gray-100 font-bold mr-2 my-4 sm:my-2 rounded-full py-4 flex items-center justify-center sm:w-40 sm:leading-none focus:outline-none hover:bg-green-800 transition duration-300`}
   }
 `;
 
@@ -39,10 +39,10 @@ const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
 const CustomersLogoStrip = styled.div`
   ${tw`mt-12 lg:mt-20`}
   p {
-    ${tw`uppercase text-sm lg:text-xs tracking-wider font-bold text-gray-500`}
+    ${tw`uppercase text-sm lg:text-xs tracking-wider font-bold text-gray-100`}
   }
   img {
-    ${tw`mt-4 w-full lg:pr-16 xl:pr-32 opacity-50`}
+    ${tw`mt-4 w-full lg:pr-16 xl:pr-32 opacity-100`}
   }
 `;
 

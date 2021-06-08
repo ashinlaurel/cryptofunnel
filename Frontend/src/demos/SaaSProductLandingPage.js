@@ -19,25 +19,19 @@ import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefc
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
 
 export default () => {
-  const Subheading = tw.span`uppercase tracking-widest font-bold text-primary-500`;
-  const HighlightedText = tw.span`text-primary-500`;
+  const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
+  const HighlightedText = tw.span`text-green-300`;
 
   return (
     <AnimationRevealPage>
       <Hero roundedHeaderButton={true} />
       <Features
-        subheading={<Subheading>Features</Subheading>}
+        subheading={<Subheading>Why choose us ?</Subheading>}
         heading={
           <>
             We have Amazing <HighlightedText>Service.</HighlightedText>
           </>
         }
-      />
-      <MainFeature
-        subheading={<Subheading>Quality Work</Subheading>}
-        imageSrc={heroScreenshotImageSrc}
-        imageBorder={true}
-        imageDecoratorBlob={true}
       />
       <FeatureWithSteps
         subheading={<Subheading>STEPS</Subheading>}
@@ -51,8 +45,15 @@ export default () => {
         imageDecoratorBlob={true}
         decoratorBlobCss={tw`xl:w-40 xl:h-40 opacity-15 -translate-x-1/2 left-1/2`}
       />
+      {/* <MainFeature
+        subheading={<Subheading>Quality Work</Subheading>}
+        imageSrc={heroScreenshotImageSrc}
+        imageBorder={true}
+        imageDecoratorBlob={true}
+      /> */}
+
       <MainFeature2
-        subheading={<Subheading>VALUES</Subheading>}
+        subheading={<Subheading>OUR VALUES</Subheading>}
         heading={
           <>
             We Always Abide by Our{" "}

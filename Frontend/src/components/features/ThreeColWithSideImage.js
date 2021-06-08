@@ -25,9 +25,9 @@ const Container = tw.div`relative`;
 const ThreeColumnContainer = styled.div`
   ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-lg mx-auto py-20 md:py-24`}
 `;
-const Subheading = tw(SubheadingBase)`mb-4`;
-const Heading = tw(SectionHeading)`w-full`;
-const Description = tw(SectionDescription)`w-full text-center`;
+const Subheading = tw(SubheadingBase)`mb-4 text-white`;
+const Heading = tw(SectionHeading)`w-full text-gray-100`;
+const Description = tw(SectionDescription)`w-full text-center `;
 
 const VerticalSpacer = tw.div`mt-10 w-full`;
 
@@ -38,9 +38,9 @@ const Column = styled.div`
 const Card = styled.div`
   ${tw`flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left h-full mx-4 px-2 py-8`}
   .imageContainer {
-    ${tw`border text-center rounded-full p-5 flex-shrink-0`}
+    ${tw`border border-green-300 text-center rounded-full p-5 flex-shrink-0`}
     img {
-      ${tw`w-6 h-6`}
+      ${tw`w-6 h-6 `}
     }
   }
 
@@ -49,11 +49,11 @@ const Card = styled.div`
   }
 
   .title {
-    ${tw`mt-4 tracking-wide font-bold text-2xl leading-none`}
+    ${tw`mt-4 tracking-wide text-gray-100 font-bold text-2xl leading-none`}
   }
 
   .description {
-    ${tw`mt-1 sm:mt-4 font-medium text-secondary-100 leading-loose`}
+    ${tw`mt-1 sm:mt-4 font-medium text-gray-500 leading-loose`}
   }
 `;
 
@@ -78,15 +78,15 @@ export default ({
   const defaultCards = [
     {
       imageSrc: ShieldIconImage,
-      title: "Secure",
+      title: "Live Trading Sessions",
       description:
-        "We strictly only deal with vendors that provide top notch security.",
+        "Lorem ipsum donor amet siti ceali ut enim ad minim veniam, quis nostrud.",
     },
     { imageSrc: SupportIconImage, title: "24/7 Support" },
-    { imageSrc: CustomizeIconImage, title: "Customizable" },
-    { imageSrc: ReliableIconImage, title: "Reliable" },
-    { imageSrc: FastIconImage, title: "Fast" },
-    { imageSrc: SimpleIconImage, title: "Easy" },
+    { imageSrc: CustomizeIconImage, title: "Doubt Clearance Sessions" },
+    { imageSrc: ReliableIconImage, title: "Curated Reports & Newsletters" },
+    { imageSrc: FastIconImage, title: "Daily Trade Signals" },
+    { imageSrc: SimpleIconImage, title: "Long Term Portfolio " },
   ];
 
   if (!cards) cards = defaultCards;

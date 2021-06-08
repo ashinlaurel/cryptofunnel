@@ -35,14 +35,14 @@ const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(
   SectionHeading
-)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+)`mt-4 font-black text-gray-100 text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 
 const Steps = tw.ul`mt-12`;
 const Step = tw.li`mt-8 flex flex-col md:flex-row items-center md:items-start`;
 const StepNumber = tw.div`font-semibold text-4xl leading-none text-gray-400`;
-const StepText = tw.div`mt-3 md:mt-0 md:ml-6`;
+const StepText = tw.div`mt-3 md:mt-0 md:ml-6 text-gray-100`;
 const StepHeading = tw.h6`leading-none text-xl font-semibold`;
-const StepDescription = tw.p`mt-3 max-w-xs leading-loose text-sm text-gray-600 font-medium`;
+const StepDescription = tw.p`mt-3 max-w-xs leading-loose text-sm text-gray-500 font-medium`;
 
 export default ({
   subheading = "Our Expertise",
@@ -68,14 +68,12 @@ export default ({
       description: "Create an account with us using Google or Facebook.",
     },
     {
-      heading: "Download",
-      description:
-        "Browse and Download the template that you like from the marketplace.",
+      heading: "Select A Plan",
+      description: "Select and get enrolled under one of the three plans.",
     },
     {
-      heading: "Run",
-      description:
-        "Follow the instructions to setup and customize the template to your needs.",
+      heading: "Make Money",
+      description: "Join our discord server and make money.",
     },
   ];
 
