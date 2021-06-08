@@ -38,7 +38,7 @@ const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(
   SectionHeading
-)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+)`mt-4 font-black text-gray-100 text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`mt-8 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`;
 
 const Features = tw.div`mx-auto md:mx-0 flex flex-col lg:flex-row max-w-xs lg:max-w-none`;
@@ -55,12 +55,12 @@ const FeatureIconContainer = styled.div`
     ${tw`w-5 h-5`}
   }
 `;
-const FeatureHeading = tw.div`ml-3 font-bold text-xl`;
+const FeatureHeading = tw.div`ml-3 font-bold text-xl text-gray-100 `;
 
 const FeatureDescription = tw.div`mt-4 text-center md:text-left text-gray-600 leading-relaxed`;
 
 const PrimaryButton = styled(PrimaryButtonBase)((props) => [
-  tw`mt-12 text-sm inline-block mx-auto md:mx-0`,
+  tw`mt-12 text-sm inline-block mx-auto md:mx-0 text-gray-100`,
   props.buttonRounded && tw`rounded-full`,
 ]);
 

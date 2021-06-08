@@ -12,7 +12,9 @@ import {
   Container,
   ContentWithPaddingXl,
 } from "../../components/misc/Layouts.js";
-import loveIllustrationImageSrc from "../../images/love-illustration.svg";
+// import loveIllustrationImageSrc from "../../images/love-illustration.svg";
+import clientsPic from "../../images/clientsPic.png";
+
 import { ReactComponent as StarIconBase } from "../../images/star-icon.svg";
 import { ReactComponent as ArrowLeftIcon } from "../../images/arrow-left-3-icon.svg";
 import { ReactComponent as ArrowRightIcon } from "../../images/arrow-right-3-icon.svg";
@@ -36,8 +38,8 @@ const Image = styled.img((props) => [
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(
   SectionHeading
-)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
-const Description = tw.p`mt-6 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`;
+)`mt-4 font-black text-gray-100 text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+const Description = tw.p`mt-6 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-gray-500`;
 
 const TestimonialSlider = styled(Slider)`
   ${tw`w-full mt-10 text-center md:text-left`}
@@ -49,21 +51,21 @@ const TestimonialSlider = styled(Slider)`
   }
 `;
 
-const Testimonial = tw.div`outline-none h-full flex! flex-col`;
+const Testimonial = tw.div`outline-none h-full flex! flex-col border border border-gray-700 rounded-xl p-4`;
 const StarsContainer = styled.div``;
 const StarIcon = tw(
   StarIconBase
 )`inline-block w-5 h-5 text-orange-400 fill-current mr-1 last:mr-0`;
-const TestimonialHeading = tw.div`mt-4 text-xl font-bold`;
-const Quote = tw.blockquote`mt-4 mb-8 sm:mb-10 leading-relaxed font-medium text-gray-700`;
+const TestimonialHeading = tw.div`mt-4 text-xl font-bold text-gray-100`;
+const Quote = tw.blockquote`mt-4 mb-8 sm:mb-10 leading-relaxed font-medium text-gray-500`;
 
 const CustomerInfoAndControlsContainer = tw.div`mt-auto flex justify-between items-center flex-col sm:flex-row`;
 
 const CustomerInfo = tw.div`flex flex-col sm:flex-row items-center justify-center lg:justify-start`;
 const CustomerProfilePicture = tw.img`rounded-full w-16 h-16 sm:w-20 sm:h-20`;
-const CustomerTextInfo = tw.div`text-center md:text-left sm:ml-6 mt-2 sm:mt-0`;
-const CustomerName = tw.h5`font-bold text-xl`;
-const CustomerTitle = tw.p`font-medium text-secondary-100`;
+const CustomerTextInfo = tw.div`text-center md:text-left text-gray-100 sm:ml-6 mt-2 sm:mt-0`;
+const CustomerName = tw.h5`font-bold text-xl text-gray-100`;
+const CustomerTitle = tw.p`font-medium text-gray-500 text-center`;
 
 const Controls = styled.div`
   ${tw`flex mt-8 sm:mt-0`}
@@ -79,7 +81,7 @@ const ControlButton = styled.button`
 `;
 
 export default ({
-  imageSrc = loveIllustrationImageSrc,
+  imageSrc = clientsPic,
   imageRounded = true,
   imageBorder = false,
   imageShadow = false,

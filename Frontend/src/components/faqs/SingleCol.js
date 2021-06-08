@@ -17,14 +17,14 @@ import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-
 import { ReactComponent as SvgDecoratorBlob2 } from "../../images/svg-decorator-blob-8.svg";
 
 const Subheading = tw(SubheadingBase)`mb-4 text-center`;
-const Heading = tw(SectionHeading)`w-full`;
+const Heading = tw(SectionHeading)`w-full text-gray-100`;
 const Description = tw(SectionDescription)`w-full text-center`;
 
 const Column = tw.div`flex flex-col items-center`;
 const HeaderContent = tw.div``;
 
-const FAQSContainer = tw.dl`mt-12 max-w-4xl relative`;
-const FAQ = tw.div`cursor-pointer select-none mt-5 px-8 sm:px-10 py-5 sm:py-4 rounded-lg text-gray-800 hover:text-gray-900 bg-gray-200 hover:bg-gray-300 transition duration-300`;
+const FAQSContainer = tw.dl`mt-12 max-w-4xl relative `;
+const FAQ = tw.div`cursor-pointer select-none mt-5 px-8 sm:px-10 py-5 sm:py-4 rounded-lg text-gray-100  bg-gray-800  transition duration-300`;
 const Question = tw.dt`flex justify-between items-center`;
 const QuestionText = tw.span`text-lg lg:text-xl font-semibold`;
 const QuestionToggleIcon = motion(styled.span`
@@ -122,7 +122,7 @@ export default ({
                   }}
                   initial="collapsed"
                   animate={activeQuestionIndex === index ? "open" : "collapsed"}
-                  transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                  transition={{ duration: 0.1, ease: [0.04, 0.62, 0.23, 0.98] }}
                 >
                   {faq.answer}
                 </Answer>

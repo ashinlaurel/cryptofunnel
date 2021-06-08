@@ -14,7 +14,9 @@ import GetStarted from "../components/cta/GetStarted";
 import Footer from "../components/footers/FiveColumnWithBackground.js";
 import heroScreenshotImageSrc from "../images/hero-screenshot-1.png";
 import macHeroScreenshotImageSrc from "../images/hero-screenshot-2.png";
+// import stepsPic from "../images/stepsPic.png";
 import prototypeIllustrationImageSrc from "../images/prototype-illustration.svg";
+import valuespic from "../images/valuespic.png";
 import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
 
@@ -42,6 +44,7 @@ export default () => {
         }
         textOnLeft={false}
         imageSrc={macHeroScreenshotImageSrc}
+        // imageSrc={stepsPic}
         imageDecoratorBlob={true}
         decoratorBlobCss={tw`xl:w-40 xl:h-40 opacity-15 -translate-x-1/2 left-1/2`}
       />
@@ -60,7 +63,8 @@ export default () => {
             <HighlightedText>Principles.</HighlightedText>
           </>
         }
-        imageSrc={prototypeIllustrationImageSrc}
+        // imageSrc={prototypeIllustrationImageSrc}
+        imageSrc={valuespic}
         showDecoratorBlob={false}
         features={[
           {
@@ -93,34 +97,34 @@ export default () => {
             duration: "Monthly",
             mainFeature: "For Individuals",
             features: [
-              "30 Templates",
-              "7 Landing Pages",
-              "12 Internal Pages",
+              "3 Lorem Ipsum",
+              "7 Lorem Ipsum",
+              "12 Lorem Ipsum",
               "Basic Assistance",
             ],
           },
           {
-            name: "Business",
+            name: "Teams",
             price: "$37.99",
             duration: "Monthly",
             mainFeature: "For Small Businesses",
             features: [
-              "60 Templates",
-              "15 Landing Pages",
-              "22 Internal Pages",
+              "3 Lorem Ipsum",
+              "15 Lorem Ipsum",
+              "22 Lorem Ipsum",
               "Priority Assistance",
             ],
             featured: true,
           },
           {
-            name: "Enterprise",
+            name: "Pro",
             price: "$57.99",
             duration: "Monthly",
             mainFeature: "For Large Companies",
             features: [
-              "90 Templates",
-              "27 Landing Pages",
-              "37 Internal Pages",
+              "3 Lorem Ipsum",
+              "27 Lorem Ipsum",
+              "37 Lorem Ipsum",
               "Personal Assistance",
             ],
           },
@@ -165,34 +169,12 @@ export default () => {
         }
         faqs={[
           {
-            question: "Are all the templates easily customizable ?",
+            question: "Which plan is the best for me ?",
             answer:
               "Yes, they all are. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           },
           {
-            question:
-              "How long do you usually support an standalone template for ?",
-            answer:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          },
-          {
-            question: "What kind of payment methods do you accept ?",
-            answer:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          },
-          {
-            question:
-              "Is there a subscribption service to get the latest templates ?",
-            answer:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          },
-          {
-            question: "Are the templates compatible with the React ?",
-            answer:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          },
-          {
-            question: "Do you really support Internet Explorer 11 ?",
+            question: "Do I need to know anything before starting to invest ?",
             answer:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           },
