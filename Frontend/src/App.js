@@ -11,6 +11,14 @@ import AdminSignup from "../src/pages/Admin/AdminSignup";
 import Home from "../src/LandingPage/Home";
 import AdminRoute from "./helper/auth/AdminRoutes";
 import SaaSProductLandingPage from "./demos/SaaSProductLandingPage";
+import Payment from "./pages/Payment/Payment";
+// STRIPE
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 const Layout = lazy(() => import("./containers/Layout"));
 const Login = lazy(() => import("./pages/Login"));
@@ -20,20 +28,23 @@ const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 function App() {
   return (
     <>
-      <Router>
-        <AccessibleNavigationAnnouncer />
-        <Switch>
-          <Redirect exact from="/" to="/home" />
-          <Route path="/home" component={SaaSProductLandingPage} />
+      <Elements stripe={stripePromise}>
+        <Router>
+          <AccessibleNavigationAnnouncer />
+          <Switch>
+            <Redirect exact from="/" to="/home" />
+            <Route path="/home" component={SaaSProductLandingPage} />
+            <Route path="/payment" component={Payment} />
 
-          {/* Place new routes over this */}
-          <Route path="/admin/signin" component={AdminLogin} />
-          <Route path="/admin/signup" component={AdminSignup} />
+            {/* Place new routes over this */}
+            <Route path="/admin/signin" component={AdminLogin} />
+            <Route path="/admin/signup" component={AdminSignup} />
 
-          <AdminRoute path="/app" component={Layout} />
-          {/* If you have an index page, you can remothis Redirect */}
-        </Switch>
-      </Router>
+            <AdminRoute path="/app" component={Layout} />
+            {/* If you have an index page, you can remothis Redirect */}
+          </Switch>
+        </Router>
+      </Elements>
     </>
   );
 }
