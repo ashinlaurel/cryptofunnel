@@ -3,24 +3,26 @@ import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import AnimationRevealPage from "../../helpers/AnimationRevealPage.js";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import axios from "axios";
+import { API } from "../../backend.js";
 
 export default () => {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
   const HighlightedText = tw.span`text-green-300`;
 
   let initCust = {
-    name: "",
-    email: "",
-    address: "",
-    city: "",
-    country: "",
-    zip: "",
+    name: "sadf",
+    email: "test@test.com",
+    address: "sdf",
+    city: "sdf",
+    state: "sdf",
+    country: "sdf",
+    zip: "43231",
   };
   const [customer, setCustomer] = useState(initCust);
 
   const [amount, setAmount] = useState(100);
   const [currency, setCurrency] = useState("INR");
-  const [clientSecret, setClientSecret] = useState(null);
   const [error, setError] = useState(null);
   const [metadata, setMetadata] = useState(null);
   const [succeeded, setSucceeded] = useState(false);
@@ -28,6 +30,11 @@ export default () => {
   const stripe = useStripe();
   const elements = useElements();
 
+  // styles for the stripe card element
+  const cardElementOptions = {
+    style: {},
+    hidePostalCode: true,
+  };
   //   const handleCustomerChange = (e) => (field) => {
   //     setCustomer[{ ...customer, [field]: e.target.value }];
   //   };
@@ -35,11 +42,60 @@ export default () => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async () => {
+    const billingDetails = {
+      name: customer.name,
+      email: customer.email,
+      address: {
+        city: customer.city,
+        line1: customer.address,
+        state: customer.state,
+        postal_code: customer.zip,
+        country: customer.country,
+      },
+    };
+    const billtemp = {
+      name: customer.name,
+      address: {
+        city: customer.city,
+        line1: customer.address,
+        state: customer.state,
+        postal_code: customer.zip,
+        country: customer.country,
+      },
+    };
+
+    const { data: clientSecret } = await axios.post(
+      `${API}/payment/payment_intents`,
+      {
+        amount: amount * 100,
+        billingDetails: billtemp,
+      }
+    );
+
+    const cardElement = elements.getElement(CardElement);
+
+    const paymentMethodReq = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+      billing_details: billingDetails,
+    });
+
+    // console.log(paymentMethodReq);
+
+    const confirmedCardPayment = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: paymentMethodReq.paymentMethod.id,
+    });
+
+    console.log(confirmedCardPayment);
+    console.log("done brother");
+  };
+
   return (
     <AnimationRevealPage>
       <div className="  bg-primary-100 mx-auto">
         <div class="leading-loose">
-          <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
+          <div class="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
             <p class="text-gray-800 font-medium">Customer information</p>
             <div class="">
               <label class="block text-sm text-gray-00" for="cus_name">
@@ -98,6 +154,21 @@ export default () => {
                 aria-label="Email"
               />
             </div>
+            <div class="mt-2">
+              <label class="hidden text-sm block text-gray-600" for="cus_email">
+                City
+              </label>
+              <input
+                class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                value={customer.state}
+                onChange={handleCustomerChange}
+                name="state"
+                type="text"
+                required=""
+                placeholder="State"
+                aria-label="text"
+              />
+            </div>
             <div class="inline-block mt-2 w-1/2 pr-1">
               <label class="hidden block text-sm text-gray-600" for="cus_email">
                 Country
@@ -114,7 +185,7 @@ export default () => {
               />
             </div>
             <div class="inline-block mt-2 -mx-1 pl-1 w-1/2">
-              <label class="hidden block text-sm text-gray-600" for="cus_email">
+              <label class=" block text-sm text-gray-600" for="cus_email">
                 Zip
               </label>
               <input
@@ -129,29 +200,21 @@ export default () => {
               />
             </div>
             <p class="mt-4 text-gray-800 font-medium">Payment information</p>
+
             <div class="">
-              <label class="block text-sm text-gray-600" for="cus_name">
-                Card
-              </label>
-              <input
-                class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
-                id="cus_name"
-                name="cus_name"
-                type="text"
-                required=""
-                placeholder="Card Number MM/YY CVC"
-                aria-label="Name"
-              />
+              <CardElement options={cardElementOptions} />
             </div>
             <div class="mt-4">
               <button
                 class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
-                type="submit"
+                onClick={() => {
+                  handleSubmit();
+                }}
               >
                 $3.00
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </AnimationRevealPage>
