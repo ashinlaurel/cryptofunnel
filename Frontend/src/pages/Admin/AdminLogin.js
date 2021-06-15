@@ -7,8 +7,11 @@ import ImageLight from "../../assets/img/login-office.jpeg";
 import ImageDark from "../../assets/img/login-office-dark.jpeg";
 import { GithubIcon, TwitterIcon } from "../../icons";
 import { Label, Input, Button } from "@windmill/react-ui";
+import { useHistory } from "react-router-dom";
+import UserProfile from "../../helper/auth/UserProfile";
 
 const AdminLogin = () => {
+  let history = useHistory();
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -27,18 +30,16 @@ const AdminLogin = () => {
     setValues({ ...values, error: false, loading: true });
     signin({ email, password })
       .then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, loading: false });
-        } else {
-          authenticate(data, () => {
-            setValues({
-              ...values,
-              didRedirect: true,
-            });
-          });
-        }
+        localStorage.setItem("jwt", JSON.stringify(data));
+        console.log("data", data.token);
+        UserProfile.setToken(data.token);
+        history.push("/app");
+        // return <Redirect to="/app" />;
+        // });
       })
-      .catch(console.log("signin request failed"));
+      .catch((err) => {
+        console.log("signin request failed", err);
+      });
   };
 
   const performRedirect = () => {
@@ -99,15 +100,6 @@ const AdminLogin = () => {
 
                 <hr className="my-8" />
 
-                <Button block layout="outline">
-                  <GithubIcon className="w-4 h-4 mr-2" aria-hidden="true" />
-                  Github
-                </Button>
-                <Button className="mt-4" block layout="outline">
-                  <TwitterIcon className="w-4 h-4 mr-2" aria-hidden="true" />
-                  Twitter
-                </Button>
-
                 <p className="mt-4">
                   <Link
                     className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
@@ -119,7 +111,7 @@ const AdminLogin = () => {
                 <p className="mt-1">
                   <Link
                     className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                    to="/create-account"
+                    to="/signup"
                   >
                     Create account
                   </Link>

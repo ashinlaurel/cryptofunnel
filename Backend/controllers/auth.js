@@ -51,7 +51,10 @@ exports.signin = (req, res) => {
     }
 
     //create token
-    const token = jwt.sign({ _id: user._id }, process.env.SECRET);
+    const token = jwt.sign(
+      { _id: user._id, role: user.role },
+      process.env.SECRET
+    );
     //put token in cookie
     res.cookie("token", token, { expire: new Date() + 9999 });
 
@@ -76,7 +79,9 @@ exports.isSignedIn = expressJwt({
 
 //custom middlewares
 exports.isAuthenticated = (req, res, next) => {
-  let checker = req.profile && req.auth && req.profile._id == req.auth._id;
+  // console.log(req.body.profile, req.auth);
+  let checker =
+    req.body.profile && req.auth && req.body.profile._id == req.auth._id;
   if (!checker) {
     return res.status(403).json({
       error: "ACCESS DENIED",
@@ -86,7 +91,7 @@ exports.isAuthenticated = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-  if (req.profile.role === 0) {
+  if (req.auth.role !== 1) {
     return res.status(403).json({
       error: "You are not ADMIN, Access denied",
     });

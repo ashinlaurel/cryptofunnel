@@ -15,6 +15,7 @@ import Payment from "./pages/Payment/Payment";
 // STRIPE
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import UserRoute from "./helper/auth/UserRoutes";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -37,10 +38,11 @@ function App() {
             <Route path="/payment" component={Payment} />
 
             {/* Place new routes over this */}
-            <Route path="/admin/signin" component={AdminLogin} />
-            <Route path="/admin/signup" component={AdminSignup} />
+            <Route path="/signin" component={AdminLogin} />
+            <Route path="/signup" component={AdminSignup} />
 
             <AdminRoute path="/app" component={Layout} />
+            {/* <UserRoute path="/app/" component={Layout} /> */}
             {/* If you have an index page, you can remothis Redirect */}
           </Switch>
         </Router>
