@@ -5,10 +5,15 @@ var UserProfile = (function () {
   var id = "";
   var role = 99;
   var token = "";
+  var name = "";
 
   var getId = function () {
     if (id == "") return localStorage.getItem("id");
     return id; // Or pull this from cookie/localStorage
+  };
+  var getName = function () {
+    if (name == "") return JSON.parse(localStorage.getItem("jwt")).user.name;
+    return name; // Or pull this from cookie/localStorage
   };
 
   var getRole = function () {
@@ -67,6 +72,7 @@ var UserProfile = (function () {
     signout,
     getToken,
     setToken,
+    getName,
   };
 })();
 
