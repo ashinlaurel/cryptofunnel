@@ -1,4 +1,5 @@
 let referralCodeGenerator = require("referral-code-generator");
+
 const Refferal = require("../../models/refferal");
 
 exports.createNewRefferal = async (req, res) => {
@@ -14,6 +15,23 @@ exports.createNewRefferal = async (req, res) => {
     let response = newrefferal.save();
 
     res.status(200).send(thecode);
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
+};
+exports.checkIfExist = async (req, res) => {
+  try {
+    const { thecode } = req.body;
+    let cnt = await Refferal.count({ refCode: thecode });
+    if (cnt > 0) {
+      console.log("found");
+      res.status(200).send({ thestatus: true });
+    } else {
+      console.log("not found");
+      res.status(200).send({ thestatus: false });
+    }
+
+    res.status(200).send();
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message });
   }

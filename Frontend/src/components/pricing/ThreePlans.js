@@ -2,6 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
+import { Link } from "react-router-dom";
 import {
   SectionHeading,
   Subheading as SubheadingBase,
@@ -21,7 +22,7 @@ const Description = tw(SectionDescription)`w-full text-center`;
 
 const PlansContainer = tw.div`flex justify-between flex-col lg:flex-row items-center lg:items-stretch relative`;
 const Plan = styled.div`
-  ${tw`w-full max-w-sm mt-16 lg:mr-8 lg:last:mr-0 text-center px-8 rounded-lg shadow relative pt-2 text-gray-900 bg-white flex flex-col`}
+  ${tw`w-full max-w-sm mt-16 bg-white lg:mr-8 lg:last:mr-0 text-center px-8 rounded-lg shadow relative pt-2 text-gray-900 flex flex-col`}
   .planHighlight {
     ${tw`rounded-t-lg absolute top-0 inset-x-0 h-2`}
   }
@@ -179,10 +180,11 @@ export default ({
             <Plan key={index} featured={plan.featured}>
               {!plan.featured && (
                 <div
-                  className="planHighlight"
-                  css={
-                    highlightGradientsCss[index % highlightGradientsCss.length]
-                  }
+                // className="planHighlight"
+                // css={
+                //   highlightGradientsCss[index % highlightGradientsCss.length]
+                // }
+                // className="bg-gray-900"
                 />
               )}
               <PlanHeader>
@@ -199,11 +201,14 @@ export default ({
                 ))}
               </PlanFeatures>
               <PlanAction>
-                <BuyNowButton
-                  css={!plan.featured && highlightGradientsCss[index]}
-                >
-                  {primaryButtonText}
-                </BuyNowButton>
+                <Link to="/signup">
+                  <BuyNowButton
+
+                  // css={!plan.featured && highlightGradientsCss[index]}
+                  >
+                    {primaryButtonText}
+                  </BuyNowButton>
+                </Link>
               </PlanAction>
             </Plan>
           ))}

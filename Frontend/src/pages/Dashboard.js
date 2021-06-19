@@ -231,7 +231,9 @@ function Dashboard() {
                   </div>
                 </TableCell> */}
                 <TableCell>
-                  <span className="text-sm">{user.refCode}</span>
+                  <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
+                    {user.refCode}
+                  </span>
                 </TableCell>
                 <TableCell>
                   <Badge type={user.status}>Active</Badge>

@@ -114,7 +114,6 @@ export default () => {
               "22 Lorem Ipsum",
               "Priority Assistance",
             ],
-            featured: true,
           },
           {
             name: "Pro",
@@ -127,6 +126,7 @@ export default () => {
               "37 Lorem Ipsum",
               "Personal Assistance",
             ],
+            featured: true,
           },
         ]}
       />

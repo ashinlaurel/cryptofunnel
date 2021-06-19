@@ -59,8 +59,8 @@ const AdminSignup = () => {
 
   const SignupForm = () => {
     return (
-      <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
-        <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+      <div className="flex items-center min-h-screen p-6 bg-gray-50 bg-gray-900 text-gray-200">
+        <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-gray-900 border border-gray-700  rounded-lg shadow-xl dark:bg-gray-800">
           <div className="flex flex-col overflow-y-auto md:flex-row">
             <div className="h-32 md:h-auto md:w-1/2">
               <img
@@ -78,13 +78,13 @@ const AdminSignup = () => {
             </div>
             <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
               <div className="w-full">
-                <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
+                <h1 className="mb-4 text-xl font-semibold text-gray-200 dark:text-gray-200">
                   Sign Up
                 </h1>
                 <Label className="mt-4">
                   <span>Name</span>
                   <Input
-                    className="mt-1"
+                    className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
                     onChange={handleChange("name")}
                     type="text"
                     value={name}
@@ -94,7 +94,7 @@ const AdminSignup = () => {
                 <Label className="mt-4">
                   <span>Email</span>
                   <Input
-                    className="mt-1"
+                    className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
                     onChange={handleChange("email")}
                     type="email"
                     value={email}
@@ -104,7 +104,7 @@ const AdminSignup = () => {
                 <Label className="mt-4">
                   <span>Password</span>
                   <Input
-                    className="mt-1"
+                    className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
                     onChange={handleChange("password")}
                     type="password"
                     value={password}
@@ -112,7 +112,7 @@ const AdminSignup = () => {
                   />
                 </Label>
 
-                <Button className="mt-4" block onClick={onSubmit}>
+                <Button className="mt-4 bg-green-300" block onClick={onSubmit}>
                   Sign up
                 </Button>
 
@@ -121,11 +121,19 @@ const AdminSignup = () => {
                 <p className="mt-4">
                   <Link
                     className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
+                    to="/signin"
+                  >
+                    Already have an account?
+                  </Link>
+                </p>
+                {/* <p className="">
+                  <Link
+                    className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
                     to="/forgot-password"
                   >
                     Forgot your password?
                   </Link>
-                </p>
+                </p> */}
               </div>
             </main>
           </div>

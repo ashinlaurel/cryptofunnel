@@ -5,6 +5,7 @@ import AnimationRevealPage from "../../helpers/AnimationRevealPage.js";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { API } from "../../backend.js";
+import UserProfile from "../../helper/auth/UserProfile.js";
 
 export default () => {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
@@ -20,6 +21,9 @@ export default () => {
     zip: "43231",
   };
   const [customer, setCustomer] = useState(initCust);
+  const [thecode, setThecode] = useState("");
+  const [codestatus, setCodeStatus] = useState(false);
+  const [codeerror, setCodeError] = useState(false);
 
   const [amount, setAmount] = useState(100);
   const [currency, setCurrency] = useState("INR");
@@ -29,6 +33,14 @@ export default () => {
   const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+
+  // ----------------------------------------
+  // useEffect(() => {
+  //   setCodeStatus(false);
+  //   return () => {
+  //     setCodeStatus(false);
+  //   };
+  // }, []);
 
   // styles for the stripe card element
   const cardElementOptions = {
@@ -40,6 +52,21 @@ export default () => {
   //   };
   const handleCustomerChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
+  };
+  const handleRefferalCode = (e) => {
+    setThecode(e.target.value);
+  };
+  const handleRefferalCheck = async () => {
+    console.log(thecode);
+    let response = await axios.post(
+      `${API}/refferal/${UserProfile.getId()}/checkIfExists`,
+      {
+        thecode: thecode,
+      }
+    );
+    console.log(response.data.thestatus);
+    setCodeStatus(response.data.thestatus);
+    setCodeError(true);
   };
 
   const handleSubmit = async () => {
@@ -88,12 +115,12 @@ export default () => {
     });
 
     console.log(confirmedCardPayment);
-    console.log("done brother");
+    // console.log("done brother");
   };
 
   return (
     <AnimationRevealPage>
-      <div className="  bg-primary-100 mx-auto">
+      <div className="   mx-auto">
         <div class="leading-loose">
           <div class="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
             <p class="text-gray-800 font-medium">Customer information</p>
@@ -102,7 +129,7 @@ export default () => {
                 Name
               </label>
               <input
-                class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
                 value={customer.name}
                 onChange={handleCustomerChange}
                 name="name"
@@ -115,7 +142,7 @@ export default () => {
                 Email
               </label>
               <input
-                class="w-full px-5  py-4 text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2  py-1 text-sm text-gray-700 bg-gray-200 rounded"
                 value={customer.email}
                 onChange={handleCustomerChange}
                 name="email"
@@ -125,11 +152,11 @@ export default () => {
               />
             </div>
             <div class="mt-2">
-              <label class=" block text-sm text-gray-600" for="cus_email">
+              <label class=" block text-sm  text-gray-600" for="cus_email">
                 Address
               </label>
               <input
-                class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
                 value={customer.address}
                 onChange={handleCustomerChange}
                 name="address"
@@ -140,11 +167,11 @@ export default () => {
               />
             </div>
             <div class="mt-2">
-              <label class="hidden text-sm block text-gray-600" for="cus_email">
+              <label class=" text-sm block text-gray-600" for="cus_email">
                 City
               </label>
               <input
-                class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
                 value={customer.city}
                 onChange={handleCustomerChange}
                 name="city"
@@ -155,11 +182,11 @@ export default () => {
               />
             </div>
             <div class="mt-2">
-              <label class="hidden text-sm block text-gray-600" for="cus_email">
-                City
+              <label class=" text-sm block text-gray-600" for="cus_email">
+                State
               </label>
               <input
-                class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
                 value={customer.state}
                 onChange={handleCustomerChange}
                 name="state"
@@ -170,11 +197,11 @@ export default () => {
               />
             </div>
             <div class="inline-block mt-2 w-1/2 pr-1">
-              <label class="hidden block text-sm text-gray-600" for="cus_email">
+              <label class=" block text-sm text-gray-600" for="cus_email">
                 Country
               </label>
               <input
-                class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
                 value={customer.country}
                 onChange={handleCustomerChange}
                 name="country"
@@ -189,7 +216,7 @@ export default () => {
                 Zip
               </label>
               <input
-                class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
                 value={customer.zip}
                 onChange={handleCustomerChange}
                 name="zip"
@@ -199,6 +226,49 @@ export default () => {
                 aria-label="Email"
               />
             </div>
+
+            {/* --------------Refferal Code ---------------*/}
+            {codestatus == false ? (
+              <div>
+                <div class="mt-2 flex items-end justify-center space-x-1">
+                  <div className="w-full">
+                    <label class=" text-sm block text-gray-600" for="cus_email">
+                      Refferal Code
+                    </label>
+                    <input
+                      class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                      value={thecode}
+                      onChange={handleRefferalCode}
+                      name="thecode"
+                      type="text"
+                      required=""
+                      placeholder="Have a refferal code ?"
+                      aria-label="text"
+                    />
+                  </div>
+                  <button
+                    class="px-4 py-1  text-white text-sm font-light tracking-wider bg-green-500 hover:bg-green-600 rounded"
+                    onClick={() => {
+                      handleRefferalCheck();
+                    }}
+                  >
+                    Enter
+                  </button>
+                </div>
+                {!codestatus && codeerror ? (
+                  <div className="text-xs text-red-600">
+                    Invalid Refferal Code. Please Try Again!
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <div class="mt-2  text-sm">
+                <div className="w-full">
+                  Refferal Code Successful! Discount of Rs.100 applied.
+                </div>
+              </div>
+            )}
+
             <p class="mt-4 text-gray-800 font-medium">Payment information</p>
 
             <div class="">
