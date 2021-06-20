@@ -1,7 +1,11 @@
 const User = require("../models/user");
+const UserInfo = require("../models/userInfo");
 const { check, validationResult } = require("express-validator");
 var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
+const { stubArray } = require("lodash");
+const { v1: uuidv1 } = require("uuid");
+const crypto = require("crypto");
 
 exports.signup = (req, res) => {
   const errors = validationResult(req);
@@ -11,14 +15,36 @@ exports.signup = (req, res) => {
       error: errors.array()[0].msg,
     });
   }
+  // console.log(req.body);
 
-  const user = new User(req.body);
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
   user.save((err, user) => {
     if (err) {
+      if (err.message.includes("E11000")) {
+        return res.status(400).json({
+          err: "Email already exists",
+        });
+      }
+      console.log("user err", err.message);
       return res.status(400).json({
         err: "NOT able to save user in DB",
       });
     }
+    let payload = req.body;
+    payload.userId = user._id;
+    const userinfo = new UserInfo(payload);
+    userinfo.save((err, u) => {
+      if (err) {
+        console.log("userinfo err", err);
+        return res.status(400).json({
+          err: "NOT able to save userinfo in DB",
+        });
+      }
+    });
     return res.json({
       name: user.name,
       email: user.email,
@@ -28,6 +54,7 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
+  console.log("SIGININ ");
   const errors = validationResult(req);
   const { email, password } = req.body;
 
@@ -39,12 +66,14 @@ exports.signin = (req, res) => {
 
   User.findOne({ email }, (err, user) => {
     if (err || !user) {
+      console.log("email no exist ");
       return res.status(400).json({
         error: "USER email does not exists",
       });
     }
 
     if (!user.autheticate(password)) {
+      console.log("pass dont match");
       return res.status(401).json({
         error: "Email and password do not match",
       });
@@ -60,6 +89,7 @@ exports.signin = (req, res) => {
 
     //send response to front end
     const { _id, name, email, role } = user;
+    console.log("SIGININ IN DONE", user);
     return res.json({ token, user: { _id, name, email, role } });
   });
 };
@@ -97,4 +127,28 @@ exports.isAdmin = (req, res, next) => {
     });
   }
   next();
+};
+
+exports.resetPassword = async (req, res) => {
+  let { id, pass } = req.body;
+  // console.log("REPASS");
+
+  console.log(id, pass);
+  let salt = uuidv1();
+  if (!pass) return "";
+  try {
+    let encPass = crypto.createHmac("sha256", salt).update(pass).digest("hex");
+    let user = await User.findByIdAndUpdate(
+      id,
+      { encry_password: encPass, salt: salt },
+      {
+        safe: true,
+        useFindAndModify: false,
+      }
+    );
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log("REPASS ERROR", err);
+    return res.status(400).json({ error: err });
+  }
 };

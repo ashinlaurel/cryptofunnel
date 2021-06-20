@@ -8,6 +8,7 @@ const {
   isSignedIn,
   isAuthenticated,
   isAdmin,
+  resetPassword,
 } = require("../controllers/auth");
 
 router.post(
@@ -30,6 +31,7 @@ router.post(
   ],
   signin
 );
+router.post("/:id/resetpassword", resetPassword);
 
 router.post(
   "/adminsignInTest",

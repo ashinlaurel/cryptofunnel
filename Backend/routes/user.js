@@ -5,7 +5,7 @@ const {
   getUserById,
   getUser,
   updateUser,
-  userPurchaseList
+  userPurchaseList,
 } = require("../controllers/user");
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 

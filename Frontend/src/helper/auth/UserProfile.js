@@ -4,7 +4,7 @@ import { API } from "../../backend";
 var UserProfile = (function () {
   var id = "";
   var role = 99;
-  var token = "";
+  var token = -1;
   var name = "";
 
   var getId = function () {
@@ -36,15 +36,22 @@ var UserProfile = (function () {
     token = t;
   };
   var isAuthenticated = async () => {
-    if (getToken() == "") throw "No token set";
-    console.log("is Authnticated", `Bearer ${getToken()}`);
+    // console.log("HERE", localStorage.getItem("jwt"));
+    let token;
+    if (getToken() == -1) {
+      if (localStorage.getItem("jwt") == null) throw "No token found";
+      token = JSON.parse(localStorage.getItem("jwt")).token;
+      setToken(token);
+    }
+    // if (getToken() == "") throw "No token set";
+    // console.log("is Authnticated", `Bearer ${getToken()}`);
 
     // if (localStorage.getItem("type") !== "0") return false;
     axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     return axios
       .post(`${API}/signInTest`)
       .then((res) => {
-        console.log("Employee authenticated", res.data);
+        // console.log("Employee authenticated", res.data);
         setRole(res.data.role);
         setId(res.data._id);
 
@@ -73,6 +80,7 @@ var UserProfile = (function () {
     getToken,
     setToken,
     getName,
+    signout,
   };
 })();
 

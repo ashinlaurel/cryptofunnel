@@ -32,7 +32,7 @@ var userSchema = new mongoose.Schema(
     salt: String,
     role: {
       type: Number,
-      default: 0, /// 0 for user 1 for admin
+      default: 0, /// 0 for user 2 for unpurchased user 1 for admin
     },
     purchases: {
       type: Array,

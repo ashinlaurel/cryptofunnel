@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../context/SidebarContext";
 import {
   SearchIcon,
@@ -18,8 +18,8 @@ import {
   DropdownItem,
   WindmillContext,
 } from "@windmill/react-ui";
-import { signout, authenticate, isAutheticated } from "../helper/auth/index";
 import { useHistory } from "react-router-dom";
+import { signout } from "../helper/auth/index";
 
 import { Redirect } from "react-router-dom";
 
@@ -36,11 +36,11 @@ function Header() {
   }
 
   function handleProfileClick() {
-    setIsProfileMenuOpen(!isProfileMenuOpen);
+    setIsProfileMenuOpen(true);
   }
 
   return (
-    <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
+    <header className="z-40 py-4 bg-white shadow-sm shadow-bottom dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         {/* <!-- Mobile hamburger --> */}
         <button
@@ -52,7 +52,7 @@ function Header() {
         </button>
         {/* <!-- Search input --> */}
         <div className="flex justify-center flex-1 lg:mr-32">
-          <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+          {/* <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
             <div className="absolute inset-y-0 flex items-center pl-2">
               <SearchIcon className="w-4 h-4" aria-hidden="true" />
             </div>
@@ -61,11 +61,11 @@ function Header() {
               placeholder="Search for projects"
               aria-label="Search"
             />
-          </div>
+          </div> */}
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">
           {/* <!-- Theme toggler --> */}
-          <li className="flex">
+          {/* <li className="flex">
             <button
               className="rounded-md focus:outline-none focus:shadow-outline-purple"
               onClick={toggleMode}
@@ -77,9 +77,19 @@ function Header() {
                 <MoonIcon className="w-5 h-5" aria-hidden="true" />
               )}
             </button>
-          </li>
+          </li> */}
           {/* <!-- Notifications menu --> */}
-          <li className="relative">
+          <a
+            className="text-gray-900 cursor-pointer font-semibold"
+            onClick={() => {
+              signout();
+              // history.push("/");
+            }}
+            href="/"
+          >
+            Log Out
+          </a>
+          {/* <li className="relative">
             <button
               className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
               onClick={handleNotificationsClick}
@@ -87,7 +97,7 @@ function Header() {
               aria-haspopup="true"
             >
               <BellIcon className="w-5 h-5" aria-hidden="true" />
-              {/* <!-- Notification badge --> */}
+          
               <span
                 aria-hidden="true"
                 className="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
@@ -111,14 +121,14 @@ function Header() {
                 <span>Alerts</span>
               </DropdownItem>
             </Dropdown>
-          </li>
+          </li> */}
           {/* <!-- Profile menu --> */}
-          <li className="relative">
+          {/* <li className="relative">
             <button
               className="rounded-full focus:shadow-outline-purple focus:outline-none"
               onClick={handleProfileClick}
-              aria-label="Account"
-              aria-haspopup="true"
+              // aria-label="Account"
+              // aria-haspopup="true"
             >
               <Avatar
                 className="align-middle"
@@ -158,7 +168,7 @@ function Header() {
                 <span>Log out</span>
               </DropdownItem>
             </Dropdown>
-          </li>
+          </li> */}
         </ul>
       </div>
     </header>

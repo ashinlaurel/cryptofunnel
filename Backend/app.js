@@ -10,6 +10,7 @@ const cors = require("cors");
 //My routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const userInfoRoutes = require("./routes/userInfo");
 const paymentRoutes = require("./routes/payments");
 const refferalRoutes = require("./routes/refferal");
 
@@ -32,6 +33,7 @@ app.use(cors());
 //My Routes
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+app.use("/api", userInfoRoutes);
 // payment routes
 app.use("/api/payment", paymentRoutes);
 // refferal route

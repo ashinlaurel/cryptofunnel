@@ -29,5 +29,8 @@
     "referral-code-generator": "^1.0.8",
     "stripe": "^8.154.0",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "kill-port": "^1.6.1"
   }
 }

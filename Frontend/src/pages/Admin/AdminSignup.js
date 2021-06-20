@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { signup, authenticate, isAutheticated } from "../../helper/auth/index";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
 
 import ImageLight from "../../assets/img/login-office.jpeg";
 import ImageDark from "../../assets/img/login-office-dark.jpeg";
@@ -9,16 +10,42 @@ import { GithubIcon, TwitterIcon } from "../../icons";
 import { Label, Input, Button } from "@windmill/react-ui";
 
 const AdminSignup = () => {
+  const history = useHistory();
+  //modal
+  const [messageModal, setMessageModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
   const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
+    name: "alan",
+    email: "alan@test.com",
+    password: "password",
+    confirmpassword: "password",
+    phone: "123",
+    address: "add",
+    city: "cc",
+    state: "ss",
+    country: "IN",
+    zip: "123",
     error: "",
     success: false,
     didRedirect: false,
   });
 
-  const { name, email, password, error, success, didRedirect } = values;
+  const {
+    name,
+    email,
+    password,
+    confirmpassword,
+    phone,
+    address,
+    city,
+    state,
+    country,
+    zip,
+    error,
+    success,
+    didRedirect,
+  } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -27,40 +54,107 @@ const AdminSignup = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    signup({ name, email, password })
+    if (
+      values.name == "" ||
+      values.email == "" ||
+      values.password == "" ||
+      values.confirmpassword == "" ||
+      values.phone == "" ||
+      values.address == "" ||
+      values.city == "" ||
+      values.state == "" ||
+      values.country == "" ||
+      values.zip == ""
+    ) {
+      setModalMessage("Please fill all the details");
+      setMessageModal(true);
+      return;
+    }
+    if (values.password !== values.confirmpassword) {
+      setModalMessage("Confirm password does not match password");
+      setMessageModal(true);
+      return;
+    }
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(values.email)) {
+      setModalMessage("Email format is incorrect");
+      setMessageModal(true);
+      return;
+    }
+    if (!/[0-9]+/.test(values.phone)) {
+      setModalMessage("Phone Number format is incorrect");
+      setMessageModal(true);
+      return;
+    }
+
+    console.log(values);
+    // return;
+    signup(values)
       .then((data) => {
-        if (data.error) {
-          setValues({
-            ...values,
-            error: data.error,
-            success: false,
-          });
+        console.log("data", data.err);
+        if (data.err) {
+          setModalMessage(data.err);
+          setMessageModal(true);
+          return;
         } else {
-          setValues({
-            ...values,
-            name: "",
-            email: "",
-            password: "",
-            error: "",
-            success: true,
-            didRedirect: true,
-          });
+          setModalMessage("Account Created");
+          setMessageModal(true);
+          history.push("/signin");
+          return;
+          // setValues({
+          //   ...values,
+          //   name: "",
+          //   email: "",
+          //   password: "",
+          //   phone: "",
+          //   address: "",
+          //   city: "",
+          //   state: "",
+          //   country: "",
+          //   zip: "",
+          //   error: "",
+          //   success: true,
+          //   didRedirect: true,
+          // });
         }
       })
-      .catch(console.log("Error in signup"));
+      .catch((err) => {
+        console.log("Error in signup", JSON.parse(err));
+      });
   };
 
-  const performRedirect = () => {
-    if (didRedirect) {
-      //need to change the link address
-      return <Redirect to="/signin" />;
-    }
+  // const performRedirect = () => {
+  //   if (didRedirect) {
+  //     //need to change the link address
+  //     return <Redirect to="/signin" />;
+  //   }
+  // };
+
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal isOpen={messageModal} onClose={() => setMessageModal(false)}>
+          <ModalHeader>{modalMessage}</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setMessageModal(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
   };
 
   const SignupForm = () => {
     return (
       <div className="flex items-center min-h-screen p-6 bg-gray-50 bg-gray-900 text-gray-200">
-        <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-gray-900 border border-gray-700  rounded-lg shadow-xl dark:bg-gray-800">
+        {messageModalComponent()}
+        <div className="flex-1 h-full max-w-6xl mx-auto overflow-hidden bg-gray-900 border border-gray-700  rounded-lg shadow-xl dark:bg-gray-800">
           <div className="flex flex-col overflow-y-auto md:flex-row">
             <div className="h-32 md:h-auto md:w-1/2">
               <img
@@ -81,38 +175,110 @@ const AdminSignup = () => {
                 <h1 className="mb-4 text-xl font-semibold text-gray-200 dark:text-gray-200">
                   Sign Up
                 </h1>
-                <Label className="mt-4">
-                  <span>Name</span>
+                <div className="flex flex-row ">
+                  <Label className="mt-4 mr-2 w-full">
+                    <span>Name</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("name")}
+                      type="text"
+                      value={name}
+                      placeholder="John Doe"
+                    />
+                  </Label>
+                  <Label className="mt-4 w-full">
+                    <span>Email</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("email")}
+                      type="email"
+                      value={email}
+                      placeholder="john@doe.com"
+                    />
+                  </Label>
+                </div>
+                <div className="flex flex-row">
+                  <Label className="mt-4 w-full mr-2">
+                    <span>Password</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("password")}
+                      type="password"
+                      value={password}
+                      placeholder="********"
+                    />
+                  </Label>
+                  <Label className="mt-4 w-full">
+                    <span> Confirm Password</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("confirmpassword")}
+                      type="password"
+                      value={confirmpassword}
+                      placeholder="********"
+                    />
+                  </Label>
+                </div>
+                <Label className="mt-4 w-full">
+                  <span>Phone</span>
                   <Input
                     className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
-                    onChange={handleChange("name")}
+                    onChange={handleChange("phone")}
                     type="text"
-                    value={name}
-                    placeholder="John Doe"
+                    value={phone}
                   />
                 </Label>
-                <Label className="mt-4">
-                  <span>Email</span>
+                <Label className="mt-4 w-full">
+                  <span>Address</span>
                   <Input
                     className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
-                    onChange={handleChange("email")}
-                    type="email"
-                    value={email}
-                    placeholder="john@doe.com"
+                    onChange={handleChange("address")}
+                    type="text"
+                    value={address}
                   />
                 </Label>
-                <Label className="mt-4">
-                  <span>Password</span>
-                  <Input
-                    className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
-                    onChange={handleChange("password")}
-                    type="password"
-                    value={password}
-                    placeholder="********"
-                  />
-                </Label>
+                <div className="flex flex-row">
+                  <Label className="mt-4 w-full mr-2">
+                    <span>City</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("city")}
+                      type="text"
+                      value={city}
+                    />
+                  </Label>
+                  <Label className="mt-4 w-full">
+                    <span>Zip</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("zip")}
+                      type="text"
+                      value={zip}
+                    />
+                  </Label>
+                </div>
+                <div className="flex flex-row">
+                  <Label className="mt-4 w-full mr-2">
+                    <span>State</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("state")}
+                      type="text"
+                      value={state}
+                    />
+                  </Label>
+                  <Label className="mt-4 w-full">
+                    <span>Country</span>
+                    <Input
+                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      onChange={handleChange("country")}
+                      type="text"
+                      value={country}
+                    />
+                  </Label>
+                </div>
 
-                <Button className="mt-4 bg-green-300" block onClick={onSubmit}>
+                <Button className="mt-4  bg-green-300" block onClick={onSubmit}>
                   Sign up
                 </Button>
 
@@ -145,7 +311,6 @@ const AdminSignup = () => {
   return (
     <>
       {SignupForm()}
-      {performRedirect()}
       <p className="text-white text-center">{JSON.stringify(values)}</p>
     </>
   );

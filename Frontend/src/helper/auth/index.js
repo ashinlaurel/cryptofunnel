@@ -1,4 +1,5 @@
 import { API } from "../../backend";
+import UserProfile from "./UserProfile";
 
 export const signup = (user) => {
   return fetch(`${API}/signup`, {
@@ -10,9 +11,14 @@ export const signup = (user) => {
     body: JSON.stringify(user),
   })
     .then((response) => {
+      console.log("NO ERROR");
       return response.json();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log("ERROR");
+      console.log("ERROR", err);
+      // throw err;
+    });
 };
 
 export const signin = (user) => {
@@ -38,16 +44,16 @@ export const authenticate = (data, next) => {
   // }
 };
 
-export const signout = (next) => {
+export const signout = () => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
-    next();
+    UserProfile.signout();
 
-    return fetch(`${API}/signout`, {
-      method: "GET",
-    })
-      .then((response) => console.log("signout success"))
-      .catch((err) => console.log(err));
+    //   return fetch(`${API}/signout`, {
+    //     method: "GET",
+    //   })
+    //     .then((response) => console.log("signout success"))
+    //     .catch((err) => console.log(err));
   }
 };
 
