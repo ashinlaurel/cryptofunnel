@@ -17,7 +17,7 @@ export default () => {
     address: "sdf",
     city: "sdf",
     state: "sdf",
-    country: "sdf",
+    country: "IN",
     zip: "43231",
   };
   const [customer, setCustomer] = useState(initCust);
@@ -129,7 +129,7 @@ export default () => {
                 Name
               </label>
               <input
-                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.name}
                 onChange={handleCustomerChange}
                 name="name"
@@ -142,7 +142,7 @@ export default () => {
                 Email
               </label>
               <input
-                class="w-full px-2  py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2  py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.email}
                 onChange={handleCustomerChange}
                 name="email"
@@ -156,7 +156,7 @@ export default () => {
                 Address
               </label>
               <input
-                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.address}
                 onChange={handleCustomerChange}
                 name="address"
@@ -171,7 +171,7 @@ export default () => {
                 City
               </label>
               <input
-                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.city}
                 onChange={handleCustomerChange}
                 name="city"
@@ -186,7 +186,7 @@ export default () => {
                 State
               </label>
               <input
-                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.state}
                 onChange={handleCustomerChange}
                 name="state"
@@ -200,8 +200,8 @@ export default () => {
               <label class=" block text-sm text-gray-600" for="cus_email">
                 Country
               </label>
-              <input
-                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+              {/* <input
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.country}
                 onChange={handleCustomerChange}
                 name="country"
@@ -209,14 +209,25 @@ export default () => {
                 required=""
                 placeholder="Country"
                 aria-label="Email"
-              />
+              /> */}
+              <select
+                name="country"
+                value={customer.country}
+                onChange={handleCustomerChange}
+                class="w-full px-2 py-2 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+              >
+                <option selected value="IN">
+                  India
+                </option>
+                <option value="US">United States</option>
+              </select>
             </div>
             <div class="inline-block mt-2 -mx-1 pl-1 w-1/2">
               <label class=" block text-sm text-gray-600" for="cus_email">
                 Zip
               </label>
               <input
-                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.zip}
                 onChange={handleCustomerChange}
                 name="zip"
@@ -236,7 +247,7 @@ export default () => {
                       Refferal Code
                     </label>
                     <input
-                      class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded"
+                      class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                       value={thecode}
                       onChange={handleRefferalCode}
                       name="thecode"
