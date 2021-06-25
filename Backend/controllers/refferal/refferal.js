@@ -1,20 +1,34 @@
+const { response } = require("express");
 let referralCodeGenerator = require("referral-code-generator");
 
 const Refferal = require("../../models/refferal");
 
-exports.createNewRefferal = async (req, res) => {
+exports.getNewCode = async (req, res) => {
   try {
-    console.log("hello");
-    // console.log(req.body);
-    let { creatorId } = req.body;
     let thecode = referralCodeGenerator.alphaNumeric("lowercase", 2, 2);
     console.log(thecode);
-    let payload = { creatorId: creatorId, refCode: thecode };
+
+    res.status(200).send(thecode);
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
+};
+exports.createNewRefferal = async (req, res) => {
+  try {
+    // console.log(req.body);
+    let { creatorId, refCode, discount } = req.body;
+
+    let payload = {
+      creatorId: creatorId,
+      refCode: refCode,
+      discount: discount,
+    };
+    // console.log("here", payload);
 
     const newrefferal = new Refferal(payload);
     let response = newrefferal.save();
 
-    res.status(200).send(thecode);
+    res.status(200).send(response);
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message });
   }

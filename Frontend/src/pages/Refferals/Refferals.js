@@ -29,6 +29,7 @@ function Refferals() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [tempcode, setTempCode] = useState("");
+  const [discount, setDiscount] = useState("0");
   const [refresh, setRefresh] = useState(true);
 
   // pagination setup
@@ -56,9 +57,32 @@ function Refferals() {
         <ModalHeader>New Refferal Code</ModalHeader>
         <ModalBody>
           You can use the following refferal code to get a discount !!
-          <div className="bg-gray-200 my-4 flex font-bold p-2 text-lg mx-40 items-center justify-center rounded-lg">
-            {/* <div>Code:</div> */}
-            <div>{tempcode}</div>
+          <div className="flex items-center justify-left my-2">
+            <label>
+              Code:
+              <div className="bg-gray-200 my-2 flex font-bold py-2 px-32 text-lg  items-center justify-center rounded-lg">
+                {/* <div>Code:</div> */}
+                <div>{tempcode}</div>
+              </div>
+            </label>
+
+            <div class=" relative ml-2">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                <label>
+                  Discount(%)
+                  <input
+                    value={discount}
+                    onChange={(e) => setDiscount(e.target.value)}
+                    placeholder="Enter the discount %"
+                    class="shadow-md z-20 my-2 appearance-none rounded border border-gray-400 border-b block pl-2 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                  />
+                </label>
+              </form>
+            </div>
           </div>
         </ModalBody>
         <ModalFooter>
@@ -73,7 +97,7 @@ function Refferals() {
             </Button>
           </div>
           <div className="hidden sm:block">
-            <Button>Accept</Button>
+            <Button onClick={handleCreateRefferal}>Accept</Button>
           </div>
           <div className="block w-full sm:hidden">
             <Button block size="large" layout="outline" onClick={closeModal}>
@@ -81,7 +105,7 @@ function Refferals() {
             </Button>
           </div>
           <div className="block w-full sm:hidden">
-            <Button block size="large">
+            <Button onClick={handleCreateRefferal} block size="large">
               Accept
             </Button>
           </div>
@@ -124,15 +148,32 @@ function Refferals() {
     // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
   }, [page, refresh]);
 
-  const handleCreateRefferal = async () => {
+  const getNewCode = async () => {
     let id = UserProfile.getId();
     // console.log(id);
     const payload = { creatorId: id };
-    const response = await axios.post(`${API}/refferal/createnew`, payload);
+    const response = await axios.post(
+      `${API}/refferal/${UserProfile.getId()}/getNewCode`,
+      payload
+    );
     console.log(response.data);
     setTempCode(response.data);
     setIsModalOpen(true);
+  };
+
+  const handleCreateRefferal = async () => {
+    let id = UserProfile.getId();
+    console.log(id);
+    const payload = { creatorId: id, refCode: tempcode, discount: discount };
+    const response = await axios.post(
+      `${API}/refferal/${UserProfile.getId()}/createnew`,
+      payload
+    );
+    console.log(response.data);
+    setTempCode("");
+    setDiscount("");
     setRefresh(!refresh);
+    setIsModalOpen(false);
   };
 
   return (
@@ -143,7 +184,7 @@ function Refferals() {
       {/* <CTA /> */}
 
       <div className="mt-2 mb-4">
-        <Button onClick={handleCreateRefferal} size="large">
+        <Button onClick={getNewCode} size="large">
           Get New Refferal Code +
         </Button>
       </div>
@@ -224,6 +265,7 @@ function Refferals() {
             <tr>
               {/* <TableCell>Client</TableCell> */}
               <TableCell>Code</TableCell>
+              <TableCell>Discount</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Created At</TableCell>
             </tr>
@@ -250,6 +292,9 @@ function Refferals() {
                   <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
                     {user.refCode}
                   </span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm ">{user.discount}%</span>
                 </TableCell>
                 <TableCell>
                   <Badge type={user.status}>Active</Badge>

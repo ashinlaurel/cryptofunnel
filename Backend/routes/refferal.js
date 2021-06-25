@@ -6,12 +6,14 @@ const {
   createNewRefferal,
   getByUser,
   checkIfExist,
+  getNewCode,
 } = require("../controllers/refferal/refferal");
 const { getUserById } = require("../controllers/user");
 
 router.param("userId", getUserById);
 
-router.post("/createnew", createNewRefferal);
+router.post("/:userId/getNewCode", getNewCode);
+router.post("/:userId/createnew", createNewRefferal);
 // router.post("/:userId/getbyuser", isSignedIn, isAuthenticated, getByUser);
 router.post("/:userId/getbyuser", isSignedIn, getByUser);
 // router.post("/:userId/checkIfExists", isSignedIn, checkIfExist);

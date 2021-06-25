@@ -13,6 +13,10 @@ var refferalSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    discount: {
+      type: String,
+      maxlength: 2,
+    },
   },
   { timestamps: true }
 );
