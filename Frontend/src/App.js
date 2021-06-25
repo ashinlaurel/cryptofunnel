@@ -16,6 +16,7 @@ import Payment from "./pages/Payment/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserRoute from "./helper/auth/UserRoutes";
+import VerifyEmail from "./pages/Verification/VerifyEmail";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -40,6 +41,7 @@ function App() {
             {/* Place new routes over this */}
             <Route path="/signin" component={AdminLogin} />
             <Route path="/signup" component={AdminSignup} />
+            <Route path="/verifyemail" component={VerifyEmail} />
 
             <AdminRoute path="/app" component={Layout} />
             {/* <UserRoute path="/app/" component={Layout} /> */}

@@ -33,7 +33,7 @@ var userSchema = new mongoose.Schema(
     salt: String,
     role: {
       type: Number,
-      default: 0, /// 0 for user 2 for unpurchased user 1 for admin
+      default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 for purchased user
     },
     purchases: {
       type: Array,
