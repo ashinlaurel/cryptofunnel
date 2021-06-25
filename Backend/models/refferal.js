@@ -7,6 +7,10 @@ var refferalSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    creatorName: {
+      type: String,
+      required: true,
+    },
     refCode: {
       type: String,
       maxlength: 32,
@@ -17,6 +21,7 @@ var refferalSchema = new mongoose.Schema(
       type: String,
       maxlength: 2,
     },
+    reffIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

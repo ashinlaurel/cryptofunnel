@@ -13,7 +13,7 @@ function Cards() {
     <>
       <PageTitle>My Plan</PageTitle>
 
-      <CTA />
+      {/* <CTA /> */}
 
       <SectionTitle>Big section cards</SectionTitle>
 

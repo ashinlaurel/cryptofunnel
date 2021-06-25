@@ -76,7 +76,7 @@ const AdminLogin = () => {
                 <Label className="mt-4 ">
                   <span className="text-gray-500">Email</span>
                   <Input
-                    className="mt-1 bg-gray-900 border border-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                     onChange={handleChange("email")}
                     type="email"
                     value={email}
@@ -86,7 +86,7 @@ const AdminLogin = () => {
                 <Label className="mt-4 ">
                   <span className="text-gray-500">Password</span>
                   <Input
-                    className="mt-1 bg-gray-900 border border-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-gray-900 border text-white border-gray-700 p-2 rounded-md"
                     onChange={handleChange("password")}
                     type="password"
                     value={password}

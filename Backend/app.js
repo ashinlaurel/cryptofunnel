@@ -13,6 +13,7 @@ const userRoutes = require("./routes/user");
 const userInfoRoutes = require("./routes/userInfo");
 const paymentRoutes = require("./routes/payments");
 const refferalRoutes = require("./routes/refferal");
+const mailRoutes = require("./routes/mail");
 
 //DB Connection
 mongoose
@@ -38,6 +39,7 @@ app.use("/api", userInfoRoutes);
 app.use("/api/payment", paymentRoutes);
 // refferal route
 app.use("/api/refferal", refferalRoutes);
+app.use("/api/mail", mailRoutes);
 
 //PORT
 const port = process.env.PORT || 8000;
