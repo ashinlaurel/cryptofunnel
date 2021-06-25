@@ -16,9 +16,9 @@ const routes = [
 ];
 if (UserProfile.getRole() == 1)
   routes.push({
-    path: "/app/referals", // the url
+    path: "/app/refferals", // the url
     icon: "HomeIcon", // the component being exported from icons/index.js
-    name: "Referals", // name that appear in Sidebar
+    name: "Refferals", // name that appear in Sidebar
   });
 
 if (UserProfile.getRole() == 0 || UserProfile.getRole() == 2)

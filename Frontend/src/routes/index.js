@@ -5,6 +5,7 @@ import UserProfile from "../helper/auth/UserProfile";
 const Dashboard = lazy(() => import("../pages/User/Dashboard"));
 const UserInfo = lazy(() => import("../pages/User/UserInfo"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
+const Refferals = lazy(() => import("../pages/Refferals/Refferals"));
 const MyPlan = lazy(() => import("../pages/MyPlan"));
 const Forms = lazy(() => import("../pages/Forms"));
 
@@ -22,6 +23,10 @@ const routes = [
   {
     path: "/dashboard", // the url
     component: UserProfile.getRole() == 1 ? AdminDashboard : Dashboard, // view rendered
+  },
+  {
+    path: "/refferals", // the url
+    component: Refferals, // view rendered
   },
 ];
 

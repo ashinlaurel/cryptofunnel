@@ -11,6 +11,55 @@ exports.getUserById = (req, res, next, id) => {
     next();
   });
 };
+exports.getAllUsers = (req, res) => {
+  let { pages, filters } = req.body;
+
+  let { searchquery } = filters;
+  // console.log(filters);
+  // console.log(searchquery);
+  // console.log(searchtype);
+  const fuzzyquery = new RegExp(escapeRegex(searchquery), "gi");
+
+  let options = {
+    // populate: "product",
+    page: pages.page,
+    limit: pages.limit,
+  };
+
+  let filteroptions = {
+    // product: { brand: "IBM" },
+  };
+
+  // ---Conditional Addition of filters
+  if (filters.plan != "") {
+    filteroptions.plan = filters.plan;
+  }
+
+  if (filters.searchquery != "") {
+    filteroptions.name = fuzzyquery;
+  }
+
+  // -----------------------------------------------------------------------
+
+  User.paginate(filteroptions, options, function (err, result) {
+    // console.log(result);
+    if (err || !result) {
+      return res.status(400).json({
+        error: "No items found",
+        err: err,
+      });
+    }
+    // console.log(result.docs);
+    result.docs.map((doc) => {
+      (doc.encry_password = ""), (doc.salt = "");
+    });
+    let output = {
+      total: result.total,
+      out: result.docs,
+    };
+    return res.status(200).json(output);
+  });
+};
 
 exports.getUser = (req, res) => {
   req.profile.salt = undefined;
@@ -78,3 +127,8 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
     }
   );
 };
+
+// -----------------------Fuzzy Search Regex----------------
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}

@@ -6,6 +6,7 @@ const {
   getUser,
   updateUser,
   userPurchaseList,
+  getAllUsers,
 } = require("../controllers/user");
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 
@@ -13,6 +14,12 @@ router.param("userId", getUserById);
 
 router.get("/user/:userId", isSignedIn, isAuthenticated, getUser);
 router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser);
+router.post(
+  "/user/:userId/getAllUsers",
+  isSignedIn,
+  // isAuthenticated,
+  getAllUsers
+);
 
 router.get(
   "/orders/user/:userId",

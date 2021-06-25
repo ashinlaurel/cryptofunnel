@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import PageTitle from "../components/Typography/PageTitle";
-import UserProfile from "../helper/auth/UserProfile";
-import UserPng from "../images/user.png";
+import PageTitle from "../../components/Typography/PageTitle";
+
+import UserProfile from "../../helper/auth/UserProfile";
 
 import {
   TableBody,
@@ -15,17 +15,21 @@ import {
   Avatar,
   Badge,
   Pagination,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "@windmill/react-ui";
 
-import { API } from "../backend";
 import axios from "axios";
+import { API } from "../../backend";
 
-function Dashboard() {
+function Refferals() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [tempcode, setTempCode] = useState("");
   const [refresh, setRefresh] = useState(true);
-  const [searchquery, setSearchQuery] = useState("");
 
   // pagination setup
   const resultsPerPage = 10;
@@ -46,6 +50,46 @@ function Dashboard() {
     setIsModalOpen(false);
   }
 
+  const theModal = () => {
+    return (
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalHeader>New Refferal Code</ModalHeader>
+        <ModalBody>
+          You can use the following refferal code to get a discount !!
+          <div className="bg-gray-200 my-4 flex font-bold p-2 text-lg mx-40 items-center justify-center rounded-lg">
+            {/* <div>Code:</div> */}
+            <div>{tempcode}</div>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          {/* I don't like this approach. Consider passing a prop to ModalFooter
+           * that if present, would duplicate the buttons in a way similar to this.
+           * Or, maybe find some way to pass something like size="large md:regular"
+           * to Button
+           */}
+          <div className="hidden sm:block">
+            <Button layout="outline" onClick={closeModal}>
+              Cancel
+            </Button>
+          </div>
+          <div className="hidden sm:block">
+            <Button>Accept</Button>
+          </div>
+          <div className="block w-full sm:hidden">
+            <Button block size="large" layout="outline" onClick={closeModal}>
+              Cancel
+            </Button>
+          </div>
+          <div className="block w-full sm:hidden">
+            <Button block size="large">
+              Accept
+            </Button>
+          </div>
+        </ModalFooter>
+      </Modal>
+    );
+  };
+
   // on page change, load new sliced data
   // here you would make another server request for new data
 
@@ -59,14 +103,13 @@ function Dashboard() {
           limit: resultsPerPage,
         },
         filters: {
-          searchquery: searchquery,
-          plan: "",
+          creatorId: UserProfile.getId(),
         },
       };
 
       try {
         let response = await axios({
-          url: `${API}/user/${UserProfile.getId()}/getAllUsers`,
+          url: `${API}/refferal/${UserProfile.getId()}/getbyuser`,
           method: "POST",
           data: payload,
         });
@@ -79,15 +122,31 @@ function Dashboard() {
       }
     })();
     // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
-  }, [page, searchquery, refresh]);
+  }, [page, refresh]);
+
+  const handleCreateRefferal = async () => {
+    let id = UserProfile.getId();
+    // console.log(id);
+    const payload = { creatorId: id };
+    const response = await axios.post(`${API}/refferal/createnew`, payload);
+    console.log(response.data);
+    setTempCode(response.data);
+    setIsModalOpen(true);
+    setRefresh(!refresh);
+  };
 
   return (
     <>
-      <PageTitle>Admin Dashboard</PageTitle>
+      {theModal()}
+      <PageTitle>Refferals</PageTitle>
 
       {/* <CTA /> */}
 
-      <div className="font-bold text-gray-700 text-xl">Users</div>
+      <div className="mt-2 mb-4">
+        <Button onClick={handleCreateRefferal} size="large">
+          Get New Refferal Code +
+        </Button>
+      </div>
 
       <div className="mb-4">
         {/* -------------------------------------Row 1 ------------------------------------------------------------------------------- */}
@@ -102,13 +161,12 @@ function Dashboard() {
               }}
             >
               <option value="" disabled selected>
-                Plan
+                Condition
               </option>
               <option value="">All</option>
-              <option value="">No Plan</option>
-              <option value="Good">Gold</option>
-              <option value="Bad">Silver</option>
-              <option value="Used">Bronze</option>
+              <option value="Good">Good</option>
+              <option value="Bad">Bad</option>
+              <option value="Used">Used</option>
             </select>
 
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -139,8 +197,8 @@ function Dashboard() {
               }}
             >
               <input
-                value={searchquery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                // value={searchquery}
+                // onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search"
                 class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
               />
@@ -165,20 +223,19 @@ function Dashboard() {
           <TableHeader>
             <tr>
               {/* <TableCell>Client</TableCell> */}
-              <TableCell>User</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Code</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Created At</TableCell>
-              <TableCell>Plan</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
             {data.map((user, i) => (
               <TableRow key={i}>
-                <TableCell>
+                {/* <TableCell>
                   <div className="flex items-center text-sm">
                     <Avatar
                       className="hidden mr-3 md:block"
-                      src={UserPng}
+                      src={user.avatar}
                       alt="User image"
                     />
                     <div>
@@ -188,18 +245,19 @@ function Dashboard() {
                       </p>
                     </div>
                   </div>
-                </TableCell>
-
+                </TableCell> */}
                 <TableCell>
-                  <span className="text-sm ">{user.email}</span>
+                  <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
+                    {user.refCode}
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <Badge type={user.status}>Active</Badge>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </span>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm  font-bold ">Gold</span>
                 </TableCell>
               </TableRow>
             ))}
@@ -218,4 +276,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Refferals;

@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 const crypto = require("crypto");
 const uuidv1 = require("uuid/v1");
+var mongoosePaginate = require("mongoose-paginate");
 
 var userSchema = new mongoose.Schema(
   {
@@ -41,6 +42,8 @@ var userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.plugin(mongoosePaginate);
 
 userSchema
   .virtual("password")
