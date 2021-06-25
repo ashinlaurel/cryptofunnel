@@ -29,6 +29,11 @@ if (UserProfile.getRole() == 0 || UserProfile.getRole() == 2)
       name: "My Plans", // name that appear in Sidebar
     },
     {
+      path: "/app/userrefferal", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Refferal", // name that appear in Sidebar
+    },
+    {
       path: "/app/info", // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
       name: "Profile", // name that appear in Sidebar

@@ -25,7 +25,7 @@ import {
 import axios from "axios";
 import { API } from "../../backend";
 
-function Refferals() {
+function UserRefferals() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [tempcode, setTempCode] = useState("");
@@ -327,4 +327,4 @@ function Refferals() {
   );
 }
 
-export default Refferals;
+export default UserRefferals;

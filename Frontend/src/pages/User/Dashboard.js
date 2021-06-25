@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import tw from "twin.macro";
 
 import PageTitle from "../../components/Typography/PageTitle";
 import SectionTitle from "../../components/Typography/SectionTitle";
+import DashBoardPlans from "../../components/pricing/DashboardPlans";
 
 import UserProfile from "../../helper/auth/UserProfile";
 
@@ -15,6 +17,7 @@ import {
 } from "../../utils/demo/chartsData";
 import { API } from "../../backend";
 import axios from "axios";
+import { Subheading } from "../../components/misc/Headings";
 
 const handleVerifyEmail = async () => {
   let id = UserProfile.getId();
@@ -28,7 +31,9 @@ const handleVerifyEmail = async () => {
   );
   console.log(response.data);
 };
+
 function Dashboard() {
+  const HighlightedText = tw.span`text-green-300`;
   // const [page, setPage] = useState(1);
   // const [data, setData] = useState([]);
   // const [tempcode, setTempCode] = useState("");
@@ -137,7 +142,7 @@ function Dashboard() {
 
       {/* <!-- Cards --> */}
 
-      <Card colored className="mb-5 text-gray-900 border rounded-lg">
+      <Card className="mb-5 text-gray-900 border rounded-lg">
         <CardBody>
           <div className="flex items-center">
             <div>
@@ -165,7 +170,56 @@ function Dashboard() {
 
       {/* ------Plans Ad */}
 
-      <SectionTitle>Buy Plans</SectionTitle>
+      <div className="text-xl xl:text-2xl text-gray-700 font-semibold">
+        Buy a Plan
+      </div>
+      <DashBoardPlans
+        subheading={<Subheading>Pricing</Subheading>}
+        heading={
+          <>
+            Reasonable & Flexible <HighlightedText>Plans.</HighlightedText>
+          </>
+        }
+        plans={[
+          {
+            name: "Personal",
+            price: "$17.99",
+            duration: "Monthly",
+            mainFeature: "For Individuals",
+            features: [
+              "3 Lorem Ipsum",
+              "7 Lorem Ipsum",
+              "12 Lorem Ipsum",
+              "Basic Assistance",
+            ],
+          },
+          {
+            name: "Teams",
+            price: "$37.99",
+            duration: "Monthly",
+            mainFeature: "For Small Businesses",
+            features: [
+              "3 Lorem Ipsum",
+              "15 Lorem Ipsum",
+              "22 Lorem Ipsum",
+              "Priority Assistance",
+            ],
+          },
+          {
+            name: "Pro",
+            price: "$57.99",
+            duration: "Monthly",
+            mainFeature: "For Large Companies",
+            features: [
+              "3 Lorem Ipsum",
+              "27 Lorem Ipsum",
+              "37 Lorem Ipsum",
+              "Personal Assistance",
+            ],
+            featured: true,
+          },
+        ]}
+      />
     </>
   );
 }

@@ -6,6 +6,7 @@ const Dashboard = lazy(() => import("../pages/User/Dashboard"));
 const UserInfo = lazy(() => import("../pages/User/UserInfo"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
 const Refferals = lazy(() => import("../pages/Refferals/Refferals"));
+const UserRefferals = lazy(() => import("../pages/Refferals/UserRefferals"));
 const MyPlan = lazy(() => import("../pages/MyPlan"));
 const Forms = lazy(() => import("../pages/Forms"));
 
@@ -39,6 +40,10 @@ if (UserProfile.getRole() == 0 || UserProfile.getRole() == 2)
     {
       path: "/info", // the url
       component: UserInfo, // view rendered
+    },
+    {
+      path: "/userrefferal", // the url
+      component: UserRefferals, // view rendered
     }
   );
 
