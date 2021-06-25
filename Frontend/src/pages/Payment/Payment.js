@@ -6,8 +6,9 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { API } from "../../backend.js";
 import UserProfile from "../../helper/auth/UserProfile.js";
-
-export default () => {
+import { Subheading } from "../../components/misc/Headings";
+import DashBoardPlans from "../../components/pricing/DashboardPlans1";
+function Payment() {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
   const HighlightedText = tw.span`text-green-300`;
 
@@ -20,6 +21,8 @@ export default () => {
     country: "IN",
     zip: "43231",
   };
+  const color = "blue";
+  const [openTab, setOpenTab] = React.useState(1);
   const [customer, setCustomer] = useState(initCust);
   const [thecode, setThecode] = useState("");
   const [codestatus, setCodeStatus] = useState(false);
@@ -119,10 +122,158 @@ export default () => {
   };
 
   return (
-    <AnimationRevealPage>
-      <div className="   mx-auto">
-        <div class="leading-loose">
-          <div class="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
+    // <AnimationRevealPage>
+    <div className=" flex md:flex-row flex-col">
+      <div className="w-full mx-4">
+        MY PLANS
+        <>
+          <div className="flex flex-wrap">
+            <div className="w-full">
+              <ul
+                className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+                role="tablist"
+              >
+                <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                  <a
+                    className={
+                      "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                      (openTab === 1
+                        ? "text-white bg-" + color + "-600"
+                        : "text-" + color + "-600 bg-white")
+                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpenTab(1);
+                    }}
+                    data-toggle="tab"
+                    href="#link1"
+                    role="tablist"
+                  >
+                    GOLD
+                  </a>
+                </li>
+                <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                  <a
+                    className={
+                      "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                      (openTab === 2
+                        ? "text-white bg-" + color + "-600"
+                        : "text-" + color + "-600 bg-white")
+                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpenTab(2);
+                    }}
+                    data-toggle="tab"
+                    href="#link2"
+                    role="tablist"
+                  >
+                    PLATINUM
+                  </a>
+                </li>
+                <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                  <a
+                    className={
+                      "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                      (openTab === 3
+                        ? "text-white bg-" + color + "-600"
+                        : "text-" + color + "-600 bg-white")
+                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpenTab(3);
+                    }}
+                    data-toggle="tab"
+                    href="#link3"
+                    role="tablist"
+                  >
+                    SILVER
+                  </a>
+                </li>
+              </ul>
+              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+                <div className="px-4 py-5 flex-auto">
+                  <div className="tab-content tab-space">
+                    <div
+                      className={openTab === 1 ? "block" : "hidden"}
+                      id="link1"
+                    >
+                      <DashBoardPlans
+                        subheading=""
+                        heading=""
+                        plans={[
+                          {
+                            name: "Personal",
+                            price: "$17.99",
+                            duration: "Monthly",
+                            mainFeature: "For Individuals",
+                            features: [
+                              "3 Lorem Ipsum",
+                              "7 Lorem Ipsum",
+                              "12 Lorem Ipsum",
+                              "Basic Assistance",
+                            ],
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div
+                      className={openTab === 2 ? "block" : "hidden"}
+                      id="link2"
+                    >
+                      <DashBoardPlans
+                        subheading=""
+                        heading=""
+                        plans={[
+                          {
+                            name: "Business",
+                            price: "$37.99",
+                            duration: "Monthly",
+                            mainFeature: "Suited for Production Websites",
+                            features: [
+                              "60 Templates",
+                              "8 Landing Pages",
+                              "22 Internal Pages",
+                              "Priority Assistance",
+                            ],
+                            featured: true,
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div
+                      className={openTab === 3 ? "block" : "hidden"}
+                      id="link3"
+                    >
+                      <DashBoardPlans
+                        subheading=""
+                        heading=""
+                        plans={[
+                          {
+                            name: "Enterprise",
+                            price: "$57.99",
+                            duration: "Monthly",
+                            mainFeature: "Suited for Big Companies",
+                            features: [
+                              "90 Templates",
+                              "9 Landing Pages",
+                              "37 Internal Pages",
+                              "Personal Assistance",
+                            ],
+                          },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      </div>
+      <div className="w-full">
+        <div class="leading-loose ">
+          <div class="max-w-xl my-4 p-10 bg-white rounded shadow-xl">
             <p class="text-gray-800 font-medium">Customer information</p>
             <div class="">
               <label class="block text-sm text-gray-00" for="cus_name">
@@ -226,6 +377,7 @@ export default () => {
               <label class=" block text-sm text-gray-600" for="cus_email">
                 Zip
               </label>
+              {/* <CTA /> */}
               <input
                 class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
                 value={customer.zip}
@@ -298,6 +450,9 @@ export default () => {
           </div>
         </div>
       </div>
-    </AnimationRevealPage>
+    </div>
+    // </AnimationRevealPage>
   );
-};
+}
+
+export default Payment;

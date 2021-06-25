@@ -38,6 +38,10 @@ var userSchema = new mongoose.Schema(
       type: Number,
       default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 for purchased user
     },
+    plan: {
+      type: Number,
+      default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 for purchased user
+    },
     purchases: {
       type: Array,
       default: [],
