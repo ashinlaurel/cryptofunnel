@@ -1,28 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import PageTitle from "../../components/Typography/PageTitle";
+import SectionTitle from "../../components/Typography/SectionTitle";
 
 import UserProfile from "../../helper/auth/UserProfile";
 
-import {
-  TableBody,
-  TableContainer,
-  Table,
-  TableHeader,
-  TableCell,
-  TableRow,
-  TableFooter,
-  Avatar,
-  Badge,
-  Pagination,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Card,
-  CardBody,
-} from "@windmill/react-ui";
+import { Button, Card, CardBody } from "@windmill/react-ui";
 
 import {
   doughnutOptions,
@@ -33,6 +16,18 @@ import {
 import { API } from "../../backend";
 import axios from "axios";
 
+const handleVerifyEmail = async () => {
+  let id = UserProfile.getId();
+  let name = UserProfile.getName();
+  let email = UserProfile.getEmail();
+
+  const payload = { id: id, name: name, email: email };
+  const response = await axios.post(
+    `${API}/mail/${UserProfile.getId()}/verifyEmail`,
+    payload
+  );
+  console.log(response.data);
+};
 function Dashboard() {
   // const [page, setPage] = useState(1);
   // const [data, setData] = useState([]);
@@ -142,12 +137,35 @@ function Dashboard() {
 
       {/* <!-- Cards --> */}
 
-      <Card colored className="text-white bg-red-600">
+      <Card colored className="mb-5 text-gray-900 border rounded-lg">
         <CardBody>
-          <p className="mb-4 font-semibold">Verify Your Email!</p>
-          <p>Please your email id in order to continue with any purchases!</p>
+          <div className="flex items-center">
+            <div>
+              <p className="mb-4 font-semibold">Verify Your Email!</p>
+              <p>
+                Please your email id in order to continue with any purchases!
+                <span
+                  onClick={handleVerifyEmail}
+                  className="ml-1 underline text-blue-600 cursor-pointer"
+                >
+                  Click Here{" "}
+                </span>{" "}
+                to verify your email.
+              </p>
+            </div>
+
+            {/* <div className="ml-10">
+              <Button layout="outline" onClick={handleVerifyEmail} className="">
+                Verify
+              </Button>
+            </div> */}
+          </div>
         </CardBody>
       </Card>
+
+      {/* ------Plans Ad */}
+
+      <SectionTitle>Buy Plans</SectionTitle>
     </>
   );
 }

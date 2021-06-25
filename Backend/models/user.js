@@ -22,6 +22,9 @@ var userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    emailVerified: {
+      type: String,
+    },
     userinfo: {
       type: String,
       trim: true,
