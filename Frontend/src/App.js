@@ -16,7 +16,6 @@ import Payment from "./pages/Payment/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserRoute from "./helper/auth/UserRoutes";
-import VerifyEmail from "./pages/Verification/VerifyEmail";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -25,6 +24,10 @@ const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 const Layout = lazy(() => import("./containers/Layout"));
 const Login = lazy(() => import("./pages/Login"));
 const CreateAccount = lazy(() => import("./pages/CreateAccount"));
+const VerifyEmail = lazy(() => import("./pages/Verification/VerifyEmail"));
+const ForgotPasswordReset = lazy(() =>
+  import("./pages/ForgotPassword/ForgotPasswordReset")
+);
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 
 function App() {
@@ -41,7 +44,11 @@ function App() {
             {/* Place new routes over this */}
             <Route path="/signin" component={AdminLogin} />
             <Route path="/signup" component={AdminSignup} />
-            <Route path="/verifyemail" component={VerifyEmail} />
+            <Route path="/verifyemail/:token" component={VerifyEmail} />
+            <Route
+              path="/resetpassword/:token"
+              component={ForgotPasswordReset}
+            />
 
             <AdminRoute path="/app" component={Layout} />
             {/* <UserRoute path="/app/" component={Layout} /> */}

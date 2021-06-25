@@ -33,7 +33,9 @@ export const signin = (user) => {
     .then((response) => {
       return response.json();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw err;
+    });
 };
 
 export const authenticate = (data, next) => {

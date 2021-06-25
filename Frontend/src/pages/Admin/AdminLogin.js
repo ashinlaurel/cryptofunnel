@@ -9,9 +9,14 @@ import { GithubIcon, TwitterIcon } from "../../icons";
 import { Label, Input, Button } from "@windmill/react-ui";
 import { useHistory } from "react-router-dom";
 import UserProfile from "../../helper/auth/UserProfile";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
+import { API } from "../../backend";
+import axios from "axios";
 
 const AdminLogin = () => {
   let history = useHistory();
+  const [ispassmodal, setIspassmodal] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -19,6 +24,8 @@ const AdminLogin = () => {
   });
 
   const { email, password, error, loading, didRedirect } = values;
+  const [messageModal, setMessageModal] = useState(false);
+  const [modalmessage, setModalmessage] = useState("");
   const { user } = isAutheticated();
 
   const handleChange = (name) => (event) => {
@@ -30,8 +37,18 @@ const AdminLogin = () => {
     setValues({ ...values, error: false, loading: true });
     signin({ email, password })
       .then((data) => {
+        // console.log("DATA", data);
+        if (data === undefined) {
+          history.push("/app");
+          return;
+        }
+        if (data.error) {
+          setModalmessage(data.error);
+          setMessageModal(true);
+          return;
+        }
         localStorage.setItem("jwt", JSON.stringify(data));
-        console.log("data", data.token);
+        // console.log("data", data.token);
         UserProfile.setToken(data.token);
         history.push("/app");
         // return <Redirect to="/app" />;
@@ -49,9 +66,79 @@ const AdminLogin = () => {
     }
   };
 
+  const handleResetPassword = async () => {
+    const payload = { email: resetEmail };
+    try {
+      const response = await axios.post(`${API}/mail/resetpassemail`, payload);
+      console.log(response.data);
+    } catch (err) {
+      console.log("RESETPASS err", err);
+    }
+  };
+
+  const RsestPassModal = () => {
+    return (
+      <>
+        <Modal isOpen={ispassmodal} onClose={() => setIspassmodal(false)}>
+          <ModalHeader>Recover Password</ModalHeader>
+          <ModalBody>
+            <div>
+              Click Recover password to send email with password recovery email.
+              <Label className="mt-4 ">
+                <span className="text-gray-500">Email</span>
+                <Input
+                  className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                  onChange={(e) => {
+                    setResetEmail(e.target.value);
+                  }}
+                  type="email"
+                  value={resetEmail}
+                  placeholder="john@doe.com"
+                />
+              </Label>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => {
+                handleResetPassword();
+                setIspassmodal(false);
+                // history.push("/signin");
+              }}
+            >
+              Recover Password
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal isOpen={messageModal} onClose={() => setMessageModal(false)}>
+          <ModalHeader>{modalmessage}</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setMessageModal(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
   const loginForm = () => {
     return (
       <div className="flex items-center min-h-screen p-6 bg-gray-50 bg-gray-900">
+        {RsestPassModal()}
+        {messageModalComponent()}
         <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-gray-900 border border-gray-700 rounded-lg shadow-xl dark:bg-gray-800">
           <div className="flex flex-col overflow-y-auto md:flex-row">
             <div className="h-32 md:h-auto md:w-1/2">
@@ -103,7 +190,8 @@ const AdminLogin = () => {
                 <p className="mt-4">
                   <Link
                     className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                    to="/forgot-password"
+                    // to="/forgot-password"
+                    onClick={() => setIspassmodal(true)}
                   >
                     Forgot your password?
                   </Link>
