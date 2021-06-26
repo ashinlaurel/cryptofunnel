@@ -509,7 +509,7 @@ function Payment() {
 
             <p class="mt-4 text-gray-800 font-medium">Payment information</p>
 
-            <div class="">
+            <div class="mt-1 bg-gray-100 py-4 px-2 rounded-md">
               <CardElement options={cardElementOptions} />
             </div>
             <div class="mt-4">

@@ -16,16 +16,16 @@ const AdminSignup = () => {
   const [modalMessage, setModalMessage] = useState("");
 
   const [values, setValues] = useState({
-    name: "alan",
-    email: "alan@test.com",
-    password: "password",
-    confirmpassword: "password",
-    phone: "123",
-    address: "add",
-    city: "cc",
-    state: "ss",
-    country: "IN",
-    zip: "123",
+    name: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    zip: "",
     error: "",
     success: false,
     didRedirect: false,
@@ -172,9 +172,9 @@ const AdminSignup = () => {
                 </h1>
                 <div className="flex flex-row ">
                   <Label className="mt-4 mr-2 w-full">
-                    <span>Name</span>
+                    <span className="text-gray-100 ">Name</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("name")}
                       type="text"
                       value={name}
@@ -182,9 +182,9 @@ const AdminSignup = () => {
                     />
                   </Label>
                   <Label className="mt-4 w-full">
-                    <span>Email</span>
+                    <span className="text-gray-100 ">Email</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("email")}
                       type="email"
                       value={email}
@@ -194,9 +194,9 @@ const AdminSignup = () => {
                 </div>
                 <div className="flex flex-row">
                   <Label className="mt-4 w-full mr-2">
-                    <span>Password</span>
+                    <span className="text-gray-100 ">Password</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("password")}
                       type="password"
                       value={password}
@@ -204,9 +204,9 @@ const AdminSignup = () => {
                     />
                   </Label>
                   <Label className="mt-4 w-full">
-                    <span> Confirm Password</span>
+                    <span className="text-gray-100 "> Confirm Password</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("confirmpassword")}
                       type="password"
                       value={confirmpassword}
@@ -215,18 +215,18 @@ const AdminSignup = () => {
                   </Label>
                 </div>
                 <Label className="mt-4 w-full">
-                  <span>Phone</span>
+                  <span className="text-gray-100 ">Phone</span>
                   <Input
-                    className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("phone")}
                     type="text"
                     value={phone}
                   />
                 </Label>
                 <Label className="mt-4 w-full">
-                  <span>Address</span>
+                  <span className="text-gray-100 ">Address</span>
                   <Input
-                    className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("address")}
                     type="text"
                     value={address}
@@ -234,18 +234,18 @@ const AdminSignup = () => {
                 </Label>
                 <div className="flex flex-row">
                   <Label className="mt-4 w-full mr-2">
-                    <span>City</span>
+                    <span className="text-gray-100 ">City</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("city")}
                       type="text"
                       value={city}
                     />
                   </Label>
                   <Label className="mt-4 w-full">
-                    <span>Zip</span>
+                    <span className="text-gray-100 ">Zip</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("zip")}
                       type="text"
                       value={zip}
@@ -254,18 +254,18 @@ const AdminSignup = () => {
                 </div>
                 <div className="flex flex-row">
                   <Label className="mt-4 w-full mr-2">
-                    <span>State</span>
+                    <span className="text-gray-100 ">State</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("state")}
                       type="text"
                       value={state}
                     />
                   </Label>
                   <Label className="mt-4 w-full">
-                    <span>Country</span>
+                    <span className="text-gray-100 ">Country</span>
                     <Input
-                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                       onChange={handleChange("country")}
                       type="text"
                       value={country}
