@@ -8,6 +8,9 @@ import { API } from "../../backend.js";
 import UserProfile from "../../helper/auth/UserProfile.js";
 import { Subheading } from "../../components/misc/Headings";
 import DashBoardPlans from "../../components/pricing/PricingPlans";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
+import { Label, Input, Button } from "@windmill/react-ui";
+
 function Payment() {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
   const HighlightedText = tw.span`text-green-300`;
@@ -23,6 +26,10 @@ function Payment() {
   };
   const color = "blue";
   const [openTab, setOpenTab] = React.useState(1);
+  const [loading, setLoading] = useState(false);
+  const [messageModal, setMessageModal] = useState(false);
+  const [modalmessage, setModalmessage] = useState("");
+
   const [discount, setDiscount] = useState(0);
   const [customer, setCustomer] = useState(initCust);
   const [thecode, setThecode] = useState("");
@@ -82,6 +89,7 @@ function Payment() {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     const billingDetails = {
       name: customer.name,
       email: customer.email,
@@ -103,37 +111,79 @@ function Payment() {
         country: customer.country,
       },
     };
+    try {
+      const { data: clientSecret } = await axios.post(
+        `${API}/payment/${UserProfile.getId()}/payment_intents`,
+        {
+          plan: openTab,
+          refCode: thecode,
+          billingDetails: billtemp,
+        }
+      );
 
-    const { data: clientSecret } = await axios.post(
-      `${API}/payment/${UserProfile.getId()}/payment_intents`,
-      {
-        plan: openTab,
-        refCode: thecode,
-        billingDetails: billtemp,
+      const cardElement = elements.getElement(CardElement);
+
+      const paymentMethodReq = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+        billing_details: billingDetails,
+      });
+
+      // console.log(paymentMethodReq);
+
+      const confirmedCardPayment = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: paymentMethodReq.paymentMethod.id,
+        }
+      );
+
+      console.log(confirmedCardPayment);
+      if (confirmedCardPayment.paymentIntent.status == "succeeded") {
+        console.log("Payment Successful!");
+        setModalmessage("Payment Successful");
+        setMessageModal(true);
+      } else throw { message: "Stripe Failed" };
+
+      setLoading(false);
+    } catch (err) {
+      console.log(err.message);
+      setLoading(false);
+      if (err.message == "paymentMethodReq.paymentMethod is undefined") {
+        setModalmessage("Please provide valid credit card number.");
+        setMessageModal(true);
+        return;
       }
+
+      setModalmessage("Sorry, an error occured.");
+      setMessageModal(true);
+      return;
+    }
+  };
+
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal isOpen={messageModal} onClose={() => setMessageModal(false)}>
+          <ModalHeader>{modalmessage}</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setMessageModal(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
     );
-
-    const cardElement = elements.getElement(CardElement);
-
-    const paymentMethodReq = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-      billing_details: billingDetails,
-    });
-
-    // console.log(paymentMethodReq);
-
-    const confirmedCardPayment = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: paymentMethodReq.paymentMethod.id,
-    });
-
-    console.log(confirmedCardPayment);
-    console.log("Payment Successfull!");
   };
 
   return (
     // <AnimationRevealPage>
     <div className=" flex md:flex-row flex-col">
+      {messageModalComponent()}
       <div className="w-full mx-4">
         <>
           <div className="flex flex-wrap">
@@ -459,13 +509,24 @@ function Payment() {
             </div>
             <div class="mt-4">
               <button
-                class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
+                className={`px-4 py-1 text-white font-light tracking-wider ${
+                  loading ? `bg-gray-700` : `bg-gray-900`
+                }  rounded`}
+                disabled={loading ? "true" : ""}
+                // disabled="true"
                 onClick={() => {
                   handleSubmit();
                 }}
               >
-                $
-                {plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100}
+                {loading ? (
+                  <>Loading...</>
+                ) : (
+                  <>
+                    $
+                    {plans[openTab] -
+                      (plans[openTab] * parseFloat(discount)) / 100}
+                  </>
+                )}
               </button>
             </div>
           </div>
