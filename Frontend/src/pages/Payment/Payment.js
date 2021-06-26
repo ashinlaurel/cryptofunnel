@@ -23,6 +23,7 @@ function Payment() {
   };
   const color = "blue";
   const [openTab, setOpenTab] = React.useState(1);
+  const [discount, setDiscount] = useState(0);
   const [customer, setCustomer] = useState(initCust);
   const [thecode, setThecode] = useState("");
   const [codestatus, setCodeStatus] = useState(false);
@@ -36,6 +37,8 @@ function Payment() {
   const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+
+  // o02m12
 
   // ----------------------------------------
   // useEffect(() => {
@@ -70,7 +73,10 @@ function Payment() {
         thecode: thecode,
       }
     );
-    console.log(response.data);
+    console.log(response.data.codeData.discount);
+    setDiscount(response.data.codeData.discount);
+    let discount = response.data.codeData.discount;
+    console.log(plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100);
     setCodeStatus(response.data.thestatus);
     setCodeError(true);
   };
@@ -405,43 +411,43 @@ function Payment() {
             </div>
 
             {/* --------------Refferal Code ---------------*/}
-            {codestatus == false ? (
-              <div>
-                <div class="mt-2 flex items-end justify-center space-x-1">
-                  <div className="w-full">
-                    <label class=" text-sm block text-gray-600" for="cus_email">
-                      Refferal Code
-                    </label>
-                    <input
-                      class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
-                      value={thecode}
-                      onChange={handleRefferalCode}
-                      name="thecode"
-                      type="text"
-                      required=""
-                      placeholder="Have a refferal code ?"
-                      aria-label="text"
-                    />
-                  </div>
-                  <button
-                    class="px-4 py-1  text-white text-sm font-light tracking-wider bg-green-500 hover:bg-green-600 rounded"
-                    onClick={() => {
-                      handleRefferalCheck();
-                    }}
-                  >
-                    Enter
-                  </button>
+
+            <div>
+              <div class="mt-2 flex items-end justify-center space-x-1">
+                <div className="w-full">
+                  <label class=" text-sm block text-gray-600" for="cus_email">
+                    Refferal Code
+                  </label>
+                  <input
+                    class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+                    value={thecode}
+                    onChange={handleRefferalCode}
+                    name="thecode"
+                    type="text"
+                    required=""
+                    placeholder="Have a refferal code ?"
+                    aria-label="text"
+                  />
                 </div>
-                {!codestatus && codeerror ? (
-                  <div className="text-xs text-red-600">
-                    Invalid Refferal Code. Please Try Again!
-                  </div>
-                ) : null}
+                <button
+                  class="px-4 py-1  text-white text-sm font-light tracking-wider bg-green-500 hover:bg-green-600 rounded"
+                  onClick={() => {
+                    handleRefferalCheck();
+                  }}
+                >
+                  Enter
+                </button>
               </div>
-            ) : (
+              {!codestatus && codeerror ? (
+                <div className="text-xs text-red-600">
+                  Invalid Refferal Code. Please Try Again!
+                </div>
+              ) : null}
+            </div>
+            {codestatus == false ? null : (
               <div class="mt-2  text-sm">
                 <div className="w-full">
-                  Refferal Code Successful! Discount of Rs.100 applied.
+                  Refferal Successful! Discount of Rs.100 applied.
                 </div>
               </div>
             )}
@@ -458,7 +464,8 @@ function Payment() {
                   handleSubmit();
                 }}
               >
-                ${plans[openTab]}
+                $
+                {plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100}
               </button>
             </div>
           </div>
