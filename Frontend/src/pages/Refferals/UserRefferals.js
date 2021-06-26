@@ -29,8 +29,9 @@ function UserRefferals() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [tempcode, setTempCode] = useState("");
-  const [discount, setDiscount] = useState("0");
+  const [discount, setDiscount] = useState("10");
   const [refresh, setRefresh] = useState(true);
+  const [codeExists, setCodeExists] = useState(false);
 
   // pagination setup
   const resultsPerPage = 10;
@@ -57,16 +58,12 @@ function UserRefferals() {
         <ModalHeader>New Refferal Code</ModalHeader>
         <ModalBody>
           You can use the following refferal code to get a discount !!
-          <div className="flex items-center justify-left my-2">
-            <label>
-              Code:
-              <div className="bg-gray-200 my-2 flex font-bold py-2 px-32 text-lg  items-center justify-center rounded-lg">
-                {/* <div>Code:</div> */}
-                <div>{tempcode}</div>
-              </div>
-            </label>
-
-            <div class=" relative ml-2">
+          <div className="flex items-center justify-center my-2">
+            <div className="bg-gray-200 my-2 flex font-bold py-2 px-32 text-lg  items-center justify-center rounded-lg">
+              {/* <div>Code:</div> */}
+              <div>{tempcode}</div>
+            </div>
+            {/* <div class=" relative ml-2">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -82,7 +79,7 @@ function UserRefferals() {
                   />
                 </label>
               </form>
-            </div>
+            </div> */}
           </div>
         </ModalBody>
         <ModalFooter>
@@ -119,11 +116,37 @@ function UserRefferals() {
 
   useEffect(() => {
     // Using an IIFE
-    (async function thegetter() {
-      console.log("getter called");
+    // (async function thegetter() {
+    //   console.log("getter called");
+    //   let payload = {
+    //     pages: {
+    //       page: page,
+    //       limit: resultsPerPage,
+    //     },
+    //     filters: {
+    //       creatorId: UserProfile.getId(),
+    //     },
+    //   };
+
+    //   try {
+    //     let response = await axios({
+    //       url: `${API}/refferal/${UserProfile.getId()}/getbyuser`,
+    //       method: "POST",
+    //       data: payload,
+    //     });
+    //     console.log(response.data.out);
+    //     setTotalResults(response.data.total);
+
+    //     setData(response.data.out);
+    //   } catch (error) {
+    //     throw error;
+    //   }
+    // })();
+    (async function thedocchecker() {
+      console.log("checker called");
       let payload = {
         pages: {
-          page: page,
+          page: 1,
           limit: resultsPerPage,
         },
         filters: {
@@ -139,14 +162,17 @@ function UserRefferals() {
         });
         console.log(response.data.out);
         setTotalResults(response.data.total);
-
         setData(response.data.out);
+        if (response.data.out.length != 0) {
+          setCodeExists(true);
+        }
+        // console.log(codeExists);
       } catch (error) {
         throw error;
       }
     })();
     // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
-  }, [page, refresh]);
+  }, [refresh]);
 
   const getNewCode = async () => {
     let id = UserProfile.getId();
@@ -163,12 +189,19 @@ function UserRefferals() {
 
   const handleCreateRefferal = async () => {
     let id = UserProfile.getId();
+    let name = UserProfile.getName();
     console.log(id);
-    const payload = { creatorId: id, refCode: tempcode, discount: discount };
+    const payload = {
+      creatorName: name,
+      creatorId: id,
+      refCode: tempcode,
+      discount: discount,
+    };
     const response = await axios.post(
       `${API}/refferal/${UserProfile.getId()}/createnew`,
       payload
     );
+
     console.log(response.data);
     setTempCode("");
     setDiscount("");
@@ -183,103 +216,22 @@ function UserRefferals() {
 
       {/* <CTA /> */}
 
-      <div className="mt-2 mb-4">
-        <Button onClick={getNewCode} size="large">
-          Get New Refferal Code +
-        </Button>
-      </div>
-
-      <div className="mb-4">
-        {/* -------------------------------------Row 1 ------------------------------------------------------------------------------- */}
-        <div class="my-2 flex sm:flex-row flex-col items-start sm:items-center sm:justify-left h-full space-x-2 ">
-          {/* ---------------------------Condition Drop Down-------------------------------------- */}
-          <label className="text-gray-700 mb-1 text-sm">
-            Created By:
-            <div class="relative  ">
-              <select
-                class=" shadow-md h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none   focus:bg-white focus:border-gray-500"
-                // value={condition}
-                onChange={(e) => {
-                  // setCondition(e.target.value);
-                }}
-              >
-                {/* <option value="" disabled selected>
-                  Created By
-                </option> */}
-                <option value="">All</option>
-                <option selected value="">
-                  Admin
-                </option>
-              </select>
-
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  class="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div>
-            </div>
-          </label>
-
-          {/* -----------------Search Bar------------------------------------ */}
-          <label className="text-gray-700 mb-1 text-sm">
-            Search:
-            <div class="block relative ">
-              <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  class="h-4 w-4 fill-current text-gray-500"
-                >
-                  <path d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z"></path>
-                </svg>
-              </span>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setRefresh(!refresh);
-                }}
-              >
-                <input
-                  // value={searchquery}
-                  // onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search"
-                  class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
-                />
-              </form>
-            </div>
-          </label>
-
-          {/* <div class="block relative xl:ml-64">
-            <Button
-              layout="outline"
-              onClick={() => {
-                // setIsDwnldModalOpen(true);
-              }}
-            >
-              Download Database
-            </Button>
-          </div> */}
-        </div>
-      </div>
-
-      <TableContainer>
-        <Table>
-          <TableHeader>
-            <tr>
-              {/* <TableCell>Client</TableCell> */}
-              <TableCell>Code</TableCell>
-              <TableCell>Discount</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Created At</TableCell>
-            </tr>
-          </TableHeader>
-          <TableBody>
-            {data.map((user, i) => (
-              <TableRow key={i}>
-                {/* <TableCell>
+      {codeExists ? (
+        <TableContainer>
+          <Table>
+            <TableHeader>
+              <tr>
+                {/* <TableCell>Client</TableCell> */}
+                <TableCell>Code</TableCell>
+                <TableCell>Discount</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Created At</TableCell>
+              </tr>
+            </TableHeader>
+            <TableBody>
+              {data.map((user, i) => (
+                <TableRow key={i}>
+                  {/* <TableCell>
                   <div className="flex items-center text-sm">
                     <Avatar
                       className="hidden mr-3 md:block"
@@ -294,35 +246,42 @@ function UserRefferals() {
                     </div>
                   </div>
                 </TableCell> */}
-                <TableCell>
-                  <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
-                    {user.refCode}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm ">{user.discount}%</span>
-                </TableCell>
-                <TableCell>
-                  <Badge type={user.status}>Active</Badge>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TableFooter>
+                  <TableCell>
+                    <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
+                      {user.refCode}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm ">{user.discount}%</span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge type={user.status}>Active</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          {/* <TableFooter>
           <Pagination
             totalResults={totalResults}
             resultsPerPage={resultsPerPage}
             label="Table navigation"
             onChange={onPageChange}
           />
-        </TableFooter>
-      </TableContainer>
+        </TableFooter> */}
+        </TableContainer>
+      ) : (
+        <div className="mt-2 mb-4">
+          <Button onClick={getNewCode} size="large">
+            Get New Refferal Code +
+          </Button>
+        </div>
+      )}
     </>
   );
 }
