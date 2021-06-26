@@ -129,7 +129,6 @@ function Payment() {
     // <AnimationRevealPage>
     <div className=" flex md:flex-row flex-col">
       <div className="w-full mx-4">
-        MY PLANS
         <>
           <div className="flex flex-wrap">
             <div className="w-full">
@@ -278,6 +277,17 @@ function Payment() {
       <div className="w-full">
         <div class="leading-loose ">
           <div class="max-w-xl my-4 p-10 bg-white rounded shadow-xl">
+            <p class="text-gray-800 font-lg font-semibold">
+              Selected Plan{" "}
+              {openTab == 1
+                ? "Silver"
+                : openTab == 2
+                ? "Gold"
+                : openTab == 3
+                ? "Platinum"
+                : ""}{" "}
+              : ${plans[openTab]}
+            </p>
             <p class="text-gray-800 font-medium">Customer information</p>
             <div class="">
               <label class="block text-sm text-gray-00" for="cus_name">
@@ -448,7 +458,7 @@ function Payment() {
                   handleSubmit();
                 }}
               >
-                $3.00
+                ${plans[openTab]}
               </button>
             </div>
           </div>
