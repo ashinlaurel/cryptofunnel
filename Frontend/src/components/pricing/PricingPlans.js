@@ -166,7 +166,7 @@ export default ({
 
   return (
     <Container>
-      <div className="mb-10">
+      <div className="mb-32">
         <PlansContainer>
           {plans.map((plan, index) => (
             <Plan key={index} featured={plan.featured}>

@@ -142,6 +142,7 @@ function Payment() {
       if (confirmedCardPayment.paymentIntent.status == "succeeded") {
         console.log("Payment Successful!");
         setModalmessage("Payment Successful");
+        await handleRoleChange();
         setMessageModal(true);
       } else throw { message: "Stripe Failed" };
 
@@ -160,6 +161,8 @@ function Payment() {
       return;
     }
   };
+
+  const handleRoleChange = async () => {};
 
   const messageModalComponent = () => {
     return (
@@ -272,6 +275,7 @@ function Payment() {
                               "12 Lorem Ipsum",
                               "Basic Assistance",
                             ],
+                            featured: true,
                           },
                         ]}
                       />
@@ -319,6 +323,7 @@ function Payment() {
                               "37 Internal Pages",
                               "Personal Assistance",
                             ],
+                            featured: true,
                           },
                         ]}
                       />
