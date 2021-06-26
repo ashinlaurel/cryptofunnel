@@ -20,18 +20,29 @@ const Forms = lazy(() => import("../pages/Forms"));
  * If you're looking for the links rendered in the SidebarContent, go to
  * `routes/sidebar.js`
  */
-const routes = [
-  {
-    path: "/dashboard", // the url
-    component: UserProfile.getRole() == 1 ? AdminDashboard : Dashboard, // view rendered
-  },
-  {
-    path: "/refferals", // the url
-    component: Refferals, // view rendered
-  },
-];
+let routes = [];
 
-if (UserProfile.getRole() == 0 || UserProfile.getRole() == 2)
+if (UserProfile.getRole() == 0) {
+  routes.push({
+    path: "/dashboard", // the url
+    component: Dashboard, // view rendered
+  });
+}
+
+if (UserProfile.getRole() == 1) {
+  routes.push(
+    {
+      path: "/dashboard", // the url
+      component: AdminDashboard, // view rendered
+    },
+    {
+      path: "/refferals", // the url
+      component: Refferals, // view rendered
+    }
+  );
+}
+
+if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
   routes.push(
     {
       path: "/myplan", // the url

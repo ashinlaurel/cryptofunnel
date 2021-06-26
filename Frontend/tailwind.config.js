@@ -2,6 +2,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const windmill = require("@windmill/react-ui/config");
 
 module.exports = windmill({
+  darkMode: "class",
   purge: ["src/**/*.js"],
   theme: {
     extend: {
@@ -37,7 +38,7 @@ module.exports = {
       primary: {
         100: "#a273ff",
         200: "#935bff",
-        300: "#8344ff",
+        300: "#834ff",
         400: "#742cff",
         500: "#6415FF",
         600: "#5a13e6",

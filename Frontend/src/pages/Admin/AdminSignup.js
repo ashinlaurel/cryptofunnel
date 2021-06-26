@@ -59,12 +59,7 @@ const AdminSignup = () => {
       values.email == "" ||
       values.password == "" ||
       values.confirmpassword == "" ||
-      values.phone == "" ||
-      values.address == "" ||
-      values.city == "" ||
-      values.state == "" ||
-      values.country == "" ||
-      values.zip == ""
+      values.phone == ""
     ) {
       setModalMessage("Please fill all the details");
       setMessageModal(true);
