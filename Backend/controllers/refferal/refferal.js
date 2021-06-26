@@ -1,11 +1,23 @@
 const { response } = require("express");
 let referralCodeGenerator = require("referral-code-generator");
+const refferal = require("../../models/refferal");
 
 const Refferal = require("../../models/refferal");
 
 exports.getNewCode = async (req, res) => {
   try {
     let thecode = referralCodeGenerator.alphaNumeric("lowercase", 2, 2);
+    console.log(thecode);
+
+    res.status(200).send(thecode);
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
+};
+exports.getCodeData = async (req, res) => {
+  const { refCode } = req.body;
+  try {
+    let thecode = await Refferal.findOne({ refCode: refCode });
     console.log(thecode);
 
     res.status(200).send(thecode);
@@ -36,10 +48,15 @@ exports.createNewRefferal = async (req, res) => {
 exports.checkIfExist = async (req, res) => {
   try {
     const { thecode } = req.body;
-    let cnt = await Refferal.count({ refCode: thecode });
+    let cnt = await refferal.count({ refCode: thecode });
     if (cnt > 0) {
       console.log("found");
-      res.status(200).send({ thestatus: true });
+      let codedata = await refferal.findOne({ refCode: thecode });
+      if (codedata._id == req.auth._id) {
+        console.log("user using his own code");
+        res.status(200).send({ thestatus: false });
+      }
+      res.status(200).send({ thestatus: true, codeData: codedata });
     } else {
       console.log("not found");
       res.status(200).send({ thestatus: false });

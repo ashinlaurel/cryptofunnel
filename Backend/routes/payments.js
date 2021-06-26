@@ -7,6 +7,6 @@ const { getUserById } = require("../controllers/user");
 
 router.param("userId", getUserById);
 
-router.post("/payment_intents", getPaymentIntent);
+router.post("/:userId/payment_intents", isSignedIn, getPaymentIntent);
 
 module.exports = router;

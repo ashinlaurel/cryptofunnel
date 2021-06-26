@@ -7,6 +7,7 @@ const {
   getByUser,
   checkIfExist,
   getNewCode,
+  getCodeData,
 } = require("../controllers/refferal/refferal");
 const { getUserById } = require("../controllers/user");
 
@@ -17,6 +18,7 @@ router.post("/:userId/createnew", createNewRefferal);
 // router.post("/:userId/getbyuser", isSignedIn, isAuthenticated, getByUser);
 router.post("/:userId/getbyuser", isSignedIn, getByUser);
 // router.post("/:userId/checkIfExists", isSignedIn, checkIfExist);
-router.post("/:userId/checkIfExists", checkIfExist);
+router.post("/:userId/checkIfExists", isSignedIn, checkIfExist);
+router.post("/:userId/getCodeData", getCodeData);
 
 module.exports = router;
