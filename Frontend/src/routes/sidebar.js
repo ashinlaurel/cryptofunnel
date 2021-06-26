@@ -21,13 +21,6 @@ if (UserProfile.getRole() == 1)
     name: "Refferals", // name that appear in Sidebar
   });
 
-if (UserProfile.getRole() == 0)
-  routes.push({
-    path: "/app/myplan", // the url
-    icon: "HomeIcon", // the component being exported from icons/index.js
-    name: "My Plans", // name that appear in Sidebar
-  });
-
 if (UserProfile.getRole() == 2)
   routes.push(
     {

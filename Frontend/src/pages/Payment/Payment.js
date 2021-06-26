@@ -73,19 +73,32 @@ function Payment() {
     setThecode(e.target.value);
   };
   const handleRefferalCheck = async () => {
-    console.log(thecode);
-    let response = await axios.post(
-      `${API}/refferal/${UserProfile.getId()}/checkIfExists`,
-      {
-        thecode: thecode,
-      }
-    );
-    console.log(response.data.codeData.discount);
-    setDiscount(response.data.codeData.discount);
-    let discount = response.data.codeData.discount;
-    console.log(plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100);
-    setCodeStatus(response.data.thestatus);
-    setCodeError(true);
+    try {
+      console.log(thecode);
+      let response = await axios.post(
+        `${API}/refferal/${UserProfile.getId()}/checkIfExists`,
+        {
+          thecode: thecode,
+        }
+      );
+      if (
+        !response.data ||
+        !response.data.codeData ||
+        !response.data.codeData.discount
+      )
+        throw "Error";
+      console.log(response.data.codeData.discount);
+      setDiscount(response.data.codeData.discount);
+      let discount = response.data.codeData.discount;
+      console.log(
+        plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100
+      );
+      setCodeStatus(response.data.thestatus);
+      setCodeError(true);
+    } catch (err) {
+      setModalmessage("Sorry, code does not work");
+      setMessageModal(true);
+    }
   };
 
   const handleSubmit = async () => {
@@ -502,7 +515,11 @@ function Payment() {
             {codestatus == false ? null : (
               <div class="mt-2  text-sm">
                 <div className="w-full">
-                  Refferal Successful! Discount of Rs.100 applied.
+                  Refferal Successful! Discount of{" "}
+                  <span className="font-semibold">
+                    ${(plans[openTab] * parseFloat(discount)) / 100}{" "}
+                  </span>
+                  applied.
                 </div>
               </div>
             )}

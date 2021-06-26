@@ -202,7 +202,7 @@ export default ({
                 {/* <Link to="/app/myplan" > */}
                 <BuyNowButton
                   onClick={() => {
-                    if (UserProfile.role == 0) setmodal(true);
+                    if (UserProfile.getRole() == 0) setmodal(true);
                     else {
                       history.push("/app/myplan");
                     }
