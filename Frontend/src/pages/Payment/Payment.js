@@ -23,6 +23,7 @@ function Payment() {
   };
   const color = "blue";
   const [openTab, setOpenTab] = React.useState(1);
+  const [discount, setDiscount] = useState(0);
   const [customer, setCustomer] = useState(initCust);
   const [thecode, setThecode] = useState("");
   const [codestatus, setCodeStatus] = useState(false);
@@ -36,6 +37,8 @@ function Payment() {
   const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+
+  // o02m12
 
   // ----------------------------------------
   // useEffect(() => {
@@ -53,6 +56,9 @@ function Payment() {
   //   const handleCustomerChange = (e) => (field) => {
   //     setCustomer[{ ...customer, [field]: e.target.value }];
   //   };
+
+  const plans = { 1: 50, 2: 80, 3: 100 };
+
   const handleCustomerChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
@@ -67,7 +73,10 @@ function Payment() {
         thecode: thecode,
       }
     );
-    console.log(response.data);
+    console.log(response.data.codeData.discount);
+    setDiscount(response.data.codeData.discount);
+    let discount = response.data.codeData.discount;
+    console.log(plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100);
     setCodeStatus(response.data.thestatus);
     setCodeError(true);
   };
@@ -126,7 +135,6 @@ function Payment() {
     // <AnimationRevealPage>
     <div className=" flex md:flex-row flex-col">
       <div className="w-full mx-4">
-        MY PLANS
         <>
           <div className="flex flex-wrap">
             <div className="w-full">
@@ -150,7 +158,7 @@ function Payment() {
                     href="#link1"
                     role="tablist"
                   >
-                    GOLD
+                    SILVER
                   </a>
                 </li>
                 <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -169,7 +177,7 @@ function Payment() {
                     href="#link2"
                     role="tablist"
                   >
-                    PLATINUM
+                    GOLD
                   </a>
                 </li>
                 <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -188,7 +196,7 @@ function Payment() {
                     href="#link3"
                     role="tablist"
                   >
-                    SILVER
+                    PLATINUM
                   </a>
                 </li>
               </ul>
@@ -204,10 +212,10 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "Personal",
-                            price: "$17.99",
-                            duration: "Monthly",
-                            mainFeature: "For Individuals",
+                            name: "SILVER",
+                            price: `$${plans[1]}`,
+                            duration: "",
+                            mainFeature: "Exclusive Newsletter",
                             features: [
                               "3 Lorem Ipsum",
                               "7 Lorem Ipsum",
@@ -227,10 +235,10 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "Business",
-                            price: "$37.99",
-                            duration: "Monthly",
-                            mainFeature: "Suited for Production Websites",
+                            name: "GOLD",
+                            price: `$${plans[2]}`,
+                            duration: "",
+                            mainFeature: "Exclusive Lessons",
                             features: [
                               "60 Templates",
                               "8 Landing Pages",
@@ -251,10 +259,10 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "Enterprise",
-                            price: "$57.99",
-                            duration: "Monthly",
-                            mainFeature: "Suited for Big Companies",
+                            name: "PLATINUM",
+                            price: `$${plans[3]}`,
+                            duration: "",
+                            mainFeature: "One On One Training",
                             features: [
                               "90 Templates",
                               "9 Landing Pages",
@@ -275,6 +283,17 @@ function Payment() {
       <div className="w-full">
         <div class="leading-loose ">
           <div class="max-w-xl my-4 p-10 bg-white rounded shadow-xl">
+            <p class="text-gray-800 font-lg font-semibold">
+              Selected Plan{" "}
+              {openTab == 1
+                ? "Silver"
+                : openTab == 2
+                ? "Gold"
+                : openTab == 3
+                ? "Platinum"
+                : ""}{" "}
+              : ${plans[openTab]}
+            </p>
             <p class="text-gray-800 font-medium">Customer information</p>
             <div class="">
               <label class="block text-sm text-gray-00" for="cus_name">
@@ -392,43 +411,43 @@ function Payment() {
             </div>
 
             {/* --------------Refferal Code ---------------*/}
-            {codestatus == false ? (
-              <div>
-                <div class="mt-2 flex items-end justify-center space-x-1">
-                  <div className="w-full">
-                    <label class=" text-sm block text-gray-600" for="cus_email">
-                      Refferal Code
-                    </label>
-                    <input
-                      class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
-                      value={thecode}
-                      onChange={handleRefferalCode}
-                      name="thecode"
-                      type="text"
-                      required=""
-                      placeholder="Have a refferal code ?"
-                      aria-label="text"
-                    />
-                  </div>
-                  <button
-                    class="px-4 py-1  text-white text-sm font-light tracking-wider bg-green-500 hover:bg-green-600 rounded"
-                    onClick={() => {
-                      handleRefferalCheck();
-                    }}
-                  >
-                    Enter
-                  </button>
+
+            <div>
+              <div class="mt-2 flex items-end justify-center space-x-1">
+                <div className="w-full">
+                  <label class=" text-sm block text-gray-600" for="cus_email">
+                    Refferal Code
+                  </label>
+                  <input
+                    class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+                    value={thecode}
+                    onChange={handleRefferalCode}
+                    name="thecode"
+                    type="text"
+                    required=""
+                    placeholder="Have a refferal code ?"
+                    aria-label="text"
+                  />
                 </div>
-                {!codestatus && codeerror ? (
-                  <div className="text-xs text-red-600">
-                    Invalid Refferal Code. Please Try Again!
-                  </div>
-                ) : null}
+                <button
+                  class="px-4 py-1  text-white text-sm font-light tracking-wider bg-green-500 hover:bg-green-600 rounded"
+                  onClick={() => {
+                    handleRefferalCheck();
+                  }}
+                >
+                  Enter
+                </button>
               </div>
-            ) : (
+              {!codestatus && codeerror ? (
+                <div className="text-xs text-red-600">
+                  Invalid Refferal Code. Please Try Again!
+                </div>
+              ) : null}
+            </div>
+            {codestatus == false ? null : (
               <div class="mt-2  text-sm">
                 <div className="w-full">
-                  Refferal Code Successful! Discount of Rs.100 applied.
+                  Refferal Successful! Discount of Rs.100 applied.
                 </div>
               </div>
             )}
@@ -445,7 +464,8 @@ function Payment() {
                   handleSubmit();
                 }}
               >
-                $3.00
+                $
+                {plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100}
               </button>
             </div>
           </div>
