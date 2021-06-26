@@ -42,7 +42,7 @@ exports.getPaymentIntent = async (req, res) => {
 
       shipping: billingDetails,
       amount: finalamount,
-      currency: "inr",
+      currency: "usd",
       payment_method_types: ["card"],
     });
 
