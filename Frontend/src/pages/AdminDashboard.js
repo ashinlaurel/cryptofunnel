@@ -91,11 +91,11 @@ function Dashboard() {
 
       <div className="mb-4">
         {/* -------------------------------------Row 1 ------------------------------------------------------------------------------- */}
-        <div class="my-2 flex sm:flex-row flex-col items-start sm:items-center sm:justify-left h-full space-x-2 ">
+        <div class="my-2 flex sm:flex-row flex-col items-start sm:items-center sm:justify-left h-full xl:space-x-2 ">
           {/* ---------------------------Condition Drop Down-------------------------------------- */}
           <div class="relative mx-1 ">
             <select
-              class=" shadow-md h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none   focus:bg-white focus:border-gray-500"
+              class=" shadow-md h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-1 xl:py-2  xl: px-4  leading-tight focus:outline-none   focus:bg-white focus:border-gray-500"
               // value={condition}
               onChange={(e) => {
                 // setCondition(e.target.value);
@@ -123,7 +123,7 @@ function Dashboard() {
           </div>
 
           {/* -----------------Search Bar------------------------------------ */}
-          <div class="block relative xl:ml-64">
+          <div class="block relative xl:ml-64 mt-2 xl:mt-0 ml-1">
             <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
               <svg
                 viewBox="0 0 24 24"
@@ -142,7 +142,7 @@ function Dashboard() {
                 value={searchquery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search"
-                class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block py-1 px-8  xl:pl-8 xl:pr-6 xl:py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
               />
             </form>
           </div>

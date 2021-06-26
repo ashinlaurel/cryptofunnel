@@ -174,7 +174,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 mr-2 w-full">
                     <span>Name</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("name")}
                       type="text"
                       value={name}
@@ -184,7 +184,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 w-full">
                     <span>Email</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("email")}
                       type="email"
                       value={email}
@@ -196,7 +196,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 w-full mr-2">
                     <span>Password</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("password")}
                       type="password"
                       value={password}
@@ -206,7 +206,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 w-full">
                     <span> Confirm Password</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("confirmpassword")}
                       type="password"
                       value={confirmpassword}
@@ -217,7 +217,7 @@ const AdminSignup = () => {
                 <Label className="mt-4 w-full">
                   <span>Phone</span>
                   <Input
-                    className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                     onChange={handleChange("phone")}
                     type="text"
                     value={phone}
@@ -226,7 +226,7 @@ const AdminSignup = () => {
                 <Label className="mt-4 w-full">
                   <span>Address</span>
                   <Input
-                    className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                     onChange={handleChange("address")}
                     type="text"
                     value={address}
@@ -236,7 +236,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 w-full mr-2">
                     <span>City</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("city")}
                       type="text"
                       value={city}
@@ -245,7 +245,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 w-full">
                     <span>Zip</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("zip")}
                       type="text"
                       value={zip}
@@ -256,7 +256,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 w-full mr-2">
                     <span>State</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("state")}
                       type="text"
                       value={state}
@@ -265,7 +265,7 @@ const AdminSignup = () => {
                   <Label className="mt-4 w-full">
                     <span>Country</span>
                     <Input
-                      className="mt-1  bg-gray-900 border border-gray-700 p-2 rounded-md"
+                      className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
                       onChange={handleChange("country")}
                       type="text"
                       value={country}

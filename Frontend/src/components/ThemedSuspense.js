@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import spinner from "../images/spinner.gif";
 
 function ThemedSuspense() {
   return (
-    <div className="w-full h-screen p-6 text-lg font-medium text-gray-600 dark:text-gray-400 dark:bg-gray-900">
-      Loading...
+    <div className="w-full h-screen p-6 text-lg font-medium flex items-center justify-center  text-gray-600 dark:text-gray-400 dark:bg-gray-900">
+      <div>
+        <img src={spinner}></img>
+      </div>
     </div>
-  )
+  );
 }
 
-export default ThemedSuspense
+export default ThemedSuspense;

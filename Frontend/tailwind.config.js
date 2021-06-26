@@ -18,7 +18,7 @@ module.exports = windmill({
 });
 
 module.exports = {
-  // darkMode: "class",
+  darkMode: "class",
   prefix: "",
   important: false,
   separator: ":",
