@@ -30,7 +30,7 @@ exports.verifyMail = (req, res) => {
     console.log("TOKEN:", token);
     //put token in cookie
     res.cookie("token", token, { expire: new Date() + 9999 });
-    let link = `http://localhost:3000/verifyemail/${token}`;
+    let link = `http://3.7.158.191/verifyemail/${token}`;
 
     let output = `
    <h3> Hello ${name} </h3>
@@ -121,7 +121,7 @@ exports.ForgotPasswordMail = (req, res) => {
     console.log("TOKEN:", token);
     //put token in cookie
     res.cookie("token", token, { expire: new Date() + 9999 });
-    let link = `http://localhost:3000/resetpassword/${token}`;
+    let link = `http://3.7.158.191/resetpassword/${token}`;
 
     let output = `
    <h3> Hello ${email} </h3>
