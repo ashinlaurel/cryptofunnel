@@ -2,7 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   SectionHeading,
   Subheading as SubheadingBase,
@@ -14,6 +14,7 @@ import {
   ContentWithPaddingXl,
 } from "../../components/misc/Layouts.js";
 import { ReactComponent as SvgDecoratorBlob } from "../../images/svg-decorator-blob-6.svg";
+import UserProfile from "../../helper/auth/UserProfile.js";
 
 const HeaderContainer = tw.div`mt-10 w-full flex flex-col items-center`;
 const Subheading = tw(SubheadingBase)`mb-4`;
@@ -94,7 +95,9 @@ export default ({
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   plans = null,
   primaryButtonText = "Buy Now",
+  setmodal,
 }) => {
+  let history = useHistory();
   const defaultPlans = [
     {
       name: "Personal",
@@ -196,14 +199,19 @@ export default ({
                 ))}
               </PlanFeatures>
               <PlanAction>
-                <Link to="/app/myplan">
-                  <BuyNowButton
-
+                {/* <Link to="/app/myplan" > */}
+                <BuyNowButton
+                  onClick={() => {
+                    if (UserProfile.role == 0) setmodal(true);
+                    else {
+                      history.push("/app/myplan");
+                    }
+                  }}
                   // css={!plan.featured && highlightGradientsCss[index]}
-                  >
-                    {primaryButtonText}
-                  </BuyNowButton>
-                </Link>
+                >
+                  {primaryButtonText}
+                </BuyNowButton>
+                {/* </Link> */}
               </PlanAction>
             </Plan>
           ))}
