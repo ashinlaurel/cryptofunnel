@@ -1,9 +1,10 @@
 import React from "react";
 import routes from "../../routes/sidebar";
-import { NavLink, Route } from "react-router-dom";
+import { Link, NavLink, Route } from "react-router-dom";
 import * as Icons from "../../icons";
 import SidebarSubmenu from "./SidebarSubmenu";
 import { Button } from "@windmill/react-ui";
+import logo from "../../images/crypto_logo.png";
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon];
@@ -13,12 +14,15 @@ function Icon({ icon, ...props }) {
 function SidebarContent() {
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
-      <a
-        className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-        href="#"
-      >
-        CryptoFunnel
-      </a>
+      <div className="flex items-center justify-left">
+        <img className="h-8 w-8 ml-4 " src={logo} alt="logo" />
+        <Link
+          className="  text-lg font-bold ml-3 text-gray-800 dark:text-gray-200"
+          to="/home"
+        >
+          Crypto Funnel
+        </Link>
+      </div>
       <ul className="mt-6">
         {routes.map((route) =>
           route.routes ? (

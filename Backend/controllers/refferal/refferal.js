@@ -53,14 +53,16 @@ exports.checkIfExist = async (req, res) => {
     if (cnt > 0) {
       console.log("found");
       let codedata = await refferal.findOne({ refCode: thecode });
-      if (codedata._id == req.auth._id) {
+      // console.log(codedata);
+      // console.log(req.auth);
+      if (codedata.creatorId == req.auth._id) {
         console.log("user using his own code");
-        res.status(200).send({ thestatus: false });
+        res.status(200).send({ thestatus: false, codeData: {} });
       }
       res.status(200).send({ thestatus: true, codeData: codedata });
     } else {
       console.log("not found");
-      res.status(200).send({ thestatus: false });
+      res.status(200).send({ thestatus: false, codeData: {} });
     }
 
     res.status(200).send();
