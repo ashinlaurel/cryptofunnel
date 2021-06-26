@@ -67,7 +67,7 @@ function Payment() {
         thecode: thecode,
       }
     );
-    console.log(response.data.thestatus);
+    console.log(response.data);
     setCodeStatus(response.data.thestatus);
     setCodeError(true);
   };
@@ -96,9 +96,10 @@ function Payment() {
     };
 
     const { data: clientSecret } = await axios.post(
-      `${API}/payment/payment_intents`,
+      `${API}/payment/${UserProfile.getId()}/payment_intents`,
       {
-        amount: amount * 100,
+        plan: openTab,
+        refCode: thecode,
         billingDetails: billtemp,
       }
     );
@@ -118,7 +119,7 @@ function Payment() {
     });
 
     console.log(confirmedCardPayment);
-    // console.log("done brother");
+    console.log("Payment Successfull!");
   };
 
   return (
