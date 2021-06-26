@@ -45,6 +45,10 @@ if (UserProfile.getRole() == 1) {
 if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
   routes.push(
     {
+      path: "/dashboard", // the url
+      component: Dashboard, // view rendered
+    },
+    {
       path: "/myplan", // the url
       component: MyPlan, // view rendered
     },
