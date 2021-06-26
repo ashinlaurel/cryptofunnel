@@ -19,7 +19,7 @@ const Description = tw(SectionDescription)`w-full text-center`;
 
 const PlansContainer = tw.div`flex justify-between flex-col lg:flex-row items-center lg:items-stretch relative`;
 const Plan = styled.div`
-  ${tw`w-full max-w-sm mt-16 bg-white lg:mr-8 lg:last:mr-0 text-center px-8 rounded-lg shadow relative pt-2 text-gray-900 flex flex-col`}
+  ${tw`w-full max-w-sm mt-16 bg-white lg:mr-8 lg:last:mr-0 text-center px-20 rounded-lg shadow relative pt-2 text-gray-900 flex flex-col`}
   .planHighlight {
     ${tw`rounded-t-lg absolute top-0 inset-x-0 h-2`}
   }

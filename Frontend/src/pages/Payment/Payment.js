@@ -7,7 +7,7 @@ import axios from "axios";
 import { API } from "../../backend.js";
 import UserProfile from "../../helper/auth/UserProfile.js";
 import { Subheading } from "../../components/misc/Headings";
-import DashBoardPlans from "../../components/pricing/DashboardPlans1";
+import DashBoardPlans from "../../components/pricing/PricingPlans";
 function Payment() {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
   const HighlightedText = tw.span`text-green-300`;
@@ -191,9 +191,9 @@ function Payment() {
                   </a>
                 </li>
               </ul>
-              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div className="px-4 py-5 flex-auto">
-                  <div className="tab-content tab-space">
+              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+                <div className="">
+                  <div className="flex-row flex items-center justify-center">
                     <div
                       className={openTab === 1 ? "block" : "hidden"}
                       id="link1"
