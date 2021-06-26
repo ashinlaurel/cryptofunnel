@@ -20,23 +20,26 @@ import { API } from "../../backend";
 import axios from "axios";
 import { Subheading } from "../../components/misc/Headings";
 
-const handleVerifyEmail = async () => {
-  let id = UserProfile.getId();
-  let name = UserProfile.getName();
-  let email = UserProfile.getEmail();
-
-  const payload = { id: id, name: name, email: email };
-  const response = await axios.post(
-    `${API}/mail/${UserProfile.getId()}/verifyEmail`,
-    payload
-  );
-  console.log(response.data);
-};
-
 function Dashboard() {
   const HighlightedText = tw.span`text-green-300`;
   const [messageModal, setMessageModal] = useState(false);
-  const [modalmessage, setModalmessage] = useState("");
+  const [isEmailModal, setIsEmailModal] = useState(false);
+  const handleVerifyEmail = async () => {
+    let id = UserProfile.getId();
+    let name = UserProfile.getName();
+    let email = UserProfile.getEmail();
+    try {
+      const payload = { id: id, name: name, email: email };
+      const response = await axios.post(
+        `${API}/mail/${UserProfile.getId()}/verifyEmail`,
+        payload
+      );
+      console.log(response.data);
+      setIsEmailModal(true);
+    } catch (err) {
+      console.log("ERROR", err);
+    }
+  };
 
   const messageModalComponent = () => {
     return (
@@ -59,11 +62,33 @@ function Dashboard() {
     );
   };
 
+  const EmailSentModal = () => {
+    return (
+      <>
+        <Modal isOpen={isEmailModal} onClose={() => setIsEmailModal(false)}>
+          <ModalHeader>
+            Email sent to your account for verification!
+          </ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setIsEmailModal(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
   return (
     <>
       {/* {theModal()} */}
       <PageTitle>Dashboard</PageTitle>
       {messageModalComponent()}
+      {EmailSentModal()}
 
       {/* <CTA /> */}
 

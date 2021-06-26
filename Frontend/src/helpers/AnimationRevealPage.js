@@ -37,8 +37,8 @@ function AnimatedSlideInComponent({
 
   const x = { target: "0%" };
 
-  if (direction === "left") x.initial = "-150%";
-  else x.initial = "150%";
+  if (direction === "left") x.initial = "-30%";
+  else x.initial = "30%";
 
   return (
     <motion.section

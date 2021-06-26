@@ -16,7 +16,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
 import Axios from "axios";
 import UserProfile from "../../helper/auth/UserProfile";
 
-export default function UserInfo() {
+export default function UpdateUserInfo() {
   let history = useHistory();
   const { id } = useParams();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -185,8 +185,6 @@ export default function UserInfo() {
 
   return (
     <div>
-      {ResetPassModal()}
-      {PassChangeModal()}
       <PageTitle>Profile Information {values.employeeName}</PageTitle>
 
       {/* <SectionTitle> </SectionTitle> */}
@@ -237,12 +235,6 @@ export default function UserInfo() {
             <Link to={`/app/employee/${id}/update`}>
               <Button className="mr-3">Update Info</Button>
             </Link>
-            <Link to={`/app/employee/${id}/viewsalary`}>
-              <Button className="mr-3">Payment History</Button>
-            </Link>
-            <Button className="" onClick={() => setPasswordModalOpen(true)}>
-              Reset Password
-            </Button>
 
             {/* <Button className="mx-3">Delete Customer</Button> */}
           </div>
