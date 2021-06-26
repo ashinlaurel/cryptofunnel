@@ -125,9 +125,9 @@ exports.ForgotPasswordMail = (req, res) => {
 
     let output = `
    <h3> Hello ${email} </h3>
-      <p>Thank you for registering at Crypto Funnel. Much Appreciated! Just one last step is laying ahead of you...</p>
-      <p>To activate your account please follow this link: <a target="_" href="${link}">Verify Email </a></p>
-      <p>Cheers</p>
+      <p>As per your request we are sending the link to reset you password</p>
+      <p>Click the following link to reset your password: <a target="_" href="${link}">Reset Password </a></p>
+      <p>Cheers,</p>
       <p>Crypto Funnel Team</p>
   `;
     console.log("LINK", link);
