@@ -163,8 +163,14 @@ function Refferals() {
 
   const handleCreateRefferal = async () => {
     let id = UserProfile.getId();
+    let name = UserProfile.getName();
     console.log(id);
-    const payload = { creatorId: id, refCode: tempcode, discount: discount };
+    const payload = {
+      creatorName: name,
+      creatorId: id,
+      refCode: tempcode,
+      discount: discount,
+    };
     const response = await axios.post(
       `${API}/refferal/${UserProfile.getId()}/createnew`,
       payload

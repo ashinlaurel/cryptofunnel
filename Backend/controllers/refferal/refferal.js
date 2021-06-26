@@ -28,9 +28,10 @@ exports.getCodeData = async (req, res) => {
 exports.createNewRefferal = async (req, res) => {
   try {
     // console.log(req.body);
-    let { creatorId, refCode, discount } = req.body;
+    let { creatorName, creatorId, refCode, discount } = req.body;
 
     let payload = {
+      creatorName: creatorName,
       creatorId: creatorId,
       refCode: refCode,
       discount: discount,
