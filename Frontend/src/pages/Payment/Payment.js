@@ -53,6 +53,9 @@ function Payment() {
   //   const handleCustomerChange = (e) => (field) => {
   //     setCustomer[{ ...customer, [field]: e.target.value }];
   //   };
+
+  const plans = { 1: 50, 2: 80, 3: 100 };
+
   const handleCustomerChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
@@ -149,7 +152,7 @@ function Payment() {
                     href="#link1"
                     role="tablist"
                   >
-                    GOLD
+                    SILVER
                   </a>
                 </li>
                 <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -168,7 +171,7 @@ function Payment() {
                     href="#link2"
                     role="tablist"
                   >
-                    PLATINUM
+                    GOLD
                   </a>
                 </li>
                 <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -187,7 +190,7 @@ function Payment() {
                     href="#link3"
                     role="tablist"
                   >
-                    SILVER
+                    PLATINUM
                   </a>
                 </li>
               </ul>
@@ -203,10 +206,10 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "Personal",
-                            price: "$17.99",
-                            duration: "Monthly",
-                            mainFeature: "For Individuals",
+                            name: "SILVER",
+                            price: `$${plans[1]}`,
+                            duration: "",
+                            mainFeature: "Exclusive Newsletter",
                             features: [
                               "3 Lorem Ipsum",
                               "7 Lorem Ipsum",
@@ -226,10 +229,10 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "Business",
-                            price: "$37.99",
-                            duration: "Monthly",
-                            mainFeature: "Suited for Production Websites",
+                            name: "GOLD",
+                            price: `$${plans[2]}`,
+                            duration: "",
+                            mainFeature: "Exclusive Lessons",
                             features: [
                               "60 Templates",
                               "8 Landing Pages",
@@ -250,10 +253,10 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "Enterprise",
-                            price: "$57.99",
-                            duration: "Monthly",
-                            mainFeature: "Suited for Big Companies",
+                            name: "PLATINUM",
+                            price: `$${plans[3]}`,
+                            duration: "",
+                            mainFeature: "One On One Training",
                             features: [
                               "90 Templates",
                               "9 Landing Pages",
