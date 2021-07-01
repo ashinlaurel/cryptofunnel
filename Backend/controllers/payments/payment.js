@@ -2,6 +2,10 @@
 const Stripe = require("stripe");
 const refferal = require("../../models/refferal");
 
+// app.use(express.static("."));
+
+const YOUR_DOMAIN = "http://localhost:3000/app/myplan";
+
 const stripe = new Stripe(process.env.SECRET_KEY);
 
 const plans = { 1: 100, 2: 500, 3: 1000 };
@@ -50,6 +54,36 @@ exports.getPaymentIntent = async (req, res) => {
 
     res.status(200).send(paymentIntent.client_secret);
     // res.status(200).send(finalamount);
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
+};
+
+exports.paymentResolver = async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Buttocks",
+              images: ["https://i.imgur.com/EHyR2nP.png"],
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${YOUR_DOMAIN}?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    });
+
+    // res.set("Access-Control-Allow-Origin", "*");
+    res.status(200).send(session.url);
+    // res.redirect(303, session.url);
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message });
   }
