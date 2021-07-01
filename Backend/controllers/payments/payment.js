@@ -88,3 +88,17 @@ exports.paymentResolver = async (req, res) => {
     res.status(500).json({ statusCode: 500, message: err.message });
   }
 };
+
+exports.confirmpayment = async (req, res) => {
+  console.log("here");
+  try {
+    const session = await stripe.checkout.sessions.retrieve(
+      req.query.session_id
+    );
+    const customer = await stripe.customers.retrieve(session.customer);
+    console.log(session, customer);
+    res.status(200).send({ message: "success" });
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
+};

@@ -4,6 +4,7 @@ import UserProfile from "../helper/auth/UserProfile";
 // use lazy for better code splitting, a.k.a. load faster
 const Dashboard = lazy(() => import("../pages/User/Dashboard"));
 const UserInfo = lazy(() => import("../pages/User/UserInfo"));
+const ConfirmPayment = lazy(() => import("../pages/Payment/ConfirmPayment"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
 const Refferals = lazy(() => import("../pages/Refferals/Refferals"));
 const UserRefferals = lazy(() => import("../pages/Refferals/UserRefferals"));
@@ -59,6 +60,10 @@ if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
     {
       path: "/userrefferal", // the url
       component: UserRefferals, // view rendered
+    },
+    {
+      path: "/ConfirmPayment/:token", // the url
+      component: ConfirmPayment, // view rendered
     }
   );
 
