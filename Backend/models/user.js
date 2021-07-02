@@ -36,11 +36,11 @@ var userSchema = new mongoose.Schema(
     salt: String,
     role: {
       type: Number,
-      default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 for purchased user
+      default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 purchased user
     },
     plan: {
       type: Number,
-      default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 for purchased user
+      default: 0, /// 0: No plan purchased ,1: 1st plan purchased, 2: 2nd plan purchased , 3:  3rd plan purchased
     },
     purchases: {
       type: Array,

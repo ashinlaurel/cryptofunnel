@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import PageTitle from "../components/Typography/PageTitle";
-import UserProfile from "../helper/auth/UserProfile";
-import UserPng from "../images/user.png";
+import PageTitle from "../../components/Typography/PageTitle";
+import UserProfile from "../../helper/auth/UserProfile";
+import UserPng from "../../images/user.png";
 
 import {
   TableBody,
@@ -18,9 +18,9 @@ import {
 } from "@windmill/react-ui";
 
 import axios from "axios";
-import { API } from "../backend";
+import { API } from "../../backend";
 
-function Dashboard() {
+function UserPaymentHistory() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [tempcode, setTempCode] = useState("");
@@ -53,6 +53,11 @@ function Dashboard() {
     // Using an IIFE
     (async function thegetter() {
       console.log("getter called");
+      const role = UserProfile.getRole();
+      let passCustId = "";
+      if (role != 1) {
+        passCustId = UserProfile.getId();
+      }
       let payload = {
         pages: {
           page: page,
@@ -61,12 +66,13 @@ function Dashboard() {
         filters: {
           searchquery: searchquery,
           plan: "",
+          customerId: passCustId,
         },
       };
 
       try {
         let response = await axios({
-          url: `${API}/user/${UserProfile.getId()}/getAllUsers`,
+          url: `${API}/payment/${UserProfile.getId()}/getAllPayHistory`,
           method: "POST",
           data: payload,
         });
@@ -83,11 +89,9 @@ function Dashboard() {
 
   return (
     <>
-      <PageTitle>Admin Dashboard</PageTitle>
+      <PageTitle>Payment History</PageTitle>
 
       {/* <CTA /> */}
-
-      <div className="font-bold text-gray-700 text-xl">Users</div>
 
       <div className="mb-4">
         {/* -------------------------------------Row 1 ------------------------------------------------------------------------------- */}
@@ -164,10 +168,10 @@ function Dashboard() {
         <Table>
           <TableHeader>
             <tr>
-              {/* <TableCell>Client</TableCell> */}
               <TableCell>User</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Created At</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Amount</TableCell>
               <TableCell>Plan</TableCell>
             </tr>
           </TableHeader>
@@ -182,24 +186,29 @@ function Dashboard() {
                       alt="User image"
                     />
                     <div>
-                      <p className="font-semibold">{user.name}</p>
+                      <p className="font-semibold">{user.customerId.name}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {user.job}
+                        {user.customerId.email}
                       </p>
                     </div>
                   </div>
                 </TableCell>
+                <TableCell>
+                  <p className="font-semibold text-sm">
+                    {new Date(user.createdAt).toLocaleDateString()}
+                  </p>
+                </TableCell>
 
                 <TableCell>
-                  <span className="text-sm ">{user.email}</span>
+                  <Badge className="text-sm ">{user.paymentStatus}</Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                  <span className="text-sm font-bold">
+                    {parseInt(user.amountTotal) / 100}
                   </span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm  font-bold ">Gold</span>
+                  <span className="text-sm   ">{user.planName}</span>
                 </TableCell>
               </TableRow>
             ))}
@@ -218,4 +227,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default UserPaymentHistory;

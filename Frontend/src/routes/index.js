@@ -8,6 +8,9 @@ const ConfirmPayment = lazy(() => import("../pages/Payment/ConfirmPayment"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
 const Refferals = lazy(() => import("../pages/Refferals/Refferals"));
 const UserRefferals = lazy(() => import("../pages/Refferals/UserRefferals"));
+const UserPaymentHistory = lazy(() =>
+  import("../pages/Payment/UserPaymentHistory")
+);
 const MyPlan = lazy(() => import("../pages/MyPlan"));
 const Forms = lazy(() => import("../pages/Forms"));
 
@@ -30,6 +33,7 @@ if (UserProfile.getRole() == 0) {
   });
 }
 
+// admin routes
 if (UserProfile.getRole() == 1) {
   routes.push(
     {
@@ -39,9 +43,15 @@ if (UserProfile.getRole() == 1) {
     {
       path: "/refferals", // the url
       component: Refferals, // view rendered
+    },
+    {
+      path: "/paymenthistory", // the url
+      component: UserPaymentHistory, // view rendered
     }
   );
 }
+
+// 2 - non purchased used , 3- purchased user
 
 if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
   routes.push(
@@ -58,11 +68,15 @@ if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
       component: UserInfo, // view rendered
     },
     {
+      path: "/paymenthistory", // the url
+      component: UserPaymentHistory, // view rendered
+    },
+    {
       path: "/userrefferal", // the url
       component: UserRefferals, // view rendered
     },
     {
-      path: "/ConfirmPayment/:token", // the url
+      path: "/ConfirmPayment/:status/:sessionId", // the url
       component: ConfirmPayment, // view rendered
     }
   );

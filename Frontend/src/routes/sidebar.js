@@ -15,13 +15,20 @@ const routes = [
   },
 ];
 if (UserProfile.getRole() == 1)
-  routes.push({
-    path: "/app/refferals", // the url
-    icon: "HomeIcon", // the component being exported from icons/index.js
-    name: "Refferals", // name that appear in Sidebar
-  });
+  routes.push(
+    {
+      path: "/app/refferals", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Refferals", // name that appear in Sidebar
+    },
+    {
+      path: "/app/paymenthistory", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Payment History", // name that appear in Sidebar
+    }
+  );
 
-if (UserProfile.getRole() == 2)
+if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
   routes.push(
     {
       path: "/app/myplan", // the url
@@ -32,6 +39,11 @@ if (UserProfile.getRole() == 2)
       path: "/app/userrefferal", // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
       name: "Refferal", // name that appear in Sidebar
+    },
+    {
+      path: "/app/paymenthistory", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Payment History", // name that appear in Sidebar
     },
     {
       path: "/app/info", // the url

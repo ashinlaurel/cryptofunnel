@@ -22,6 +22,7 @@ exports.signup = (req, res) => {
     email: req.body.email,
     password: req.body.password,
     emailVerified: false,
+    plan: 0,
   });
   user.save((err, user) => {
     if (err) {

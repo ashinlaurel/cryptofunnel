@@ -6,6 +6,7 @@ const {
   getPaymentIntent,
   paymentResolver,
   confirmpayment,
+  getAllPayHist,
 } = require("../controllers/payments/payment");
 const { getUserById } = require("../controllers/user");
 
@@ -14,5 +15,6 @@ router.param("userId", getUserById);
 router.post("/:userId/payment_intents", isSignedIn, getPaymentIntent);
 router.post("/:userId/paymentRoute", isSignedIn, paymentResolver);
 router.post("/:userId/confirmpayment", isSignedIn, confirmpayment);
+router.post("/:userId/getAllPayHistory", isSignedIn, getAllPayHist);
 
 module.exports = router;

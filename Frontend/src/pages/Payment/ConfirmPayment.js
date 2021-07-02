@@ -18,26 +18,24 @@ import UserProfile from "../../helper/auth/UserProfile";
 
 export default function ConfirmPayment() {
   let history = useHistory();
-  const { token } = useParams();
+  const { status, sessionId } = useParams();
 
   // console.log(id);
 
   const getCustomerInfo = async () => {
     console.log(`getting customer info`, UserProfile.getId());
-    console.log("PROPS", token);
-    let data = { id: UserProfile.getId() };
+    // console.log("PROPS", status, sessionId);
+    let payload = {
+      id: UserProfile.getId(),
+      sessionId: sessionId,
+    };
     // console.log(API);
     try {
       let res = await Axios({
         url: `${API}/payment/${UserProfile.getId()}/confirmpayment`,
         method: "POST",
-        data: data,
+        data: payload,
       });
-      // calc age
-
-      //   setValues({
-
-      //   });
 
       console.log("Done", res.data);
       //   console.log("Hello");

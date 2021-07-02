@@ -281,7 +281,7 @@ function Payment() {
                             name: "SILVER",
                             price: `$${plans[1]}`,
                             duration: "",
-                            mainFeature: "Exclusive Newsletter",
+                            mainFeature: "Crypto 101",
                             features: [
                               "3 Lorem Ipsum",
                               "7 Lorem Ipsum",
@@ -305,7 +305,7 @@ function Payment() {
                             name: "GOLD",
                             price: `$${plans[2]}`,
                             duration: "",
-                            mainFeature: "Exclusive Lessons",
+                            mainFeature: "Crypto 201",
                             features: [
                               "60 Templates",
                               "8 Landing Pages",
@@ -329,7 +329,7 @@ function Payment() {
                             name: "PLATINUM",
                             price: `$${plans[3]}`,
                             duration: "",
-                            mainFeature: "One On One Training",
+                            mainFeature: "Signals & Analysis",
                             features: [
                               "90 Templates",
                               "9 Landing Pages",
@@ -353,7 +353,8 @@ function Payment() {
           onClick={async () => {
             try {
               let session = await axios.post(
-                `${API}/payment/${UserProfile.getId()}/paymentRoute`
+                `${API}/payment/${UserProfile.getId()}/paymentRoute`,
+                { plannumber: openTab }
               );
               window.location.assign(session.data);
             } catch (error) {
