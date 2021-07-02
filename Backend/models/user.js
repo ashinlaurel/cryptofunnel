@@ -36,7 +36,7 @@ var userSchema = new mongoose.Schema(
     salt: String,
     role: {
       type: Number,
-      default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 purchased user
+      default: 0, /// 0 for Non verified user ,1 for admin, 2 non purchased user , 3 purchased user , 4 influencer
     },
     plan: {
       type: Number,
@@ -45,6 +45,10 @@ var userSchema = new mongoose.Schema(
     purchases: {
       type: Array,
       default: [],
+    },
+    InfulencerRequest: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

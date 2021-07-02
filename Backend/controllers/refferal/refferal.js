@@ -90,7 +90,7 @@ exports.getByUser = async (req, res) => {
   };
 
   // ---Conditional Addition of filters
-  if (filters.type != "") {
+  if (filters.creatorId && filters.creatorId != "") {
     filteroptions.creatorId = filters.creatorId;
   }
 

@@ -32,6 +32,8 @@ function UserRefferals() {
   const [discount, setDiscount] = useState("10");
   const [refresh, setRefresh] = useState(true);
   const [codeExists, setCodeExists] = useState(false);
+  const [messageModal, setMessageModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   // pagination setup
   const resultsPerPage = 10;
@@ -187,6 +189,22 @@ function UserRefferals() {
     setIsModalOpen(true);
   };
 
+  const applyInfluencer = async () => {
+    let id = UserProfile.getId();
+    // console.log(id);
+    try {
+      const response = await axios.post(
+        `${API}/user/${UserProfile.getId()}/requestInfluencer`
+      );
+      console.log(response.data);
+      setModalMessage("Request Send!");
+      setMessageModal(true);
+    } catch (err) {
+      setModalMessage("Sorry, an error occured!");
+      setMessageModal(true);
+    }
+  };
+
   const handleCreateRefferal = async () => {
     let id = UserProfile.getId();
     let name = UserProfile.getName();
@@ -209,9 +227,29 @@ function UserRefferals() {
     setIsModalOpen(false);
   };
 
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal isOpen={messageModal} onClose={() => setMessageModal(false)}>
+          <ModalHeader>{modalMessage}</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setMessageModal(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
   return (
     <>
       {theModal()}
+      {messageModalComponent()}
       <PageTitle>Refferals</PageTitle>
 
       {/* <CTA /> */}
@@ -282,6 +320,16 @@ function UserRefferals() {
           </Button>
         </div>
       )}
+      <div className=" w-1/2 mt-12 mb-4 text-gray-900">
+        <p>
+          You can get your own referal codes only with an Influencer account.
+          Click the button to apply and reach out to us at cfemail@gmail.com
+          with your resume to get your Influencer account.
+        </p>
+        <Button onClick={applyInfluencer} size="small" className="mt-5">
+          Apply for Influencer
+        </Button>
+      </div>
     </>
   );
 }
