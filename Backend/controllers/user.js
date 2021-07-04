@@ -35,6 +35,10 @@ exports.getAllUsers = (req, res) => {
     filteroptions.plan = filters.plan;
   }
 
+  if (filters.InfulencerRequest && filters.InfulencerRequest == true) {
+    filteroptions.InfulencerRequest = true;
+  }
+
   if (filters.searchquery != "") {
     filteroptions.name = fuzzyquery;
   }
@@ -126,6 +130,46 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
       next();
     }
   );
+};
+
+//request Influencer
+
+exports.setInfulencerRequest = async (req, res) => {
+  id = req.auth._id;
+  try {
+    let user = await User.findByIdAndUpdate(
+      id,
+      { InfulencerRequest: true },
+      {
+        safe: true,
+        useFindAndModify: false,
+      }
+    );
+    console.log("STATUS SET");
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log(" ERROR", err);
+    return res.status(400).json({ error: err });
+  }
+};
+
+exports.AcceptInfluencer = async (req, res) => {
+  id = req.body.id;
+  try {
+    let user = await User.findByIdAndUpdate(
+      id,
+      { role: 4 },
+      {
+        safe: true,
+        useFindAndModify: false,
+      }
+    );
+    console.log("STATUS SET");
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log(" ERROR", err);
+    return res.status(400).json({ error: err });
+  }
 };
 
 // -----------------------Fuzzy Search Regex----------------

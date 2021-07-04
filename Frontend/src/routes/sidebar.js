@@ -25,10 +25,19 @@ if (UserProfile.getRole() == 1)
       path: "/app/paymenthistory", // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
       name: "Payment History", // name that appear in Sidebar
+    },
+    {
+      path: "/app/RefferalRequests", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Refferal Requests", // name that appear in Sidebar
     }
   );
 
-if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
+if (
+  UserProfile.getRole() == 2 ||
+  UserProfile.getRole() == 3 ||
+  UserProfile.getRole() == 4
+)
   routes.push(
     {
       path: "/app/myplan", // the url

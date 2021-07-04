@@ -7,6 +7,9 @@ const UserInfo = lazy(() => import("../pages/User/UserInfo"));
 const ConfirmPayment = lazy(() => import("../pages/Payment/ConfirmPayment"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
 const Refferals = lazy(() => import("../pages/Refferals/Refferals"));
+const RefferalRequests = lazy(() =>
+  import("../pages/Refferals/RefferalRequests")
+);
 const UserRefferals = lazy(() => import("../pages/Refferals/UserRefferals"));
 const UserPaymentHistory = lazy(() =>
   import("../pages/Payment/UserPaymentHistory")
@@ -45,6 +48,10 @@ if (UserProfile.getRole() == 1) {
       component: Refferals, // view rendered
     },
     {
+      path: "/RefferalRequests", // the url
+      component: RefferalRequests, // view rendered
+    },
+    {
       path: "/paymenthistory", // the url
       component: UserPaymentHistory, // view rendered
     }
@@ -53,7 +60,11 @@ if (UserProfile.getRole() == 1) {
 
 // 2 - non purchased used , 3- purchased user
 
-if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
+if (
+  UserProfile.getRole() == 2 ||
+  UserProfile.getRole() == 3 ||
+  UserProfile.getRole() == 4
+)
   routes.push(
     {
       path: "/dashboard", // the url

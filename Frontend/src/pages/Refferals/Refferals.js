@@ -185,7 +185,7 @@ function Refferals() {
   return (
     <>
       {theModal()}
-      <PageTitle>Refferals</PageTitle>
+      <PageTitle>Refferals </PageTitle>
 
       {/* <CTA /> */}
 
