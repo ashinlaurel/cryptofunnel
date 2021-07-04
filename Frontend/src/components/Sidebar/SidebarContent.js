@@ -20,7 +20,7 @@ function SidebarContent() {
           className="  text-lg font-bold ml-3 text-gray-800 dark:text-gray-200"
           to="/home"
         >
-          Crypto Funnel
+          CryptoFunnel
         </Link>
       </div>
       <ul className="mt-6">

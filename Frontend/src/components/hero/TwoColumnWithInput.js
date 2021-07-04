@@ -54,21 +54,21 @@ export default ({ roundedHeaderButton }) => {
         <TwoColumn>
           <LeftColumn>
             <Heading>
-              Start your crypto journery{" "}
-              <span tw="text-green-300">today !</span>
+              Trading <span tw="text-green-300">can't </span>
+              be taught!
             </Heading>
             <Paragraph>
-              Crypto Funnel is the easiest place to buy and sell cryptocurrency.
-              Sign up and get started today.
+              But it can be learnt. A few months from now you will look back and
+              be glad you started learning with us!
             </Paragraph>
-            <Actions>
+            {/* <Actions>
               <input type="text" placeholder="Your E-mail Address" />
               <button>Get Started</button>
-            </Actions>
-            <CustomersLogoStrip>
+            </Actions> */}
+            {/* <CustomersLogoStrip>
               <p>Our TRUSTED Customers</p>
               <img src={CustomersLogoStripImage} alt="Our Customers" />
-            </CustomersLogoStrip>
+            </CustomersLogoStrip> */}
           </LeftColumn>
           <RightColumn>
             <IllustrationContainer>

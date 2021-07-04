@@ -16,6 +16,7 @@ import Payment from "./pages/Payment/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserRoute from "./helper/auth/UserRoutes";
+import UserProfile from "./helper/auth/UserProfile";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
