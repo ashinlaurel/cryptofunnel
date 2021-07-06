@@ -34,6 +34,7 @@ function UserRefferals() {
   const [codeExists, setCodeExists] = useState(false);
   const [messageModal, setMessageModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  console.log("ROLE", UserProfile.getRole());
 
   // pagination setup
   const resultsPerPage = 10;

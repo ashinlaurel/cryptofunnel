@@ -19,14 +19,17 @@ import prototypeIllustrationImageSrc from "../images/prototype-illustration.svg"
 import valuespic from "../images/valuespic.png";
 import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
+import UserProfile from "../helper/auth/UserProfile.js";
 
 export default () => {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
-  const HighlightedText = tw.span`text-green-300`;
+  const HighlightedText = tw.span`text-green-300 `;
+  console.log(UserProfile.getRole());
 
   return (
     <AnimationRevealPage>
       <Hero roundedHeaderButton={true} />
+      <div id="aboutus"></div>
       <Features
         subheading={<Subheading>Why choose us ?</Subheading>}
         heading={
@@ -34,6 +37,7 @@ export default () => {
             We have Amazing <HighlightedText>Service.</HighlightedText>
           </>
         }
+        description="We have some of the best experts in the industry at your service."
       />
       <FeatureWithSteps
         subheading={<Subheading>STEPS</Subheading>}
@@ -83,6 +87,7 @@ export default () => {
           },
         ]}
       />
+      <div id="pricing"></div>
       <Pricing
         subheading={<Subheading>Pricing</Subheading>}
         heading={
@@ -160,6 +165,7 @@ export default () => {
           },
         ]}
       />
+      <div id="contactus"></div>
       <FAQ
         subheading={<Subheading>FAQS</Subheading>}
         heading={

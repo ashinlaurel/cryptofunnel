@@ -4,16 +4,20 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 
 import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
 
 import logo from "../../images/crypto_logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import UserProfile from "../../helper/auth/UserProfile.js";
 
 const Header = tw.header`
   flex justify-between items-center
   max-w-screen-xl mx-auto
+ 
+  z-50
 `;
 
 export const NavLinks = tw.div`inline-block`;
@@ -42,14 +46,14 @@ export const LogoLink = styled(NavLink)`
   }
 `;
 
-export const MobileNavLinksContainer = tw.nav`flex flex-1 items-center justify-between`;
+export const MobileNavLinksContainer = tw.nav`flex flex-1 items-center justify-between `;
 export const NavToggle = tw.button`
-  lg:hidden z-20 focus:outline-none hocus:text-primary-500 transition duration-300
+  lg:hidden z-20 focus:outline-none hocus:text-gray-500 transition duration-300
 `;
 export const MobileNavLinks = motion(styled.div`
-  ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg text-gray-900 bg-white`}
+  ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg bg-gray-900  text-gray-900 `}
   ${NavLinks} {
-    ${tw`flex flex-col items-center`}
+    ${tw`flex flex-col items-center `}
   }
 `);
 
@@ -77,36 +81,105 @@ export default ({
    * changing the defaultLinks variable below below.
    * If you manipulate links here, all the styling on the links is already done for you. If you pass links yourself though, you are responsible for styling the links or use the helper styled components that are defined here (NavLink)
    */
-  const defaultLinks = [
-    <NavLinks key={1}>
-      <NavLink href="/#">About</NavLink>
-      <NavLink href="/#">Blog</NavLink>
-      <NavLink href="/#">Pricing</NavLink>
-      <NavLink href="/#">Contact Us</NavLink>
-      <Link to="/signin">
-        <NavLink tw="lg:ml-12!">Login</NavLink>
-      </Link>
-      <Link to="/signup">
-        <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}>
-          Sign Up
-        </PrimaryLink>
-      </Link>
-    </NavLinks>,
-  ];
-
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss =
     collapseBreakPointCssMap[collapseBreakpointClass];
 
   const defaultLogoLink = (
-    <LogoLink href="/">
+    <LogoLink>
       <img src={logo} alt="logo" />
-      Crypto Funnel
+      CryptoFunnel
     </LogoLink>
   );
 
+  const defaultLinks = [
+    <NavLinks key={1}>
+      <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          About
+        </span>
+      </ScrollLink>
+      {/* <NavLink href="/#">Blog</NavLink> */}
+      <ScrollLink activeClass="active" to="pricing" spy={true} smooth={true}>
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Pricing
+        </span>
+      </ScrollLink>
+      <ScrollLink activeClass="active" to="contactus" spy={true} smooth={true}>
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Contact Us
+        </span>
+      </ScrollLink>
+      {UserProfile.getRole() == 99 ? (
+        <>
+          <Link to="/signin">
+            <NavLink tw="lg:ml-12!">Login</NavLink>
+          </Link>
+          <Link to="/signup">
+            <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}>
+              Sign Up
+            </PrimaryLink>
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link to="/app/dashboard">
+            <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}>
+              Dashboard
+            </PrimaryLink>
+          </Link>
+        </>
+      )}
+    </NavLinks>,
+  ];
+
+  const MobiledefaultLinks = [
+    <NavLinks key={1}>
+      <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
+        <div
+          onClick={toggleNavbar}
+          className="text-white font-semibold hover:cursor-pointer my-4 mx-6 cursor-pointer"
+        >
+          About
+        </div>
+      </ScrollLink>
+      {/* <NavLink href="/#">Blog</NavLink> */}
+      <ScrollLink activeClass="active" to="pricing" spy={true} smooth={true}>
+        <div
+          onClick={toggleNavbar}
+          className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer"
+        >
+          Pricing
+        </div>
+      </ScrollLink>
+      <ScrollLink activeClass="active" to="contactus" spy={true} smooth={true}>
+        <div
+          onClick={toggleNavbar}
+          className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer"
+        >
+          Contact Us
+        </div>
+      </ScrollLink>
+      <Link to="/signin">
+        <NavLink tw="lg:ml-12!">
+          <div className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer">
+            Login
+          </div>
+        </NavLink>
+      </Link>
+      <Link to="/signup">
+        <div className="text-white font-semibold hover:cursor-pointer my-4 mt-10 mb-4 curson-pointer">
+          <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}>
+            Sign Up
+          </PrimaryLink>
+        </div>
+      </Link>
+    </NavLinks>,
+  ];
+
   logoLink = logoLink || defaultLogoLink;
-  links = links || defaultLinks;
+  links = defaultLinks;
+  let mobilelinks = MobiledefaultLinks;
 
   return (
     <Header className={className || "header-light"}>
@@ -124,7 +197,7 @@ export default ({
           animate={animation}
           css={collapseBreakpointCss.mobileNavLinks}
         >
-          {links}
+          {mobilelinks}
         </MobileNavLinks>
         <NavToggle
           onClick={toggleNavbar}

@@ -38,7 +38,7 @@ const Column = styled.div`
 const Card = styled.div`
   ${tw`flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left h-full mx-4 px-2 py-8`}
   .imageContainer {
-    ${tw`border border-green-300 text-center rounded-full p-5 flex-shrink-0`}
+    ${tw`border border-green-300 text-center rounded-full p-5 flex-shrink-0 text-gray-500`}
     img {
       ${tw`w-6 h-6 `}
     }
@@ -78,15 +78,40 @@ export default ({
   const defaultCards = [
     {
       imageSrc: ShieldIconImage,
-      title: "Live Trading Sessions",
+      title: "Live Classes",
       description:
-        "Lorem ipsum donor amet siti ceali ut enim ad minim veniam, quis nostrud.",
+        "From basic blockchain knwoledge and candlestick patters to advanced leveraged trading.",
     },
-    { imageSrc: SupportIconImage, title: "24/7 Support" },
-    { imageSrc: CustomizeIconImage, title: "Doubt Clearance Sessions" },
-    { imageSrc: ReliableIconImage, title: "Curated Reports & Newsletters" },
-    { imageSrc: FastIconImage, title: "Daily Trade Signals" },
-    { imageSrc: SimpleIconImage, title: "Long Term Portfolio " },
+    {
+      imageSrc: SupportIconImage,
+      title: "24/7 Support",
+      description:
+        "Answer to your every crypto related query -24/7 through telegram and mail.",
+    },
+    {
+      imageSrc: CustomizeIconImage,
+      title: "Doubt Clearance Sessions",
+      description:
+        "Weelky hands on doubt clearence sessions through zoom and clubhouse.",
+    },
+    {
+      imageSrc: ReliableIconImage,
+      title: "Curated Reports & Newsletters",
+      description:
+        "Hear our expert's opinion on the week ahead or find the next 100x alt coin.",
+    },
+    {
+      imageSrc: FastIconImage,
+      title: "Daily Trade Signals",
+      description:
+        "Let us find the best trades for you (spot/futures/margin), so you can relax.",
+    },
+    {
+      imageSrc: SimpleIconImage,
+      title: "Long Term Portfolio ",
+      description:
+        "Helping you pick the best investment for the next 3/6/12/24 monts.",
+    },
   ];
 
   if (!cards) cards = defaultCards;
@@ -108,7 +133,7 @@ export default ({
                 <span className="title">{card.title || "Fully Secure"}</span>
                 <p className="description">
                   {card.description ||
-                    "Lorem ipsum donor amet siti ceali ut enim ad minim veniam, quis nostrud."}
+                    "We have some of the best experts in the industry at your service."}
                 </p>
               </span>
             </Card>
