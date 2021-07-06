@@ -90,9 +90,26 @@ exports.getByUser = async (req, res) => {
   };
 
   // ---Conditional Addition of filters
-  if (filters.creatorId && filters.creatorId != "") {
-    filteroptions.creatorId = filters.creatorId;
+  // if (filters.creatorId && filters.creatorId != "") {
+  //   filteroptions.creatorId = filters.creatorId;
+  // }
+
+  //date
+  if (filters.toDate != "" && filters.fromDate != "") {
+    filteroptions.createdAt = {
+      $gte: filters.fromDate,
+      $lt: filters.toDate,
+    };
+  } else if (filters.fromDate != "") {
+    filteroptions.createdAt = {
+      $gte: filters.fromDate,
+    };
+  } else if (filters.toDate != "") {
+    filteroptions.createdAt = {
+      $lt: filters.toDate,
+    };
   }
+  // console.log(filteroptions);
 
   // if (filters.searchquery != "") {
   //   filteroptions.sno = fuzzyquery;

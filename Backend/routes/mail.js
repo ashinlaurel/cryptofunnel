@@ -14,6 +14,7 @@ const { getUserById } = require("../controllers/user");
 router.param("userId", getUserById);
 
 router.post("/:userId/verifyEmail", verifyMail);
+router.post("/verifyEmail", verifyMail);
 router.post("/verifyUser", isSignedIn, verifyUserByToken);
 router.post("/resetpassemail", ForgotPasswordMail);
 router.post("/resetpasswordbytoken", isSignedIn, resetPassword);
