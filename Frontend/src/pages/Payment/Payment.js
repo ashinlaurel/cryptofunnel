@@ -81,13 +81,10 @@ function Payment() {
           thecode: thecode,
         }
       );
-      if (
-        !response.data ||
-        !response.data.codeData ||
-        !response.data.codeData.discount
-      )
-        throw "Error";
+      if (response.data.thestatus == false) throw "Error";
+      console.log(response.data);
       console.log(response.data.codeData.discount);
+      console.log(response.data.thestatus);
       setDiscount(response.data.codeData.discount);
       let discount = response.data.codeData.discount;
       console.log(
@@ -96,82 +93,22 @@ function Payment() {
       setCodeStatus(response.data.thestatus);
       setCodeError(true);
     } catch (err) {
-      setModalmessage("Sorry, code does not work");
-      setMessageModal(true);
+      setCodeError(true);
+      setCodeStatus(false);
+      // setModalmessage("Sorry, code does not work");
+      // setMessageModal(true);
     }
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
-    const billingDetails = {
-      name: customer.name,
-      email: customer.email,
-      address: {
-        city: customer.city,
-        line1: customer.address,
-        state: customer.state,
-        postal_code: customer.zip,
-        country: customer.country,
-      },
-    };
-    const billtemp = {
-      name: customer.name,
-      address: {
-        city: customer.city,
-        line1: customer.address,
-        state: customer.state,
-        postal_code: customer.zip,
-        country: customer.country,
-      },
-    };
     try {
-      const { data: clientSecret } = await axios.post(
-        `${API}/payment/${UserProfile.getId()}/payment_intents`,
-        {
-          plan: openTab,
-          refCode: thecode,
-          billingDetails: billtemp,
-        }
+      let session = await axios.post(
+        `${API}/payment/${UserProfile.getId()}/paymentRoute`,
+        { plannumber: openTab, codeStatus: codestatus, thecode: thecode }
       );
-
-      const cardElement = elements.getElement(CardElement);
-
-      const paymentMethodReq = await stripe.createPaymentMethod({
-        type: "card",
-        card: cardElement,
-        billing_details: billingDetails,
-      });
-
-      // console.log(paymentMethodReq);
-
-      const confirmedCardPayment = await stripe.confirmCardPayment(
-        clientSecret,
-        {
-          payment_method: paymentMethodReq.paymentMethod.id,
-        }
-      );
-
-      console.log(confirmedCardPayment);
-      if (confirmedCardPayment.paymentIntent.status == "succeeded") {
-        console.log("Payment Successful!");
-        setModalmessage("Payment Successful");
-        await handleRoleChange();
-        setMessageModal(true);
-      } else throw { message: "Stripe Failed" };
-
-      setLoading(false);
-    } catch (err) {
-      console.log(err.message);
-      setLoading(false);
-      if (err.message == "paymentMethodReq.paymentMethod is undefined") {
-        setModalmessage("Please provide valid credit card number.");
-        setMessageModal(true);
-        return;
-      }
-
-      setModalmessage("Sorry, an error occured.");
-      setMessageModal(true);
-      return;
+      window.location.assign(session.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -348,7 +285,125 @@ function Payment() {
           </div>
         </>
       </div>
+
+      {/* -------- payment card */}
+
       <div className="w-full">
+        <div class="leading-loose ">
+          <div class="max-w-xl my-4 p-10 bg-white rounded shadow-xl">
+            <p class="text-gray-800 font-lg font-semibold">
+              Selected Plan{" "}
+              {openTab == 1
+                ? "Silver"
+                : openTab == 2
+                ? "Gold"
+                : openTab == 3
+                ? "Platinum"
+                : ""}{" "}
+              : ${plans[openTab]}
+            </p>
+            <p class="text-gray-800 font-medium">Customer information</p>
+
+            <div class="inline-block mt-2 w-full pr-1">
+              <label class=" block text-sm text-gray-600" for="cus_email">
+                Country
+              </label>
+              {/* <input
+                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+                value={customer.country}
+                onChange={handleCustomerChange}
+                name="country"
+                type="text"
+                required=""
+                placeholder="Country"
+                aria-label="Email"
+              /> */}
+              <select
+                name="country"
+                value={customer.country}
+                onChange={handleCustomerChange}
+                class="w-full px-2 py-2 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+              >
+                <option selected value="IN">
+                  India
+                </option>
+                <option value="US">United States</option>
+              </select>
+            </div>
+
+            {/* --------------Refferal Code ---------------*/}
+
+            <div>
+              <div class="mt-2 flex items-end justify-center space-x-1">
+                <div className="w-full">
+                  <label class=" text-sm block text-gray-600" for="cus_email">
+                    Refferal Code
+                  </label>
+                  <input
+                    class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+                    value={thecode}
+                    onChange={handleRefferalCode}
+                    name="thecode"
+                    type="text"
+                    required=""
+                    placeholder="Have a refferal code ?"
+                    aria-label="text"
+                  />
+                </div>
+                <button
+                  class="px-4 py-1  text-white text-sm font-light tracking-wider bg-green-500 hover:bg-green-600 rounded"
+                  onClick={() => {
+                    handleRefferalCheck();
+                  }}
+                >
+                  Enter
+                </button>
+              </div>
+              {codestatus == false && codeerror ? (
+                <div className="text-xs text-red-600">
+                  Invalid Refferal Code. Please Try Again!
+                </div>
+              ) : null}
+            </div>
+            {codestatus == false ? null : (
+              <div class="mt-2  text-sm">
+                <div className="w-full">
+                  Refferal Successful! Discount of{" "}
+                  <span className="font-semibold">
+                    ${(plans[openTab] * parseFloat(discount)) / 100}{" "}
+                  </span>
+                  applied.
+                </div>
+              </div>
+            )}
+
+            <div class="mt-4">
+              <button
+                className={`px-4 py-1 text-white font-light tracking-wider ${
+                  loading ? `bg-gray-700` : `bg-gray-900`
+                }  rounded`}
+                disabled={loading ? "true" : ""}
+                // disabled="true"
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                {loading ? (
+                  <>Loading...</>
+                ) : (
+                  <>
+                    $
+                    {plans[openTab] -
+                      (plans[openTab] * parseFloat(discount)) / 100}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="w-full">
         <button
           onClick={async () => {
             try {
@@ -364,7 +419,7 @@ function Payment() {
         >
           Buy
         </button>
-      </div>
+      </div> */}
     </div>
     // </AnimationRevealPage>
   );

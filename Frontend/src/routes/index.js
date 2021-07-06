@@ -99,7 +99,7 @@ if (
       component: UserRefferals, // view rendered
     },
     {
-      path: "/ConfirmPayment/:status/:sessionId", // the url
+      path: "/ConfirmPayment/:status/:sessionId/:refCode/:refStatus", // the url
       component: ConfirmPayment, // view rendered
     }
   );
