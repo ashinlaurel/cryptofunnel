@@ -20,6 +20,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Label,
 } from "@windmill/react-ui";
 
 import axios from "axios";
@@ -31,6 +32,8 @@ function Refferals() {
   const [tempcode, setTempCode] = useState("");
   const [discount, setDiscount] = useState("0");
   const [refresh, setRefresh] = useState(true);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
   // pagination setup
   const resultsPerPage = 10;
@@ -128,6 +131,8 @@ function Refferals() {
         },
         filters: {
           creatorId: UserProfile.getId(),
+          fromDate: fromDate,
+          toDate: toDate,
         },
       };
 
@@ -146,7 +151,7 @@ function Refferals() {
       }
     })();
     // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
-  }, [page, refresh]);
+  }, [page, refresh, fromDate, toDate]);
 
   const getNewCode = async () => {
     let id = UserProfile.getId();
@@ -256,6 +261,25 @@ function Refferals() {
                 />
               </form>
             </div>
+          </label>
+
+          <label className="text-gray-700 mb-1 text-sm">
+            <span>From Date</span>
+            <input
+              class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+          </label>
+          <label className="text-gray-700 mb-1 text-sm">
+            <span>To Date</span>
+            <input
+              class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+            />
           </label>
 
           {/* <div class="block relative xl:ml-64">

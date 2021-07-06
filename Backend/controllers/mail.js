@@ -8,6 +8,8 @@ const crypto = require("crypto");
 
 const nodemailer = require("nodemailer");
 
+const URL = "https://thecfsquad.com";
+
 exports.verifyMail = (req, res) => {
   //////// dont forget to pass customer name and CustId is login from frontend
   console.log(req.body);
@@ -30,7 +32,7 @@ exports.verifyMail = (req, res) => {
     console.log("TOKEN:", token);
     //put token in cookie
     res.cookie("token", token, { expire: new Date() + 9999 });
-    let link = `http://3.7.158.191/verifyemail/${token}`;
+    let link = `${URL}/verifyemail/${token}`;
 
     let output = `
    <h3> Hello ${name} </h3>
@@ -121,7 +123,7 @@ exports.ForgotPasswordMail = (req, res) => {
     console.log("TOKEN:", token);
     //put token in cookie
     res.cookie("token", token, { expire: new Date() + 9999 });
-    let link = `http://3.7.158.191/resetpassword/${token}`;
+    let link = `${URL}/resetpassword/${token}`;
 
     let output = `
    <h3> Hello ${email} </h3>

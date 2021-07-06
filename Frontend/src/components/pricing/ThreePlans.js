@@ -2,7 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   SectionHeading,
   Subheading as SubheadingBase,
@@ -166,6 +166,7 @@ export default ({
       );
     `,
   ];
+  let history = useHistory();
 
   return (
     <Container>
@@ -201,7 +202,7 @@ export default ({
                 ))}
               </PlanFeatures>
               <PlanAction>
-                <Link to="/signup">
+                <Link to="/app/dashboard">
                   <BuyNowButton
 
                   // css={!plan.featured && highlightGradientsCss[index]}

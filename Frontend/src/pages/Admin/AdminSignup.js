@@ -8,6 +8,9 @@ import ImageLight from "../../assets/img/login-office.jpeg";
 import ImageDark from "../../assets/img/login-office-dark.jpeg";
 import { GithubIcon, TwitterIcon } from "../../icons";
 import { Label, Input, Button } from "@windmill/react-ui";
+import { API } from "../../backend";
+import axios from "axios";
+import UserProfile from "../../helper/auth/UserProfile";
 
 const AdminSignup = () => {
   const history = useHistory();
@@ -51,6 +54,16 @@ const AdminSignup = () => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
+  const sendmail = async (data) => {
+    const payload = { id: data.id, name: data.name, email: data.email };
+    try {
+      const response = await axios.post(`${API}/mail/verifyEmail`, payload);
+      console.log("MAIL SEND", response.data);
+    } catch (err) {
+      console.log("verification mail error", err);
+    }
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false });
@@ -87,7 +100,8 @@ const AdminSignup = () => {
     // return;
     signup(values)
       .then((data) => {
-        console.log("data", data.err);
+        console.log("data", data);
+        sendmail(data);
         if (data.err) {
           setModalMessage(data.err);
           setMessageModal(true);

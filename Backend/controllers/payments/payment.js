@@ -239,6 +239,22 @@ exports.getAllPayHist = (req, res) => {
     filteroptions.customerId.name = fuzzyquery;
   }
 
+  //date
+  if (filters.toDate != "" && filters.fromDate != "") {
+    filteroptions.createdAt = {
+      $gte: filters.fromDate,
+      $lt: filters.toDate,
+    };
+  } else if (filters.fromDate != "") {
+    filteroptions.createdAt = {
+      $gte: filters.fromDate,
+    };
+  } else if (filters.toDate != "") {
+    filteroptions.createdAt = {
+      $lt: filters.toDate,
+    };
+  }
+
   // -----------------------------------------------------------------------
 
   paymentHistory.paginate(filteroptions, options, function (err, result) {
