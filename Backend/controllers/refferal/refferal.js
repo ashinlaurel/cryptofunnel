@@ -90,9 +90,9 @@ exports.getByUser = async (req, res) => {
   };
 
   // ---Conditional Addition of filters
-  // if (filters.creatorId && filters.creatorId != "") {
-  //   filteroptions.creatorId = filters.creatorId;
-  // }
+  if (filters.creatorId && filters.creatorId != "") {
+    filteroptions.creatorId = filters.creatorId;
+  }
 
   //date
   if (filters.toDate != "" && filters.fromDate != "") {
