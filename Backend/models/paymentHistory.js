@@ -23,16 +23,14 @@ var paymentHistorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // refCode: {
-    //   type: String,
-    //   maxlength: 32,
-    //   trim: true,
-    //   unique: true,
-    // },
-    // discount: {
-    //   type: String,
-    //   maxlength: 2,
-    // },
+    refCode: {
+      type: String,
+    },
+    discount: {
+      type: String,
+      maxlength: 2,
+      default: "00000000",
+    },
     // reffIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }

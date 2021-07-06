@@ -10,58 +10,9 @@ const YOUR_DOMAIN = "http://localhost:3000/app/ConfirmPayment";
 
 const stripe = new Stripe(process.env.SECRET_KEY);
 
-const plans = { 1: 100, 2: 500, 3: 1000 };
+const plans = { 1: 50, 2: 80, 3: 100 };
 
-exports.getPaymentIntent = async (req, res) => {
-  try {
-    const { plan, refCode, billingDetails } = req.body;
-    let theuser = req.auth;
-    // console.log(refCode);
-    // console.log(req.auth);
-
-    let finalamount = 0;
-    let discount = 0;
-
-    // Psst. For production-ready applications we recommend not using the
-    // amount directly from the client without verifying it first. This is to
-    // prevent bad actors from changing the total amount on the client before
-    // it gets sent to the server. A good approach is to send the quantity of
-    // a uniquely identifiable product and calculate the total price server-side.
-    // Then, you would only fulfill orders using the quantity you charged for.
-    if (refCode != "") {
-      // get discount %
-      let thecode = await refferal.findOne({ refCode: refCode });
-
-      console.log(thecode);
-
-      if (thecode.discount != "" && theuser._id != thecode.creatorId) {
-        discount = parseInt(thecode.discount);
-      }
-    }
-
-    finalamount = plans[plan] * (1 - discount / 100);
-    finalamount *= 100;
-    console.log(discount, finalamount);
-
-    const paymentIntent = await stripe.paymentIntents.create({
-      description: "payment crypto",
-
-      shipping: billingDetails,
-      amount: finalamount,
-      currency: "usd",
-      payment_method_types: ["card"],
-    });
-
-    // const paymentIntent = { client_secret };
-
-    res.status(200).send(paymentIntent.client_secret);
-    // res.status(200).send(finalamount);
-  } catch (err) {
-    res.status(500).json({ statusCode: 500, message: err.message });
-  }
-};
-
-const products = [
+let products = [
   {
     price_data: {
       currency: "usd",
@@ -69,7 +20,7 @@ const products = [
         name: "Crypto 101",
         images: ["https://i.imgur.com/EHyR2nP.png"],
       },
-      unit_amount: 17500,
+      unit_amount: 5000,
     },
     quantity: 1,
   },
@@ -80,7 +31,7 @@ const products = [
         name: "Crypto 201",
         images: ["https://i.imgur.com/EHyR2nP.png"],
       },
-      unit_amount: 25000,
+      unit_amount: 8000,
     },
     quantity: 1,
   },
@@ -98,15 +49,45 @@ const products = [
 ];
 
 exports.paymentResolver = async (req, res) => {
-  const { plannumber } = req.body;
+  const { plannumber, codeStatus } = req.body;
+  let { thecode } = req.body;
   console.log(plannumber);
+  console.log("codeStatus", codeStatus);
+  console.log("thecode", thecode);
+
+  // ---- refferal code apply-----
+
+  let finalamount = 0;
+  let discount = 0;
+
+  if (thecode != "" && codeStatus == true) {
+    // get discount %
+    let codedata = await refferal.findOne({ refCode: thecode });
+
+    console.log(codedata);
+
+    if (codedata.discount != "") {
+      discount = parseInt(codedata.discount);
+    }
+  }
+
+  finalamount = plans[plannumber] * (1 - discount / 100);
+  finalamount *= 100;
+  products[plannumber - 1].price_data.unit_amount = finalamount;
+  console.log(discount, finalamount);
+
+  // --------------------------------------
+  if (thecode == "") {
+    thecode = "00000";
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [products[plannumber - 1]],
       mode: "payment",
       // allow_promotion_codes: true,
-      success_url: `${YOUR_DOMAIN}/true/{CHECKOUT_SESSION_ID}`,
+      success_url: `${YOUR_DOMAIN}/true/{CHECKOUT_SESSION_ID}/${thecode}/${codeStatus}`,
       cancel_url: `${YOUR_DOMAIN}?canceled=true`,
     });
 
@@ -120,16 +101,23 @@ exports.paymentResolver = async (req, res) => {
 
 exports.confirmpayment = async (req, res) => {
   // console.log("here");
-  const { id, sessionId } = req.body;
-  // console.log(sessionId);
+  const { id, sessionId, refCode, refStatus } = req.body;
+  // console.log(sessionId, refCode, refStatus);
+  // let output = [];
+  let outproduct = [];
+  let outcustomer = [];
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ["line_items"],
     });
+    // output = session;
+
     const customer = await stripe.customers.retrieve(session.customer);
     const status = session.payment_status;
     const product = session.line_items.data[0];
     console.log(product);
+    outproduct = product;
+    outcustomer = customer;
     let payloadstatus = "Failed";
     if (status == "paid") {
       payloadstatus = "Success";
@@ -142,13 +130,45 @@ exports.confirmpayment = async (req, res) => {
     const thecount = await paymentHistory.count({ sessionId: session.id });
 
     if (thecount == 0) {
+      // payable for influencers variables
+      let addPayable = 0;
+      let thedisc = 0;
+      let theamt = 0;
+
       const payload = {
         sessionId: session.id,
         customerId: id,
         amountTotal: session.amount_total,
         paymentStatus: payloadstatus,
         planName: product.description,
+        refCode: "",
+        discount: "",
       };
+      // get refferal code data
+      if (refStatus == "true") {
+        let codedata = await refferal.findOne({ refCode: refCode });
+        // console.log(
+        //   "------------------code data-----------------------",
+        //   codedata
+        // );
+        if (codedata._id != "") {
+          payload.discount = codedata.discount;
+          payload.refCode = refCode;
+
+          // setting up payable amount
+          thedisc = parseFloat(payload.discount);
+          thedisc /= 100;
+          theamt = parseFloat(payload.amountTotal);
+          addPayable = (theamt * thedisc) / (1 - thedisc);
+
+          // updating the influncer account
+          await user.findByIdAndUpdate(
+            { _id: codedata.creatorId },
+            { $inc: { payable: addPayable } }
+          );
+        }
+      }
+
       const newpayment = new paymentHistory(payload);
       const response = await newpayment.save();
 
@@ -170,6 +190,8 @@ exports.confirmpayment = async (req, res) => {
             break;
         }
         // console.log("plan=", plannumber);
+
+        // updating the buyers account
         await user.findByIdAndUpdate(
           { _id: id },
           { role: 3, plan: plannumber }
@@ -178,7 +200,9 @@ exports.confirmpayment = async (req, res) => {
     }
 
     // console.log(session.payment_status);
-    res.status(200).send({ message: "success" });
+    res
+      .status(200)
+      .send({ message: "success", product: outproduct, customer: outcustomer });
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message });
   }
@@ -235,6 +259,49 @@ exports.getAllPayHist = (req, res) => {
     };
     return res.status(200).json(output);
   });
+};
+
+exports.getPaymentIntent = async (req, res) => {
+  try {
+    const { plan, refCode, billingDetails } = req.body;
+    let theuser = req.auth;
+    // console.log(refCode);
+    // console.log(req.auth);
+
+    let finalamount = 0;
+    let discount = 0;
+
+    if (refCode != "") {
+      // get discount %
+      let thecode = await refferal.findOne({ refCode: refCode });
+
+      console.log(thecode);
+
+      if (thecode.discount != "" && theuser._id != thecode.creatorId) {
+        discount = parseInt(thecode.discount);
+      }
+    }
+
+    finalamount = plans[plan] * (1 - discount / 100);
+    finalamount *= 100;
+    console.log(discount, finalamount);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      description: "payment crypto",
+
+      shipping: billingDetails,
+      amount: finalamount,
+      currency: "usd",
+      payment_method_types: ["card"],
+    });
+
+    // const paymentIntent = { client_secret };
+
+    res.status(200).send(paymentIntent.client_secret);
+    // res.status(200).send(finalamount);
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
 };
 
 // -----------------------Fuzzy Search Regex----------------

@@ -50,6 +50,14 @@ var userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    payable: {
+      type: Number,
+      default: 0,
+    },
+    lastpaid: {
+      type: String,
+      default: "Nil",
+    },
   },
   { timestamps: true }
 );
