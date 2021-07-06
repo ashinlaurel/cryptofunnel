@@ -18,16 +18,18 @@ import UserProfile from "../../helper/auth/UserProfile";
 
 export default function ConfirmPayment() {
   let history = useHistory();
-  const { status, sessionId } = useParams();
+  const { status, sessionId, refCode, refStatus } = useParams();
 
   // console.log(id);
 
   const getCustomerInfo = async () => {
     console.log(`getting customer info`, UserProfile.getId());
-    // console.log("PROPS", status, sessionId);
+    console.log("PROPS", status, sessionId, refCode, refStatus);
     let payload = {
       id: UserProfile.getId(),
       sessionId: sessionId,
+      refCode: refCode,
+      refStatus: refStatus,
     };
     // console.log(API);
     try {
