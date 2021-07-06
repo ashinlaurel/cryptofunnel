@@ -22,6 +22,11 @@ if (UserProfile.getRole() == 1)
       name: "Refferals", // name that appear in Sidebar
     },
     {
+      path: "/app/influencers", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Influencers", // name that appear in Sidebar
+    },
+    {
       path: "/app/paymenthistory", // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
       name: "Payment History", // name that appear in Sidebar

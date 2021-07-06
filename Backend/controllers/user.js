@@ -34,6 +34,9 @@ exports.getAllUsers = (req, res) => {
   if (filters.plan != "") {
     filteroptions.plan = filters.plan;
   }
+  if (filters.role != "") {
+    filteroptions.role = filters.role;
+  }
 
   if (filters.InfulencerRequest && filters.InfulencerRequest == true) {
     filteroptions.InfulencerRequest = true;

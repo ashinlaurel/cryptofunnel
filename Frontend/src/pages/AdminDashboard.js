@@ -61,6 +61,7 @@ function Dashboard() {
         filters: {
           searchquery: searchquery,
           plan: "",
+          role: "",
         },
       };
 

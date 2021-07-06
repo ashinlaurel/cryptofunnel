@@ -11,6 +11,7 @@ const RefferalRequests = lazy(() =>
   import("../pages/Refferals/RefferalRequests")
 );
 const UserRefferals = lazy(() => import("../pages/Refferals/UserRefferals"));
+const Influencers = lazy(() => import("../pages/Influencers/Influencers"));
 const UserPaymentHistory = lazy(() =>
   import("../pages/Payment/UserPaymentHistory")
 );
@@ -46,6 +47,10 @@ if (UserProfile.getRole() == 1) {
     {
       path: "/refferals", // the url
       component: Refferals, // view rendered
+    },
+    {
+      path: "/influencers", // the url
+      component: Influencers, // view rendered
     },
     {
       path: "/RefferalRequests", // the url

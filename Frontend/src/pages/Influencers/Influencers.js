@@ -20,7 +20,7 @@ import {
 import axios from "axios";
 import { API } from "../../backend";
 
-function UserPaymentHistory() {
+function Influencers() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [tempcode, setTempCode] = useState("");
@@ -53,11 +53,6 @@ function UserPaymentHistory() {
     // Using an IIFE
     (async function thegetter() {
       console.log("getter called");
-      const role = UserProfile.getRole();
-      let passCustId = "";
-      if (role != 1) {
-        passCustId = UserProfile.getId();
-      }
       let payload = {
         pages: {
           page: page,
@@ -66,13 +61,13 @@ function UserPaymentHistory() {
         filters: {
           searchquery: searchquery,
           plan: "",
-          customerId: passCustId,
+          role: "4",
         },
       };
 
       try {
         let response = await axios({
-          url: `${API}/payment/${UserProfile.getId()}/getAllPayHistory`,
+          url: `${API}/user/${UserProfile.getId()}/getAllUsers`,
           method: "POST",
           data: payload,
         });
@@ -89,9 +84,11 @@ function UserPaymentHistory() {
 
   return (
     <>
-      <PageTitle>Payment History</PageTitle>
+      <PageTitle>Influencers</PageTitle>
 
       {/* <CTA /> */}
+
+      {/* <div className="font-bold text-gray-700 text-xl">Users</div> */}
 
       <div className="mb-4">
         {/* -------------------------------------Row 1 ------------------------------------------------------------------------------- */}
@@ -168,10 +165,10 @@ function UserPaymentHistory() {
         <Table>
           <TableHeader>
             <tr>
+              {/* <TableCell>Client</TableCell> */}
               <TableCell>User</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Amount</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Created At</TableCell>
               <TableCell>Plan</TableCell>
             </tr>
           </TableHeader>
@@ -186,29 +183,24 @@ function UserPaymentHistory() {
                       alt="User image"
                     />
                     <div>
-                      <p className="font-semibold">{user.customerId.name}</p>
+                      <p className="font-semibold">{user.name}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {user.customerId.email}
+                        {user.job}
                       </p>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>
-                  <p className="font-semibold text-sm">
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </p>
-                </TableCell>
 
                 <TableCell>
-                  <Badge className="text-sm ">{user.paymentStatus}</Badge>
+                  <span className="text-sm ">{user.email}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm font-bold">
-                    {parseInt(user.amountTotal) / 100}
+                  <span className="text-sm">
+                    {new Date(user.createdAt).toLocaleDateString()}
                   </span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm   ">{user.planName}</span>
+                  <span className="text-sm  font-bold ">Gold</span>
                 </TableCell>
               </TableRow>
             ))}
@@ -227,4 +219,4 @@ function UserPaymentHistory() {
   );
 }
 
-export default UserPaymentHistory;
+export default Influencers;
