@@ -27,6 +27,8 @@ function Influencers(props) {
   const [tempcode, setTempCode] = useState("");
   const [refresh, setRefresh] = useState(true);
   const [searchquery, setSearchQuery] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
   // pagination setup
   const resultsPerPage = 10;
@@ -63,6 +65,8 @@ function Influencers(props) {
           searchquery: searchquery,
           plan: "",
           role: "4",
+          fromDate: fromDate,
+          toDate: toDate,
         },
       };
 
@@ -81,7 +85,7 @@ function Influencers(props) {
       }
     })();
     // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
-  }, [page, searchquery, refresh]);
+  }, [page, searchquery, refresh, fromDate, toDate]);
 
   return (
     <>
@@ -148,6 +152,25 @@ function Influencers(props) {
               />
             </form>
           </div>
+
+          <label className="text-gray-700 -mt-3 mb-2 text-sm">
+            <span>From Date</span>
+            <input
+              class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+          </label>
+          <label className="text-gray-700 -mt-3  mb-1 text-sm">
+            <span>To Date</span>
+            <input
+              class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+            />
+          </label>
 
           {/* <div class="block relative xl:ml-64">
             <Button

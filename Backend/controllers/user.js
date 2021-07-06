@@ -29,9 +29,10 @@ exports.getAllUsers = (req, res) => {
   let filteroptions = {
     // product: { brand: "IBM" },
   };
-
+  console.log(filters.plan);
   // ---Conditional Addition of filters
-  if (filters.plan != "") {
+  if (filters.plan && filters.plan != "") {
+    console.log("HERE");
     filteroptions.plan = filters.plan;
   }
   if (filters.role != "") {
@@ -45,7 +46,7 @@ exports.getAllUsers = (req, res) => {
   if (filters.searchquery != "") {
     filteroptions.name = fuzzyquery;
   }
-
+  console.log(filteroptions);
   // -----------------------------------------------------------------------
 
   User.paginate(filteroptions, options, function (err, result) {

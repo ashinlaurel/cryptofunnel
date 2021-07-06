@@ -56,7 +56,7 @@ var UserProfile = (function () {
     return axios
       .post(`${API}/signInTest`)
       .then((res) => {
-        // console.log("Employee authenticated", res.data);
+        console.log("Employee authenticated", res.data);
         setRole(res.data.role);
         setId(res.data._id);
 

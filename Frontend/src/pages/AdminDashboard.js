@@ -26,6 +26,7 @@ function Dashboard() {
   const [tempcode, setTempCode] = useState("");
   const [refresh, setRefresh] = useState(true);
   const [searchquery, setSearchQuery] = useState("");
+  const [plan, setPlan] = useState(-1);
 
   // pagination setup
   const resultsPerPage = 10;
@@ -65,6 +66,8 @@ function Dashboard() {
         },
       };
 
+      if (plan != -1) payload.filters.plan = parseInt(plan);
+
       try {
         let response = await axios({
           url: `${API}/user/${UserProfile.getId()}/getAllUsers`,
@@ -80,7 +83,7 @@ function Dashboard() {
       }
     })();
     // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
-  }, [page, searchquery, refresh]);
+  }, [page, searchquery, refresh, plan]);
 
   return (
     <>
@@ -99,17 +102,17 @@ function Dashboard() {
               class=" shadow-md h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-1 xl:py-2  xl: px-4  leading-tight focus:outline-none   focus:bg-white focus:border-gray-500"
               // value={condition}
               onChange={(e) => {
-                // setCondition(e.target.value);
+                setPlan(e.target.value);
               }}
             >
               <option value="" disabled selected>
                 Plan
               </option>
               <option value="">All</option>
-              <option value="">No Plan</option>
-              <option value="Good">Gold</option>
-              <option value="Bad">Silver</option>
-              <option value="Used">Bronze</option>
+              <option value="0">No Plan</option>
+              <option value="1">Crypto 101</option>
+              <option value="2">Crypto 201</option>
+              <option value="3">Signals & Analysis</option>
             </select>
 
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -200,7 +203,17 @@ function Dashboard() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm  font-bold ">Gold</span>
+                  <span className="text-sm  font-bold ">
+                    {user.plan == 1 ? (
+                      <>Crypto 101</>
+                    ) : user.plan == 2 ? (
+                      <>Crypto 201</>
+                    ) : user.plan == 3 ? (
+                      <>Signals & Analysis</>
+                    ) : (
+                      <>-</>
+                    )}
+                  </span>
                 </TableCell>
               </TableRow>
             ))}

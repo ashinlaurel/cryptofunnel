@@ -5,6 +5,7 @@ import UserProfile from "../helper/auth/UserProfile";
 const Dashboard = lazy(() => import("../pages/User/Dashboard"));
 const UserInfo = lazy(() => import("../pages/User/UserInfo"));
 const ConfirmPayment = lazy(() => import("../pages/Payment/ConfirmPayment"));
+const FailedPayment = lazy(() => import("../pages/Payment/FailedPayment"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
 const Refferals = lazy(() => import("../pages/Refferals/Refferals"));
 const RefferalRequests = lazy(() =>
@@ -101,6 +102,10 @@ if (
     {
       path: "/ConfirmPayment/:status/:sessionId/:refCode/:refStatus", // the url
       component: ConfirmPayment, // view rendered
+    },
+    {
+      path: "/ConfirmPayment/paymentfailed", // the url
+      component: FailedPayment, // view rendered
     }
   );
 

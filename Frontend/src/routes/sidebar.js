@@ -34,7 +34,7 @@ if (UserProfile.getRole() == 1)
     {
       path: "/app/RefferalRequests", // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
-      name: "Refferal Requests", // name that appear in Sidebar
+      name: "Influencer Requests", // name that appear in Sidebar
     }
   );
 

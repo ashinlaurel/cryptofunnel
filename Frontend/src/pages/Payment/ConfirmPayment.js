@@ -19,7 +19,7 @@ import UserProfile from "../../helper/auth/UserProfile";
 export default function ConfirmPayment() {
   let history = useHistory();
   const { status, sessionId, refCode, refStatus } = useParams();
-
+  const [values, setValues] = useState({});
   // console.log(id);
 
   const getCustomerInfo = async () => {
@@ -39,7 +39,10 @@ export default function ConfirmPayment() {
         data: payload,
       });
 
-      console.log("Done", res.data);
+      console.log("Done", res.data.product);
+      setValues(res.data.product);
+      console.log(res.data.product.description);
+      UserProfile.setRole(3);
       //   console.log("Hello");
     } catch (error) {
       console.log(`error`, error);
@@ -61,6 +64,30 @@ export default function ConfirmPayment() {
             <div className="w-1/2">
               <p className="text-lg  text-gray-800 dark:text-gray-100">
                 <span className="font-semibold"> Payment Information</span>{" "}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold">
+                  {" "}
+                  Product Name:
+                  <span className="text-xl text-primary-600 mx-3">
+                    {values.description}{" "}
+                  </span>
+                </span>{" "}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold">
+                  {" "}
+                  Price:
+                  <span className="text-xl text-primary-600 mx-3">
+                    ${values.amount_subtotal / 100}
+                  </span>
+                </span>
+              </p>
+              <p className="text-secondary-400">
+                {" "}
+                We will contant you with you shortly with more information
+                regarding the amazing crouse you just bought! For any queries
+                mail us at test@gmail.com.
               </p>
             </div>
           </div>

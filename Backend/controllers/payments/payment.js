@@ -88,7 +88,7 @@ exports.paymentResolver = async (req, res) => {
       mode: "payment",
       // allow_promotion_codes: true,
       success_url: `${YOUR_DOMAIN}/true/{CHECKOUT_SESSION_ID}/${thecode}/${codeStatus}`,
-      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      cancel_url: `${YOUR_DOMAIN}/paymentfailed`,
     });
 
     // res.set("Access-Control-Allow-Origin", "*");

@@ -30,15 +30,15 @@ function AnimationReveal({ disabled, children }) {
 
 function AnimatedSlideInComponent({
   direction = "left",
-  offset = 30,
+  offset = 5,
   children,
 }) {
   const [ref, inView] = useInView(30);
 
   const x = { target: "0%" };
 
-  if (direction === "left") x.initial = "-30%";
-  else x.initial = "30%";
+  if (direction === "left") x.initial = "-5%";
+  else x.initial = "5%";
 
   return (
     <motion.section
