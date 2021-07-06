@@ -19,8 +19,9 @@ import {
 
 import axios from "axios";
 import { API } from "../../backend";
+import { Link, Redirect } from "react-router-dom";
 
-function Influencers() {
+function Influencers(props) {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [tempcode, setTempCode] = useState("");
@@ -178,12 +179,22 @@ function Influencers() {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <Avatar
-                      className="hidden mr-3 md:block"
+                      className="hidden mr-3 md:block cursor-pointer hover:bg-green-300"
                       src={UserPng}
                       alt="User image"
+                      onClick={() => {
+                        props.history.push("/app");
+                      }}
                     />
                     <div>
-                      <p className="font-semibold">{user.name}</p>
+                      <p
+                        className="font-semibold cursor-pointer hover:text-black"
+                        onClick={() => {
+                          props.history.push(`/app/influencerpage/${user._id}`);
+                        }}
+                      >
+                        {user.name}
+                      </p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
                         {user.job}
                       </p>

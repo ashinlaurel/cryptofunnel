@@ -1,0 +1,280 @@
+import React, { useEffect, useState } from "react";
+import { useParams, Link, useHistory } from "react-router-dom";
+import { API } from "../../backend";
+import UserPng from "../../images/user.png";
+
+import {
+  Card,
+  CardBody,
+  Input,
+  HelperText,
+  Label,
+  Button,
+  Badge,
+  Select,
+} from "@windmill/react-ui";
+import PageTitle from "../../components/Typography/PageTitle";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
+import Axios from "axios";
+
+export default function InfluencerPage() {
+  let history = useHistory();
+  const { id } = useParams();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [PasswordModalOpen, setPasswordModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [newpass, setNewpass] = useState("");
+  const [newpassconf, setNewpassconf] = useState("");
+  const [passerror, setPasserror] = useState("");
+
+  // console.log(id);
+  const [values, setValues] = useState({
+    //both
+    employeeID: "",
+    username: "",
+    email: "",
+    // password: "",
+    // confpassword: "",
+    //customer
+    customerName: "",
+    // accountId: [],
+    //account
+    // accountName: "",
+    // unitId: [],
+    // //------> customerName from above
+    address: "",
+    district: "",
+    state: "",
+    locationType: "",
+    pincode: "",
+    GSTnumber: "",
+    contactPerson: "",
+    contactNo: "",
+    altContact: "",
+    WhatsappNo: "",
+    role: 0,
+    parentCustomerId: "",
+    show_password: "",
+  });
+  const [err, setErr] = useState({
+    email: "",
+    name: "",
+    // accountName: "",
+    enc_password: "",
+    confpassword: "",
+  });
+
+  const changePassword = async () => {
+    let data = { id: id, pass: newpass };
+    try {
+      let user = await Axios({
+        url: `${API}/${id}/resetpassword`,
+        method: "POST",
+        data: data,
+      });
+      setIsReviewModalOpen(true);
+      setPasswordModalOpen(false);
+      console.log("Done", user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const getCustomerInfo = async () => {
+    console.log(`getting customer info`, id);
+    let data = { id: id };
+    // console.log(API);
+    try {
+      let res = await Axios({
+        url: `${API}/userinfo`,
+        method: "POST",
+        data: data,
+      });
+      // calc age
+
+      //   setValues({
+
+      //   });
+
+      console.log("Done", res.data);
+      setValues(res.data[0]);
+      //   console.log("Hello");
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  };
+
+  useEffect(() => {
+    getCustomerInfo();
+  }, []);
+
+  const ResetPassModal = () => {
+    return (
+      <>
+        <Modal
+          isOpen={PasswordModalOpen}
+          onClose={() => setPasswordModalOpen(false)}
+        >
+          <ModalHeader>Change Password for {values.username}!</ModalHeader>
+          <ModalBody>
+            <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+              <Label>
+                <span>New Password</span>
+                <Input
+                  className="mt-5"
+                  type="password"
+                  value={newpass}
+                  onChange={(e) => setNewpass(e.target.value)}
+                  placeholder="New Password"
+                />
+              </Label>{" "}
+              <Label>
+                <span>Confirm Password</span>
+                <Input
+                  className="my-5"
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={newpassconf}
+                  onChange={(e) => {
+                    setNewpassconf(e.target.value);
+                    if (e.target.value != newpass)
+                      setPasserror("Passwords do not match!");
+                    else setPasserror("");
+                  }}
+                />
+              </Label>
+              <HelperText valid={false}>{passerror}</HelperText>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => {
+                if (newpass !== newpassconf) return;
+                changePassword();
+              }}
+            >
+              Change Password
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
+  const PassChangeModal = () => {
+    return (
+      <>
+        <Modal
+          isOpen={isReviewModalOpen}
+          onClose={() => setIsReviewModalOpen(false)}
+        >
+          <ModalHeader>Password Updated Successfully!</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setIsReviewModalOpen(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
+  return (
+    <div>
+      {ResetPassModal()}
+      {PassChangeModal()}
+      <PageTitle>Profile Information {values.name}</PageTitle>
+
+      {/* <SectionTitle> </SectionTitle> */}
+      <Card className="mb-2 mt-24 shadow-md overflow-visible">
+        <CardBody>
+          <div className="w-full -mt-20 z-30 flex items-center justify-center ">
+            <div className="flex flex-col items-center justify-center">
+              <img className="h-32 w-32 bg-white" src={UserPng}></img>
+              <div className="mt-2 text-2xl font-sans font-semibold">
+                {values.userId.name}
+              </div>
+              <div className=" text-lg ">Influencer</div>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+
+      <div className="flex flex-row flex-wrap xl:flex-nowrap xl:space-x-3  justify-left">
+        <Card className="mb-4 w-full xl:w-1/2   shadow-md overflow-visible">
+          <CardBody>
+            <div className="">
+              <p className="text-lg  text-gray-800 dark:text-gray-100">
+                <span className="font-semibold"> Personal Information</span>{" "}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> Name:</span>{" "}
+                {values.userId.name}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> Email:</span> {values.email}
+              </p>
+
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> Phone:</span> {values.phone}
+              </p>
+            </div>
+          </CardBody>
+        </Card>
+        <Card className="mb-4 w-full xl:w-1/2  shadow-md overflow-visible">
+          <CardBody>
+            <div className=" ">
+              <p className="text-lg  text-gray-800 dark:text-gray-100">
+                <span className="font-semibold"> Contact Information</span>{" "}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> Address:</span>{" "}
+                {values.address}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> City:</span> {values.city}
+              </p>
+
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> State:</span> {values.state}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> Country:</span>{" "}
+                {values.country}
+              </p>
+              <p className="text-md text-gray-700 dark:text-gray-100 py-2">
+                <span className="font-semibold"> Zip:</span> {values.zip}
+              </p>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+
+      <Card className="mb-8  shadow-md overflow-visible">
+        <CardBody>
+          <div className="flex flex-wrap flex-col md:flex-row space-y-2   ">
+            <Link className="w-full" to={`/app/employee/${id}/update`}>
+              <Button className=" w-full ">Update Info</Button>
+            </Link>
+            <Link className="w-full" to={`/app/employee/${id}/viewsalary`}>
+              <Button className=" w-full">Payment History</Button>
+            </Link>
+            <Button
+              className="w-full"
+              onClick={() => setPasswordModalOpen(true)}
+            >
+              Reset Password
+            </Button>
+
+            {/* <Button className="mx-3">Delete Customer</Button> */}
+          </div>
+        </CardBody>
+      </Card>
+    </div>
+  );
+}
