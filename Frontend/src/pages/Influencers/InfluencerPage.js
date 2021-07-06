@@ -321,11 +321,14 @@ export default function InfluencerPage() {
                 <span className="font-semibold"> Amount Payable</span>{" "}
               </p>
               <p className="text-md text-gray-700 dark:text-gray-100 py-1">
-                <span className="font-semibold"> Amount:</span> 0
+                <span className="font-semibold"> Amount:</span>{" "}
+                {values.userId ? values.userId.payable : ""}
               </p>
               <p className="text-md text-gray-700 dark:text-gray-100 py-1">
                 <span className="font-semibold"> Last Paid:</span>{" "}
-                {moment().format("DD-MM-YYYY")}
+                {values.userId
+                  ? moment(values.userId.payable).format("DD-MM-YYYY")
+                  : ""}
               </p>
               <div className="flex  items-center justify-center mt-10  ">
                 <Button layout="outline" className="w-3/4">
