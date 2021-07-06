@@ -52,7 +52,7 @@ export default function ConfirmPayment() {
 
   return (
     <div>
-      <PageTitle>Confirm Payment </PageTitle>
+      <PageTitle>Payment Successful !!! </PageTitle>
 
       {/* <SectionTitle> </SectionTitle> */}
       <Card className="mb-8 shadow-md">
@@ -60,7 +60,7 @@ export default function ConfirmPayment() {
           <div className="flex flex-row flex-wrap ">
             <div className="w-1/2">
               <p className="text-lg  text-gray-800 dark:text-gray-100">
-                <span className="font-semibold"> Personal Information</span>{" "}
+                <span className="font-semibold"> Payment Information</span>{" "}
               </p>
             </div>
           </div>
