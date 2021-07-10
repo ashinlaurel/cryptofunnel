@@ -11,6 +11,7 @@ import AdminSignup from "../src/pages/Admin/AdminSignup";
 import Home from "../src/LandingPage/Home";
 import AdminRoute from "./helper/auth/AdminRoutes";
 import SaaSProductLandingPage from "./demos/SaaSProductLandingPage";
+import PRMarketingPage from "./demos/PRMarketingPage";
 import Payment from "./pages/Payment/Payment";
 // STRIPE
 import { Elements } from "@stripe/react-stripe-js";
@@ -40,6 +41,9 @@ function App() {
           <Switch>
             {/* <Redirect exact from="/" to="/home" /> */}
             <Route path="/" exact={true} component={SaaSProductLandingPage} />
+            <Redirect exact from="/" to="/home" />
+            <Route path="/home" component={SaaSProductLandingPage} />
+            <Route path="/marketing" component={PRMarketingPage} />
             <Route path="/payment" component={Payment} />
 
             {/* Place new routes over this */}
