@@ -38,8 +38,8 @@ function App() {
         <Router>
           <AccessibleNavigationAnnouncer />
           <Switch>
-            <Redirect exact from="/" to="/home" />
-            <Route path="/home" component={SaaSProductLandingPage} />
+            {/* <Redirect exact from="/" to="/home" /> */}
+            <Route path="/" exact={true} component={SaaSProductLandingPage} />
             <Route path="/payment" component={Payment} />
 
             {/* Place new routes over this */}

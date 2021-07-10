@@ -110,6 +110,11 @@ export default ({
           Contact Us
         </span>
       </ScrollLink>
+      <Link to="/marketing">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Marketing
+        </span>
+      </Link>
       {UserProfile.getRole() == 99 ? (
         <>
           <Link to="/signin">
@@ -160,6 +165,11 @@ export default ({
           Contact Us
         </div>
       </ScrollLink>
+      <Link to="/marketing">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Marketing
+        </span>
+      </Link>
       <Link to="/signin">
         <NavLink tw="lg:ml-12!">
           <div className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer">
