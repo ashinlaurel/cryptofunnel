@@ -86,10 +86,12 @@ export default ({
     collapseBreakPointCssMap[collapseBreakpointClass];
 
   const defaultLogoLink = (
-    <LogoLink>
-      <img src={logo} alt="logo" />
-      CryptoFunnel
-    </LogoLink>
+    <Link to="/">
+      <LogoLink>
+        <img src={logo} alt="logo" />
+        CryptoFunnel
+      </LogoLink>
+    </Link>
   );
 
   const defaultLinks = [
