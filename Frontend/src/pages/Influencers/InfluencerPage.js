@@ -111,7 +111,7 @@ export default function InfluencerPage() {
   };
 
   const getCustomerInfo = async () => {
-    console.log(`getting customer info`, id);
+    // console.log(`getting customer info`, id);
     let data = { id: id };
     // console.log(API);
     try {
