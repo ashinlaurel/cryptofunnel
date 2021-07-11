@@ -13,6 +13,12 @@ const stripe = new Stripe(process.env.SECRET_KEY);
 const plans = { 1: 175, 2: 250, 3: 100 };
 const indplans = { 1: 13000, 2: 18500, 3: 7500 };
 
+const discReff = {
+  "Crypto 101": 175,
+  "Crypto 201": 250,
+  "Signals & Analysis": 100,
+};
+
 let products = [
   {
     price_data: {
@@ -167,8 +173,10 @@ exports.confirmpayment = async (req, res) => {
           // setting up payable amount
           thedisc = parseFloat(payload.discount);
           thedisc /= 100;
-          theamt = parseFloat(payload.amountTotal);
+          theamt = parseFloat(discReff[product.description]);
           addPayable = (theamt * thedisc) / (1 - thedisc);
+
+          console.log("thepayable", addPayable);
 
           // updating the influncer account
           await user.findByIdAndUpdate(

@@ -193,6 +193,7 @@ function UserPaymentHistory() {
             <tr>
               <TableCell>User</TableCell>
               <TableCell>Date</TableCell>
+              <TableCell>Code</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Plan</TableCell>
@@ -222,6 +223,11 @@ function UserPaymentHistory() {
                   </p>
                 </TableCell>
 
+                <TableCell>
+                  <Badge className="text-sm ">
+                    {user.refCode == "" ? "Nil" : user.refCode}
+                  </Badge>
+                </TableCell>
                 <TableCell>
                   <Badge className="text-sm ">{user.paymentStatus}</Badge>
                 </TableCell>

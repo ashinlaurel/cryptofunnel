@@ -34,6 +34,7 @@ function Refferals() {
   const [refresh, setRefresh] = useState(true);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [condition, setCondition] = useState("");
 
   // pagination setup
   const resultsPerPage = 10;
@@ -130,7 +131,7 @@ function Refferals() {
           limit: resultsPerPage,
         },
         filters: {
-          creatorId: "",
+          creatorId: condition,
           fromDate: fromDate,
           toDate: toDate,
         },
@@ -151,7 +152,7 @@ function Refferals() {
       }
     })();
     // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
-  }, [page, refresh, fromDate, toDate]);
+  }, [page, refresh, fromDate, toDate, condition]);
 
   const getNewCode = async () => {
     let id = UserProfile.getId();
@@ -211,16 +212,16 @@ function Refferals() {
                 class=" shadow-md h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none   focus:bg-white focus:border-gray-500"
                 // value={condition}
                 onChange={(e) => {
-                  // setCondition(e.target.value);
+                  setCondition(e.target.value);
                 }}
               >
                 {/* <option value="" disabled selected>
                   Created By
                 </option> */}
-                <option value="">All</option>
                 <option selected value="">
-                  Admin
+                  All
                 </option>
+                <option value={UserProfile.getId()}>Admin</option>
               </select>
 
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
