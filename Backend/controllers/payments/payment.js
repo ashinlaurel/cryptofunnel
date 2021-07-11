@@ -3,6 +3,7 @@ const Stripe = require("stripe");
 const paymentHistory = require("../../models/paymentHistory");
 const refferal = require("../../models/refferal");
 const user = require("../../models/user");
+const logo = require("../../");
 
 // app.use(express.static("."));
 
@@ -25,7 +26,7 @@ let products = [
       currency: "usd",
       product_data: {
         name: "Crypto 101",
-        images: ["https://i.imgur.com/EHyR2nP.png"],
+        images: ["https://i.imgur.com/7JApXKO.png"],
       },
       unit_amount: 5000,
     },
@@ -36,7 +37,7 @@ let products = [
       currency: "usd",
       product_data: {
         name: "Crypto 201",
-        images: ["https://i.imgur.com/EHyR2nP.png"],
+        images: ["https://i.imgur.com/7JApXKO.png"],
       },
       unit_amount: 8000,
     },
@@ -47,7 +48,7 @@ let products = [
       currency: "usd",
       product_data: {
         name: "Signals & Analysis",
-        images: ["https://i.imgur.com/EHyR2nP.png"],
+        images: ["https://i.imgur.com/7JApXKO.png"],
       },
       unit_amount: 10000,
     },
@@ -156,6 +157,7 @@ exports.confirmpayment = async (req, res) => {
         amountTotal: session.amount_total,
         paymentStatus: payloadstatus,
         planName: product.description,
+        curr: product.currency,
         refCode: "",
         discount: "",
       };
@@ -174,10 +176,12 @@ exports.confirmpayment = async (req, res) => {
           thedisc = parseFloat(payload.discount);
           thedisc /= 100;
           theamt = parseFloat(discReff[product.description]);
-          addPayable = (theamt * thedisc) / (1 - thedisc);
 
+          addPayable = theamt * thedisc;
+
+          console.log("thedisc", thedisc);
+          console.log("theamt", theamt);
           console.log("thepayable", addPayable);
-
           // updating the influncer account
           await user.findByIdAndUpdate(
             { _id: codedata.creatorId },

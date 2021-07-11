@@ -233,6 +233,7 @@ function UserPaymentHistory() {
                 </TableCell>
                 <TableCell>
                   <span className="text-sm font-bold">
+                    {user.curr == "inr" ? "₹ " : "$"}
                     {parseInt(user.amountTotal) / 100}
                   </span>
                 </TableCell>

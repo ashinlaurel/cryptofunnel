@@ -23,6 +23,9 @@ var paymentHistorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    curr: {
+      type: String,
+    },
     refCode: {
       type: String,
     },

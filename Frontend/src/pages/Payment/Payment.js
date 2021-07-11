@@ -149,11 +149,11 @@ function Payment() {
 
   return (
     // <AnimationRevealPage>
-    <div className=" flex md:flex-row flex-col  items-center">
+    <div className=" flex md:flex-row flex-col  items-center lg:items-start lg:mt-3 ">
       {messageModalComponent()}
       <div className="w-full mx-4  ">
         <>
-          <div className="flex flex-wrap border ">
+          <div className="flex flex-wrap  ">
             <div className="w-full">
               <ul
                 className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
