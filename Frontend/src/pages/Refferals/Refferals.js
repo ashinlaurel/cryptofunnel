@@ -130,7 +130,7 @@ function Refferals() {
           limit: resultsPerPage,
         },
         filters: {
-          creatorId: UserProfile.getId(),
+          creatorId: "",
           fromDate: fromDate,
           toDate: toDate,
         },

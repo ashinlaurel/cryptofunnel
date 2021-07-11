@@ -92,7 +92,7 @@ export default ({
       imageSrc: CustomizeIconImage,
       title: "Doubt Clearance Sessions",
       description:
-        "Weelky hands on doubt clearence sessions through zoom and clubhouse.",
+        "Weekly hands on doubt clearence sessions through zoom and clubhouse.",
     },
     {
       imageSrc: ReliableIconImage,
