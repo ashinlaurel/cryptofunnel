@@ -9,13 +9,13 @@ import Header from "../../headers/light.js";
 import { ReactComponent as SvgDecoratorBlob1 } from "../../../images/svg-decorator-blob-1.svg";
 import DesignIllustration from "../../../images/design-illustration-2.svg";
 import CustomersLogoStripImage from "../../../images/customers-logo-strip.png";
-import BitcoinMain from "../../../images/Bitcoin1.png";
+import BitcoinMain from "../../../images/Marketing/3.png";
 import { Link, useHistory } from "react-router-dom";
 
 const Container = tw.div`relative`;
-const TwoColumn = tw.div`flex flex-col lg:flex-row lg:items-center max-w-screen-xl mx-auto py-20 md:py-24`;
-const LeftColumn = tw.div`relative lg:w-5/12 text-center max-w-lg mx-auto lg:max-w-none lg:text-left`;
-const RightColumn = tw.div`relative mt-12 lg:mt-0 flex-1 flex flex-col justify-center lg:self-end`;
+const TwoColumn = tw.div`flex flex-col-reverse lg:flex-row lg:items-center  max-w-screen-xl mx-auto `;
+const LeftColumn = tw.div`relative lg:w-6/12 text-center max-w-lg  lg:max-w-none lg:text-left`;
+const RightColumn = tw.div`relative lg:w-6/12 mt-12 lg:ml-5 mx-auto  lg:mt-0 flex flex-1 flex-col justify-center text-center lg:text-left`;
 
 const Heading = tw.h1`font-bold text-2xl md:text-2xl lg:text-2xl xl:text-3xl text-gray-100 leading-tight`;
 const Paragraph = tw.p`my-5 lg:my-8 text-base text-gray-100 xl:text-lg`;

@@ -94,6 +94,11 @@ export default ({
 
   const defaultLinks = [
     <NavLinks key={1}>
+      <Link to="/">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Home
+        </span>
+      </Link>
       <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
         <span className="text-white font-semibold mx-5 cursor-pointer">
           About
@@ -140,6 +145,11 @@ export default ({
 
   const MobiledefaultLinks = [
     <NavLinks key={1}>
+      <Link to="/">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Home
+        </span>
+      </Link>
       <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
         <div
           onClick={toggleNavbar}
