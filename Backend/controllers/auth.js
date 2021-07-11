@@ -154,3 +154,15 @@ exports.resetPassword = async (req, res) => {
     return res.status(400).json({ error: err });
   }
 };
+
+exports.TestSignedIn = async (req, res) => {
+  console.log("Testing USER", req.auth);
+  id = req.auth._id;
+  try {
+    let user = await User.findById(id);
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log("VERIFY ERROR", err);
+    return res.status(400).json({ error: err });
+  }
+};

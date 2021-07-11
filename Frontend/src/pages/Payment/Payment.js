@@ -24,7 +24,7 @@ function Payment() {
     country: "IN",
     zip: "43231",
   };
-  const color = "blue";
+  const color = "primary";
   const [openTab, setOpenTab] = React.useState(1);
   const [loading, setLoading] = useState(false);
   const [messageModal, setMessageModal] = useState(false);
@@ -36,12 +36,6 @@ function Payment() {
   const [codestatus, setCodeStatus] = useState(false);
   const [codeerror, setCodeError] = useState(false);
 
-  const [amount, setAmount] = useState(100);
-  const [currency, setCurrency] = useState("INR");
-  const [error, setError] = useState(null);
-  const [metadata, setMetadata] = useState(null);
-  const [succeeded, setSucceeded] = useState(false);
-  const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -64,7 +58,12 @@ function Payment() {
   //     setCustomer[{ ...customer, [field]: e.target.value }];
   //   };
 
-  const plans = { 1: 50, 2: 80, 3: 100 };
+  const [country, setcountry] = useState("notIN");
+
+  const gloabalPlans = { 1: 175, 2: 250, 3: 100 };
+  const indPlans = { 1: 13000, 2: 18500, 3: 7500 };
+  const [plans, setPlans] = useState(gloabalPlans);
+  const [currency, setCurrency] = useState("$");
 
   const handleCustomerChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
@@ -111,6 +110,16 @@ function Payment() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (country == "IN") {
+      setPlans(indPlans);
+      setCurrency("Rs.");
+    } else {
+      setPlans(gloabalPlans);
+      setCurrency("$");
+    }
+  }, [country]);
 
   const handleRoleChange = async () => {};
 
@@ -161,7 +170,7 @@ function Payment() {
                     href="#link1"
                     role="tablist"
                   >
-                    SILVER
+                    Crypto 101
                   </a>
                 </li>
                 <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -180,7 +189,7 @@ function Payment() {
                     href="#link2"
                     role="tablist"
                   >
-                    GOLD
+                    Crypto 201
                   </a>
                 </li>
                 <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -199,7 +208,7 @@ function Payment() {
                     href="#link3"
                     role="tablist"
                   >
-                    PLATINUM
+                    Signals & Analysis
                   </a>
                 </li>
               </ul>
@@ -215,15 +224,15 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "SILVER",
-                            price: `$${plans[1]}`,
-                            duration: "",
-                            mainFeature: "Crypto 101",
+                            name: "Crypto 101",
+                            price: ` ${currency}${plans[1]}`,
+                            duration: "Lifetime",
+                            mainFeature: "The Right Place To Start!",
                             features: [
-                              "3 Lorem Ipsum",
-                              "7 Lorem Ipsum",
-                              "12 Lorem Ipsum",
-                              "Basic Assistance",
+                              "Beginners TA -live classes",
+                              "Priority Support",
+                              "Live Doubt Clearence",
+                              "Trading Bots",
                             ],
                             featured: true,
                           },
@@ -239,15 +248,16 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "GOLD",
-                            price: `$${plans[2]}`,
-                            duration: "",
-                            mainFeature: "Crypto 201",
+                            name: "Crypto 201",
+                            price: `${currency}${plans[2]}`,
+                            duration: "Lifetime",
+                            mainFeature: "For The Crypto Nerds",
                             features: [
-                              "60 Templates",
-                              "8 Landing Pages",
-                              "22 Internal Pages",
-                              "Priority Assistance",
+                              "Advanced TA -live classes",
+                              "Priority Support",
+                              "Live Doubt Clearence",
+                              "Trading Bots",
+                              "5 Live Trading Sessions",
                             ],
                             featured: true,
                           },
@@ -263,15 +273,15 @@ function Payment() {
                         heading=""
                         plans={[
                           {
-                            name: "PLATINUM",
-                            price: `$${plans[3]}`,
-                            duration: "",
-                            mainFeature: "Signals & Analysis",
+                            name: "Signals & Analysis",
+                            price: `${currency}${plans[3]}`,
+                            duration: "Monthly",
+                            mainFeature: "We'll Work For You",
                             features: [
-                              "90 Templates",
-                              "9 Landing Pages",
-                              "37 Internal Pages",
-                              "Personal Assistance",
+                              "Daily 3 trading Signals",
+                              "Spot/Margin/Future Based Calls",
+                              "Report & Newsletter",
+                              "weekly Live Trading Sessions",
                             ],
                             featured: true,
                           },
@@ -294,13 +304,18 @@ function Payment() {
             <p class="text-gray-800 font-lg font-semibold">
               Selected Plan{" "}
               {openTab == 1
-                ? "Silver"
+                ? "Crypto 101"
                 : openTab == 2
-                ? "Gold"
+                ? "Crypto 201"
                 : openTab == 3
-                ? "Platinum"
+                ? "Signals & Analysis"
                 : ""}{" "}
-              : ${plans[openTab]}
+              :
+              <span className="text-primary-500 font-bold">
+                {" "}
+                {currency}
+                {plans[openTab]}
+              </span>
             </p>
             <p class="text-gray-800 font-medium">Customer information</p>
 
@@ -320,14 +335,16 @@ function Payment() {
               /> */}
               <select
                 name="country"
-                value={customer.country}
-                onChange={handleCustomerChange}
+                value={country}
+                onChange={(e) => {
+                  setcountry(e.target.value);
+                }}
                 class="w-full px-2 py-2 text-sm text-gray-700 bg-gray-100 border shadow rounded "
               >
                 <option selected value="IN">
                   India
                 </option>
-                <option value="US">United States</option>
+                <option value="notIN">Outside India</option>
               </select>
             </div>
 
@@ -380,23 +397,17 @@ function Payment() {
             <div class="mt-4">
               <button
                 className={`px-4 py-1 text-white font-light tracking-wider ${
-                  loading ? `bg-gray-700` : `bg-gray-900`
-                }  rounded`}
+                  loading
+                    ? `bg-primary-700`
+                    : `bg-gradient-to-r from-primary-600 to-primary-400 `
+                }  rounded hover:bg-gradient-to-r hover:from-primary-500 hover:to-primary-800`}
                 disabled={loading ? "true" : ""}
                 // disabled="true"
                 onClick={() => {
                   handleSubmit();
                 }}
               >
-                {loading ? (
-                  <>Loading...</>
-                ) : (
-                  <>
-                    $
-                    {plans[openTab] -
-                      (plans[openTab] * parseFloat(discount)) / 100}
-                  </>
-                )}
+                {loading ? <>Loading...</> : <>PURCHASE</>}
               </button>
             </div>
           </div>

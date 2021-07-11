@@ -9,6 +9,7 @@ const {
   isAuthenticated,
   isAdmin,
   resetPassword,
+  TestSignedIn,
 } = require("../controllers/auth");
 
 router.post(
@@ -43,10 +44,7 @@ router.post(
     res.status(200).json(req.auth);
   }
 );
-router.post("/signInTest", isSignedIn, (req, res) => {
-  console.log("signedIn");
-  res.status(200).json(req.auth);
-});
+router.post("/signInTest", isSignedIn, TestSignedIn);
 
 router.get("/signout", signout);
 

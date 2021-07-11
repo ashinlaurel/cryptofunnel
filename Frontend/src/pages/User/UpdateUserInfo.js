@@ -80,7 +80,7 @@ export default function UpdateUserInfo() {
   };
 
   const getCustomerInfo = async () => {
-    console.log(`getting customer info`, UserProfile.getId());
+    // console.log(`getting customer info`, UserProfile.getId());
     let data = { id: UserProfile.getId() };
     // console.log(API);
     try {

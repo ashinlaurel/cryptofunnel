@@ -23,7 +23,7 @@ export default function ConfirmPayment() {
   // console.log(id);
 
   const getCustomerInfo = async () => {
-    console.log(`getting customer info`, UserProfile.getId());
+    // console.log(`getting customer info`, UserProfile.getId());
     console.log("PROPS", status, sessionId, refCode, refStatus);
     let payload = {
       id: UserProfile.getId(),
