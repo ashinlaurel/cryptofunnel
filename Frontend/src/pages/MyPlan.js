@@ -46,10 +46,10 @@ function Cards() {
   return (
     <>
       {UserProfile.getRole() == 2 ? (
-        <>
+        <div className="">
           <PageTitle>You Haven't Purchased Any Plans</PageTitle>
           <Payment />
-        </>
+        </div>
       ) : (
         <>
           <PageTitle>Your Plan</PageTitle>

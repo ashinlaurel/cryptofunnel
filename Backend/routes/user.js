@@ -9,6 +9,7 @@ const {
   getAllUsers,
   setInfulencerRequest,
   AcceptInfluencer,
+  MarkInfluencerPaid,
 } = require("../controllers/user");
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 
@@ -41,6 +42,12 @@ router.post(
   isSignedIn,
   // isAuthenticated,
   AcceptInfluencer
+);
+router.post(
+  "/user/:userId/markInfluencerPaid",
+  isSignedIn,
+  // isAuthenticated,
+  MarkInfluencerPaid
 );
 
 module.exports = router;

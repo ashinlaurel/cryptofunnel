@@ -51,6 +51,8 @@ export default function InfluencerPage() {
   // pagination setup
   const resultsPerPage = 10;
   const [totalResults, setTotalResults] = useState(20);
+  //modal
+  const [messageModal, setMessageModal] = useState(false);
 
   // pagination change control
   function onPageChange(p) {
@@ -171,7 +173,40 @@ export default function InfluencerPage() {
   useEffect(async () => {
     await getCustomerInfo();
     await codeGetter();
-  }, []);
+  }, [refresh]);
+
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal isOpen={messageModal} onClose={() => setMessageModal(false)}>
+          <ModalHeader>
+            Click "Paid" to reset amount and mark as paid.
+          </ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={async () => {
+                try {
+                  let session = await Axios.post(
+                    `${API}/user/${UserProfile.getId()}/markInfluencerPaid`,
+                    { id: id }
+                  );
+                  setMessageModal(false);
+                  setRefresh(!refresh);
+                  console.log("success");
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              Paid!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
 
   const ResetPassModal = () => {
     return (
@@ -253,6 +288,7 @@ export default function InfluencerPage() {
     <div>
       {ResetPassModal()}
       {PassChangeModal()}
+      {messageModalComponent()}
       <PageTitle>Profile Information {values.name}</PageTitle>
 
       {/* <SectionTitle> </SectionTitle> */}
@@ -331,12 +367,16 @@ export default function InfluencerPage() {
               <p className="text-md text-gray-700 dark:text-gray-100 py-1">
                 <span className="font-semibold"> Last Paid:</span>{" "}
                 {values.userId
-                  ? moment(values.userId.payable).format("DD-MM-YYYY")
+                  ? moment(values.userId.lastpaid).format("DD-MM-YYYY")
                   : ""}
               </p>
               <div className="flex  items-center justify-center mt-10  ">
-                <Button layout="outline" className="w-3/4">
-                  Pay Now
+                <Button
+                  layout="outline"
+                  className="w-3/4"
+                  onClick={() => setMessageModal(true)}
+                >
+                  Mark as Paid
                 </Button>
               </div>
             </div>
