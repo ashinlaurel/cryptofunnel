@@ -65,17 +65,20 @@ export default ({ roundedHeaderButton }) => {
             </Paragraph>
             <Actions>
               <input type="text" placeholder="Your E-mail Address" />
-              <button
-                onClick={() => {
-                  history.push("/signup");
-                }}
-              >
-                Get Started
-              </button>
+
+              <a href="mailto:support@thecfsquad.com">
+                <button
+                // onClick={() => {
+                //   history.push("/signup");
+                // }}
+                >
+                  Get Started
+                </button>
+              </a>
             </Actions>
             <CustomersLogoStrip>
               <p>Our TRUSTED Customers</p>
-              <img src={CustomersLogoStripImage} alt="Our Customers" />
+              {/* <img src={CustomersLogoStripImage} alt="Our Customers" /> */}
             </CustomersLogoStrip>
           </LeftColumn>
           <RightColumn>

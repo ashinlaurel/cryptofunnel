@@ -33,7 +33,7 @@ export default () => {
   const HighlightedText = tw.span`text-green-300 `;
   console.log(UserProfile.getRole());
 
-  const [contactstate, setContactState] = useState(true);
+  const [contactstate, setContactState] = useState(false);
 
   const ContactUsModal = () => {
     return (
