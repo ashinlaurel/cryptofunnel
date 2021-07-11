@@ -69,7 +69,7 @@ export default () => {
               </LinkListItem>
             </LinkList>
           </Column>
-          <Column>
+          {/* <Column>
             <ColumnHeading>Product</ColumnHeading>
             <LinkList>
               <LinkListItem>
@@ -85,8 +85,8 @@ export default () => {
                 <Link href="#">Team</Link>
               </LinkListItem>
             </LinkList>
-          </Column>
-          <Column>
+          </Column> */}
+          {/* <Column>
             <ColumnHeading>Press</ColumnHeading>
             <LinkList>
               <LinkListItem>
@@ -102,8 +102,8 @@ export default () => {
                 <Link href="#">Office</Link>
               </LinkListItem>
             </LinkList>
-          </Column>
-          <Column>
+          </Column> */}
+          {/* <Column>
             <ColumnHeading>Team</ColumnHeading>
             <LinkList>
               <LinkListItem>
@@ -119,22 +119,22 @@ export default () => {
                 <Link href="#">Onboarding</Link>
               </LinkListItem>
             </LinkList>
-          </Column>
+          </Column> */}
           <Column>
             <ColumnHeading>Legal</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                <Link href="#">GDPR</Link>
-              </LinkListItem>
-              <LinkListItem>
                 <Link href="#">Privacy Policy</Link>
               </LinkListItem>
               <LinkListItem>
+                <Link href="#">Terms and Conditions</Link>
+              </LinkListItem>
+              {/* <LinkListItem>
                 <Link href="#">Terms of Service</Link>
               </LinkListItem>
               <LinkListItem>
                 <Link href="#">Disclaimer</Link>
-              </LinkListItem>
+              </LinkListItem> */}
             </LinkList>
           </Column>
         </FiveColumns>

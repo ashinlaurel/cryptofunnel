@@ -18,6 +18,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserRoute from "./helper/auth/UserRoutes";
 import UserProfile from "./helper/auth/UserProfile";
+import PrivacyPolicy from "./demos/Privacy Policy";
+import TermsAndConditions from "./demos/TermsAndConditions";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -44,6 +46,8 @@ function App() {
             <Redirect exact from="/" to="/home" />
             <Route path="/home" component={SaaSProductLandingPage} />
             <Route path="/marketing" component={PRMarketingPage} />
+            <Route path="/privacypolicy" component={PrivacyPolicy} />
+            <Route path="/TermsAndConditions" component={TermsAndConditions} />
             <Route path="/payment" component={Payment} />
 
             {/* Place new routes over this */}
