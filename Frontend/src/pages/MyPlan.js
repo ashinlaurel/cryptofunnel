@@ -47,7 +47,7 @@ function Cards() {
     <>
       {UserProfile.getRole() == 2 ? (
         <div className="">
-          <PageTitle>You Haven't Purchased Any Plans</PageTitle>
+          {/* <PageTitle>You Haven't Purchased Any Plans</PageTitle> */}
           <Payment />
         </div>
       ) : (

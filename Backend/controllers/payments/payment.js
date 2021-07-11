@@ -3,6 +3,7 @@ const Stripe = require("stripe");
 const paymentHistory = require("../../models/paymentHistory");
 const refferal = require("../../models/refferal");
 const user = require("../../models/user");
+const logo = require("../../");
 
 // app.use(express.static("."));
 
@@ -13,13 +14,19 @@ const stripe = new Stripe(process.env.SECRET_KEY);
 const plans = { 1: 175, 2: 250, 3: 100 };
 const indplans = { 1: 13000, 2: 18500, 3: 7500 };
 
+const discReff = {
+  "Crypto 101": 175,
+  "Crypto 201": 250,
+  "Signals & Analysis": 100,
+};
+
 let products = [
   {
     price_data: {
       currency: "usd",
       product_data: {
         name: "Crypto 101",
-        images: ["https://i.imgur.com/EHyR2nP.png"],
+        images: ["https://i.imgur.com/7JApXKO.png"],
       },
       unit_amount: 5000,
     },
@@ -30,7 +37,7 @@ let products = [
       currency: "usd",
       product_data: {
         name: "Crypto 201",
-        images: ["https://i.imgur.com/EHyR2nP.png"],
+        images: ["https://i.imgur.com/7JApXKO.png"],
       },
       unit_amount: 8000,
     },
@@ -41,7 +48,7 @@ let products = [
       currency: "usd",
       product_data: {
         name: "Signals & Analysis",
-        images: ["https://i.imgur.com/EHyR2nP.png"],
+        images: ["https://i.imgur.com/7JApXKO.png"],
       },
       unit_amount: 10000,
     },
@@ -150,6 +157,7 @@ exports.confirmpayment = async (req, res) => {
         amountTotal: session.amount_total,
         paymentStatus: payloadstatus,
         planName: product.description,
+        curr: product.currency,
         refCode: "",
         discount: "",
       };
@@ -167,9 +175,13 @@ exports.confirmpayment = async (req, res) => {
           // setting up payable amount
           thedisc = parseFloat(payload.discount);
           thedisc /= 100;
-          theamt = parseFloat(payload.amountTotal);
-          addPayable = (theamt * thedisc) / (1 - thedisc);
+          theamt = parseFloat(discReff[product.description]);
 
+          addPayable = theamt * thedisc;
+
+          console.log("thedisc", thedisc);
+          console.log("theamt", theamt);
+          console.log("thepayable", addPayable);
           // updating the influncer account
           await user.findByIdAndUpdate(
             { _id: codedata.creatorId },

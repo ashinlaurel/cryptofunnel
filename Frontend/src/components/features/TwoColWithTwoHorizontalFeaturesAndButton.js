@@ -71,9 +71,9 @@ export default ({
       Designed & Developed by <span tw="text-primary-500">Professionals.</span>
     </>
   ),
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  description = "We only recommend the absolute best for you. All our recommendation will be crypto projects we have personally invested and truly believe in.",
   primaryButtonText = "Learn More",
-  primaryButtonUrl = "https://timerse.com",
+  primaryButtonUrl = "https://turnbox.in",
   imageSrc = TeamIllustrationSrc,
   buttonRounded = true,
   imageRounded = true,
@@ -146,13 +146,13 @@ export default ({
               ))}
             </Features>
 
-            <PrimaryButton
+            {/* <PrimaryButton
               buttonRounded={buttonRounded}
               as="a"
               href={primaryButtonUrl}
             >
               {primaryButtonText}
-            </PrimaryButton>
+            </PrimaryButton> */}
           </TextContent>
         </TextColumn>
       </TwoColumn>

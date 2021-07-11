@@ -361,7 +361,8 @@ export default function InfluencerPage() {
                 <span className="font-semibold"> Amount Payable</span>{" "}
               </p>
               <p className="text-md text-gray-700 dark:text-gray-100 py-1">
-                <span className="font-semibold"> Amount:</span>{" "}
+                <span className="font-semibold"> Amount:</span>
+                {" $ "}
                 {values.userId ? values.userId.payable : ""}
               </p>
               <p className="text-md text-gray-700 dark:text-gray-100 py-1">

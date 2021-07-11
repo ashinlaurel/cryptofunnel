@@ -110,7 +110,7 @@ export default ({
       imageSrc: SimpleIconImage,
       title: "Long Term Portfolio ",
       description:
-        "Helping you pick the best investment for the next 3/6/12/24 monts.",
+        "Helping you pick the best investment for the next 3/6/12/24 months.",
     },
   ];
 

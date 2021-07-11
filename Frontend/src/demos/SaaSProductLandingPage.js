@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import AnimationRevealPage from "../helpers/AnimationRevealPage.js";
@@ -20,15 +20,51 @@ import valuespic from "../images/valuespic.png";
 import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
 import UserProfile from "../helper/auth/UserProfile.js";
+import {
+  Modal,
+  ModalFooter,
+  ModalBody,
+  ModalHeader,
+  Button,
+} from "@windmill/react-ui";
 
 export default () => {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
   const HighlightedText = tw.span`text-green-300 `;
   console.log(UserProfile.getRole());
 
+  const [contactstate, setContactState] = useState(true);
+
+  const ContactUsModal = () => {
+    return (
+      <>
+        <Modal
+          className="bg-gray-900 px-10 py-10 rounded-lg "
+          isOpen={contactstate}
+          onClose={() => setContactState(false)}
+        >
+          <ModalHeader>Password Updated Successfully!</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <button
+              className="w-full sm:w-auto bg-green-300 px-2 py-1 text-gray-800 rounded-lg "
+              onClick={() => setContactState(false)}
+            >
+              Okay!
+            </button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
   return (
     <AnimationRevealPage>
+<<<<<<< HEAD
+      {ContactUsModal()}
+=======
       <div id="home"></div>
+>>>>>>> c43b9f1fa6149d8df8f5033b724b2f4d794ca0a0
       <Hero roundedHeaderButton={true} />
       <div id="aboutus"></div>
       <Features
@@ -76,14 +112,14 @@ export default () => {
             Icon: MoneyIcon,
             title: "Affordable",
             description:
-              "We promise to offer you the best rate we can - at par with the industry standard.",
+              "We at CFsquad are committed to bringing you the best quality content at affordable pricing.",
             iconContainerCss: tw`bg-green-300 text-green-800`,
           },
           {
             Icon: BriefcaseIcon,
             title: "Professionalism",
             description:
-              "We assure you that our templates are designed and created by professional designers.",
+              "All our reports/newsletters are prepared by professionals who have years of experience in the industry.",
             iconContainerCss: tw`bg-red-300 text-red-800`,
           },
         ]}
@@ -149,9 +185,9 @@ export default () => {
             stars: 5,
             profileImageSrc:
               "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80",
-            heading: "Amazing User Experience",
+            heading: "Amazing Experience",
             quote:
-              "They helped me get up and started with crypo and helped me find some gems which gave some amazing results. Been extremely helpful is solving doubts and helping me setup my trading setup up and running. I trade daily with some amaizng results now!",
+              "I want to thank Crypto Funnel for getting me setup to trade cryptocurrency. It’s an exciting time in the market and with only a week of hobby level trading I’ve been making $100+ a day! Now is the time to invest.",
             customerName: "Charlotte Hale",
             customerTitle: "",
           },
@@ -159,9 +195,9 @@ export default () => {
             stars: 5,
             profileImageSrc:
               "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
-            heading: "Love the Developer Experience and Design Principles !",
+            heading: "Such an enjoyable learning experience!",
             quote:
-              "I gained a lot of knoledge about alt coin and how to find them. I am proud of my portfolio now. 10/10 recoomended.",
+              "Crypto Funnel teaches technical analysis that I haven’t seen in anyone else offering. I highly recommend this for anyone wanting to get a better understanding of the Cryptocurrency market, and how to buy and sell in this up and coming industry.",
             customerName: "Adam Cuppy",
             customerTitle: "",
           },
@@ -177,14 +213,24 @@ export default () => {
         }
         faqs={[
           {
-            question: "Which plan is the best for me ?",
+            question: "Do You Post Trading Signals? ?",
             answer:
-              "Yes, they all are. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              "Yes, cfsquad provides trading signals, research reports on altcoins and crypto newsletters depending on the plan you choose.",
           },
           {
-            question: "Do I need to know anything before starting to invest ?",
+            question: "What is 1-1 Mentoring?",
             answer:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              "We will teach you a range of topics over a Zoom or Discord call, ranging from DeFi to Fundamental Analysis Techniques.",
+          },
+          {
+            question: "Is there an active community?",
+            answer:
+              "Members are invited to join our Pro telegram group after signing up. There is a very active community of crypto enthusiasts.",
+          },
+          {
+            question: "Is it Beginner Friendly?",
+            answer:
+              "We built cfsquad to accommodate for all skill levels, for beginners its the easiest way to become crypto nerd. Yes! You can use your Crypto to join thecfsquad. Please check out using the crypto payments option during checkout. If you would like some assistance paying with crypto please mail us at support@thecfsquad.com",
           },
         ]}
       />

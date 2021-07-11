@@ -91,7 +91,7 @@ const DecoratorBlob = styled(SvgDecoratorBlob)`
 export default ({
   subheading = "Pricing",
   heading = "Flexible Plans.",
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  description = "Select any of the following plans to kickstart your crypto journey with the CFsquad.",
   plans = null,
   primaryButtonText = "Buy Now",
 }) => {
