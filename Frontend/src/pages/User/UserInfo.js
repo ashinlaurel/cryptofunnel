@@ -234,12 +234,12 @@ export default function UserInfo() {
             </div>
           </div>
           <div className="my-10">
-            <Link to={`/app/employee/${id}/update`}>
+            {/* <Link to={`/app/employee/${id}/update`}>
               <Button className="mr-3">Update Info</Button>
             </Link>
             <Link to={`/app/employee/${id}/viewsalary`}>
               <Button className="mr-3">Payment History</Button>
-            </Link>
+            </Link> */}
             <Button className="" onClick={() => setPasswordModalOpen(true)}>
               Reset Password
             </Button>

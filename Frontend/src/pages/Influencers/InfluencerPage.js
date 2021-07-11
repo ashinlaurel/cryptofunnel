@@ -370,15 +370,17 @@ export default function InfluencerPage() {
                   ? moment(values.userId.lastpaid).format("DD-MM-YYYY")
                   : ""}
               </p>
-              <div className="flex  items-center justify-center mt-10  ">
-                <Button
-                  layout="outline"
-                  className="w-3/4"
-                  onClick={() => setMessageModal(true)}
-                >
-                  Mark as Paid
-                </Button>
-              </div>
+              {UserProfile.getRole() == 1 ? (
+                <div className="flex  items-center justify-center mt-10  ">
+                  <Button
+                    layout="outline"
+                    className="w-3/4"
+                    onClick={() => setMessageModal(true)}
+                  >
+                    Mark as Paid
+                  </Button>
+                </div>
+              ) : null}
             </div>
           </CardBody>
         </Card>
