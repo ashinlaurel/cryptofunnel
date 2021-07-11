@@ -60,11 +60,7 @@ export default () => {
 
   return (
     <AnimationRevealPage>
-<<<<<<< HEAD
       {ContactUsModal()}
-=======
-      <div id="home"></div>
->>>>>>> c43b9f1fa6149d8df8f5033b724b2f4d794ca0a0
       <Hero roundedHeaderButton={true} />
       <div id="aboutus"></div>
       <Features
