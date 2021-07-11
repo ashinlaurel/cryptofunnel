@@ -142,6 +142,8 @@ export default function InfluencerPage() {
       },
       filters: {
         creatorId: id,
+        fromDate: "",
+        toDate: "",
       },
     };
 
@@ -151,8 +153,10 @@ export default function InfluencerPage() {
         method: "POST",
         data: payload,
       });
-      console.log(response.data.out[0]);
+      // console.log(response);
+      console.log("the code getting", response.data.out[0]);
       setCodeDetails(response.data.out[0]);
+
       //   setTotalResults(response.data.total);
       //   setData(response.data.out);
       //   if (response.data.out.length != 0) {

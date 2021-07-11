@@ -206,7 +206,7 @@ function Influencers(props) {
                       src={UserPng}
                       alt="User image"
                       onClick={() => {
-                        props.history.push("/app");
+                        props.history.push(`/app/influencerpage/${user._id}`);
                       }}
                     />
                     <div>

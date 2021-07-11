@@ -60,9 +60,9 @@ function Payment() {
 
   const [country, setcountry] = useState("notIN");
 
-  const gloabalPlans = { 1: 175, 2: 250, 3: 100 };
+  const globalPlans = { 1: 175, 2: 250, 3: 100 };
   const indPlans = { 1: 13000, 2: 18500, 3: 7500 };
-  const [plans, setPlans] = useState(gloabalPlans);
+  const [plans, setPlans] = useState(globalPlans);
   const [currency, setCurrency] = useState("$");
 
   const handleCustomerChange = (e) => {
@@ -103,7 +103,12 @@ function Payment() {
     try {
       let session = await axios.post(
         `${API}/payment/${UserProfile.getId()}/paymentRoute`,
-        { plannumber: openTab, codeStatus: codestatus, thecode: thecode }
+        {
+          plannumber: openTab,
+          codeStatus: codestatus,
+          thecode: thecode,
+          country: country,
+        }
       );
       window.location.assign(session.data);
     } catch (error) {
@@ -114,9 +119,9 @@ function Payment() {
   useEffect(() => {
     if (country == "IN") {
       setPlans(indPlans);
-      setCurrency("Rs.");
+      setCurrency("₹ ");
     } else {
-      setPlans(gloabalPlans);
+      setPlans(globalPlans);
       setCurrency("$");
     }
   }, [country]);
@@ -298,7 +303,7 @@ function Payment() {
 
       {/* -------- payment card */}
 
-      <div className="w-full">
+      <div className="w-full lg:mt-12 ">
         <div class="leading-loose ">
           <div class="max-w-xl my-4 p-10 bg-white rounded shadow-xl">
             <p class="text-gray-800 font-lg font-semibold">

@@ -10,7 +10,8 @@ const YOUR_DOMAIN = "http://localhost:3000/app/ConfirmPayment";
 
 const stripe = new Stripe(process.env.SECRET_KEY);
 
-const plans = { 1: 50, 2: 80, 3: 100 };
+const plans = { 1: 175, 2: 250, 3: 100 };
+const indplans = { 1: 13000, 2: 18500, 3: 7500 };
 
 let products = [
   {
@@ -49,7 +50,7 @@ let products = [
 ];
 
 exports.paymentResolver = async (req, res) => {
-  const { plannumber, codeStatus } = req.body;
+  const { plannumber, codeStatus, country } = req.body;
   let { thecode } = req.body;
   console.log(plannumber);
   console.log("codeStatus", codeStatus);
@@ -71,9 +72,17 @@ exports.paymentResolver = async (req, res) => {
     }
   }
 
-  finalamount = plans[plannumber] * (1 - discount / 100);
-  finalamount *= 100;
-  products[plannumber - 1].price_data.unit_amount = finalamount;
+  if (country == "notIN") {
+    finalamount = plans[plannumber] * (1 - discount / 100);
+    finalamount *= 100;
+    products[plannumber - 1].price_data.unit_amount = finalamount;
+  } else {
+    finalamount = indplans[plannumber] * (1 - discount / 100);
+    finalamount *= 100;
+    products[plannumber - 1].price_data.unit_amount = finalamount;
+    products[plannumber - 1].price_data.currency = "inr";
+  }
+
   console.log(discount, finalamount);
 
   // --------------------------------------
