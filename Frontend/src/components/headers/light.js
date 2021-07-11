@@ -96,6 +96,11 @@ export default ({
 
   const defaultLinks = [
     <NavLinks key={1}>
+      <Link to="/">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Home
+        </span>
+      </Link>
       <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
         <span className="text-white font-semibold mx-5 cursor-pointer">
           About
@@ -112,6 +117,11 @@ export default ({
           Contact Us
         </span>
       </ScrollLink>
+      <Link to="/marketing">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Marketing
+        </span>
+      </Link>
       {UserProfile.getRole() == 99 ? (
         <>
           <Link to="/signin">
@@ -137,6 +147,11 @@ export default ({
 
   const MobiledefaultLinks = [
     <NavLinks key={1}>
+      <Link to="/">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Home
+        </span>
+      </Link>
       <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
         <div
           onClick={toggleNavbar}
@@ -162,6 +177,11 @@ export default ({
           Contact Us
         </div>
       </ScrollLink>
+      <Link to="/marketing">
+        <span className="text-white font-semibold mx-5 cursor-pointer">
+          Marketing
+        </span>
+      </Link>
       <Link to="/signin">
         <NavLink tw="lg:ml-12!">
           <div className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer">
