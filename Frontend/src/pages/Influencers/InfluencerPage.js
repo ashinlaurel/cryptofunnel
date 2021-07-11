@@ -348,11 +348,11 @@ export default function InfluencerPage() {
             </p>
             <p className="text-md text-gray-700 dark:text-gray-100 pt-2">
               <span className="font-semibold"> Code:</span>{" "}
-              {codeDetails.refCode}
+              {codeDetails ? codeDetails.refCode : null}
             </p>
             <p className="text-md text-gray-700 dark:text-gray-100 ">
               <span className="font-semibold"> Discount:</span>{" "}
-              {codeDetails.discount}%
+              {codeDetails ? codeDetails.discount : null}%
             </p>
           </div>
         </CardBody>
