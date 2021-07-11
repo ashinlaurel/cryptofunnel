@@ -79,7 +79,8 @@ export default function ConfirmPayment() {
                   {" "}
                   Price:
                   <span className="text-xl text-primary-600 mx-3">
-                    ${values.amount_subtotal / 100}
+                    {values.currency == "inr" ? <>₹</> : <>$</>}
+                    {values.amount_subtotal / 100}
                   </span>
                 </span>
               </p>
