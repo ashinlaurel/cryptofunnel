@@ -88,7 +88,7 @@ export default function ConfirmPayment() {
                 {" "}
                 We will contant you with you shortly with more information
                 regarding the amazing crouse you just bought! For any queries
-                mail us at test@gmail.com.
+                mail us at support@thecfsquad.com.
               </p>
             </div>
           </div>
