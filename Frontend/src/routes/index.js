@@ -109,4 +109,10 @@ if (
     }
   );
 
+if (UserProfile.getRole() == 4)
+  routes.push({
+    path: "/influencerpage/:id", // the url
+    component: InfluencerPage, // view rendered
+  });
+
 export default routes;

@@ -38,11 +38,7 @@ if (UserProfile.getRole() == 1)
     }
   );
 
-if (
-  UserProfile.getRole() == 2 ||
-  UserProfile.getRole() == 3 ||
-  UserProfile.getRole() == 4
-)
+if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
   routes.push(
     {
       path: "/app/myplan", // the url
@@ -63,6 +59,30 @@ if (
       path: "/app/info", // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
       name: "Profile", // name that appear in Sidebar
+    }
+  );
+
+if (UserProfile.getRole() == 4)
+  routes.push(
+    {
+      path: "/app/myplan", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "My Plans", // name that appear in Sidebar
+    },
+    {
+      path: "/app/userrefferal", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Refferal", // name that appear in Sidebar
+    },
+    {
+      path: "/app/paymenthistory", // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Payment History", // name that appear in Sidebar
+    },
+    {
+      path: `/app/influencerpage/${UserProfile.getId()}`, // the url
+      icon: "HomeIcon", // the component being exported from icons/index.js
+      name: "Profine ", // name that appear in Sidebar
     }
   );
 
