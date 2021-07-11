@@ -176,6 +176,28 @@ exports.AcceptInfluencer = async (req, res) => {
   }
 };
 
+exports.MarkInfluencerPaid = async (req, res) => {
+  id = req.body.id;
+  try {
+    let user = await User.findByIdAndUpdate(
+      id,
+      {
+        payable: 0,
+        lastpaid: new Date(),
+      },
+      {
+        safe: true,
+        useFindAndModify: false,
+      }
+    );
+    console.log("PAY REST");
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log(" ERROR", err);
+    return res.status(400).json({ error: err });
+  }
+};
+
 // -----------------------Fuzzy Search Regex----------------
 function escapeRegex(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
