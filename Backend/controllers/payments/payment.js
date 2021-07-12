@@ -7,7 +7,7 @@ const logo = require("../../");
 
 // app.use(express.static("."));
 
-const YOUR_DOMAIN = "http://localhost:3000/app/ConfirmPayment";
+const YOUR_DOMAIN = "https://thecfsquad.com/app/ConfirmPayment";
 
 const stripe = new Stripe(process.env.SECRET_KEY);
 
