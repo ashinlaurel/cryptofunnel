@@ -10,16 +10,16 @@ import AdminLogin from "../src/pages/Admin/AdminLogin";
 import AdminSignup from "../src/pages/Admin/AdminSignup";
 import Home from "../src/LandingPage/Home";
 import AdminRoute from "./helper/auth/AdminRoutes";
-import SaaSProductLandingPage from "./demos/SaaSProductLandingPage";
-import PRMarketingPage from "./demos/PRMarketingPage";
+import SaaSProductLandingPage from "./corepages/MainHome";
+import PRMarketingPage from "./corepages/PRMarketingPage";
 import Payment from "./pages/Payment/Payment";
 // STRIPE
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import UserRoute from "./helper/auth/UserRoutes";
 import UserProfile from "./helper/auth/UserProfile";
-import PrivacyPolicy from "./demos/Privacy Policy";
-import TermsAndConditions from "./demos/TermsAndConditions";
+import PrivacyPolicy from "./corepages/Privacy Policy";
+import TermsAndConditions from "./corepages/TermsAndConditions";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
