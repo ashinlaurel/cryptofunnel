@@ -32,7 +32,7 @@ export default ({
     try {
       const payload = { email: email, name: name };
       const response = await axios.post(
-        `https://thecfsquad.com/https://api.mailerlite.com/api/v2/groups/107848252/subscribers`,
+        `https://thecfsquad.com:8080/https://api.mailerlite.com/api/v2/groups/107848252/subscribers`,
         payload,
         {
           headers: {
