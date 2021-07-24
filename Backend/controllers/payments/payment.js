@@ -9,7 +9,7 @@ const e = require("express");
 
 // app.use(express.static("."));
 
-const YOUR_DOMAIN = "https://thecfsquad.com/app/ConfirmPayment";
+// const YOUR_DOMAIN = "https://thecfsquad.com/app/ConfirmPayment";
 
 const stripe = new Stripe(process.env.SECRET_KEY);
 Client.init(process.env.COINBASE_API);
