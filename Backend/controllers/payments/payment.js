@@ -16,7 +16,7 @@ Client.init(process.env.COINBASE_API);
 
 const { Charge } = resources;
 
-const plans = { 1: 175, 2: 250, 3: 100 };
+const plans = { 1: 1, 2: 250, 3: 100 };
 const indplans = { 1: 13000, 2: 18500, 3: 7500 };
 
 const discReff = {
