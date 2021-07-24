@@ -46,25 +46,25 @@ app.use("/api/mail", mailRoutes);
 
 // -----ssh keys-------------------------------
 
-// const privateKey1 = fs.readFileSync(
-//   "/etc/letsencrypt/live/thecfsquad.com/privkey.pem",
-//   "utf8"
-// );
-// const certificate1 = fs.readFileSync(
-//   "/etc/letsencrypt/live/thecfsquad.com/cert.pem",
-//   "utf8"
-// );
-// const ca1 = fs.readFileSync(
-//   "/etc/letsencrypt/live/thecfsquad.com/chain.pem",
-//   "utf8"
-// );
-// const credentials1 = {
-//   key: privateKey1,
-//   cert: certificate1,
-//   ca: ca1,
-// };
+const privateKey1 = fs.readFileSync(
+  "/etc/letsencrypt/live/thecfsquad.com/privkey.pem",
+  "utf8"
+);
+const certificate1 = fs.readFileSync(
+  "/etc/letsencrypt/live/thecfsquad.com/cert.pem",
+  "utf8"
+);
+const ca1 = fs.readFileSync(
+  "/etc/letsencrypt/live/thecfsquad.com/chain.pem",
+  "utf8"
+);
+const credentials1 = {
+  key: privateKey1,
+  cert: certificate1,
+  ca: ca1,
+};
 
-// var server = https.createServer(credentials1, app);
+var server = https.createServer(credentials1, app);
 
 // ------------------------------------------
 
@@ -72,11 +72,11 @@ app.use("/api/mail", mailRoutes);
 const port = process.env.PORT || 8000;
 
 //Starting a server production
-// server.listen(port, () => {
-//   console.log(`app is running at ${port}`);
-// });
-
-//Starting a server local
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`app is running at ${port}`);
 });
+
+//Starting a server local
+// app.listen(port, () => {
+//   console.log(`app is running at ${port}`);
+// });
