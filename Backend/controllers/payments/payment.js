@@ -66,7 +66,7 @@ let bitproducts = [
     name: "Crypto 101",
     description: "Crypto 101",
     local_price: {
-      amount: 175.0,
+      amount: 1.0,
       currency: "USD",
     },
     pricing_type: "fixed_price",
