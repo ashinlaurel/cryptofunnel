@@ -1,15 +1,20 @@
 // import Stripe from "stripe";
 const Stripe = require("stripe");
+const { Client, resources } = require("coinbase-commerce-node");
 const paymentHistory = require("../../models/paymentHistory");
 const refferal = require("../../models/refferal");
 const user = require("../../models/user");
 const logo = require("../../");
+const e = require("express");
 
 // app.use(express.static("."));
 
 const YOUR_DOMAIN = "https://thecfsquad.com/app/ConfirmPayment";
 
 const stripe = new Stripe(process.env.SECRET_KEY);
+Client.init(process.env.COINBASE_API);
+
+const { Charge } = resources;
 
 const plans = { 1: 175, 2: 250, 3: 100 };
 const indplans = { 1: 13000, 2: 18500, 3: 7500 };
@@ -53,6 +58,51 @@ let products = [
       unit_amount: 10000,
     },
     quantity: 1,
+  },
+];
+
+let bitproducts = [
+  {
+    name: "Crypto 101",
+    description: "Crypto 101",
+    local_price: {
+      amount: 175.0,
+      currency: "USD",
+    },
+    pricing_type: "fixed_price",
+    metadata: {
+      user: "jeffd23",
+    },
+    redirect_url: `${process.env.FRONTEND_DOMAIN}`,
+    cancel_url: `${process.env.FRONTEND_DOMAIN}`,
+  },
+  {
+    name: "Crypto 201",
+    description: "Crypto 201",
+    local_price: {
+      amount: 250.0,
+      currency: "USD",
+    },
+    pricing_type: "fixed_price",
+    metadata: {
+      user: "jeffd23",
+    },
+    redirect_url: `${process.env.FRONTEND_DOMAIN}`,
+    cancel_url: `${process.env.FRONTEND_DOMAIN}`,
+  },
+  {
+    name: "Signals & Analysis",
+    description: "Signals & Analysis",
+    local_price: {
+      amount: 100.0,
+      currency: "USD",
+    },
+    pricing_type: "fixed_price",
+    metadata: {
+      user: "jeffd23",
+    },
+    redirect_url: `${process.env.FRONTEND_DOMAIN}`,
+    cancel_url: `${process.env.FRONTEND_DOMAIN}`,
   },
 ];
 
@@ -103,8 +153,8 @@ exports.paymentResolver = async (req, res) => {
       line_items: [products[plannumber - 1]],
       mode: "payment",
       // allow_promotion_codes: true,
-      success_url: `${YOUR_DOMAIN}/true/{CHECKOUT_SESSION_ID}/${thecode}/${codeStatus}`,
-      cancel_url: `${YOUR_DOMAIN}/paymentfailed`,
+      success_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/true/{CHECKOUT_SESSION_ID}/${thecode}/${codeStatus}`,
+      cancel_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/paymentfailed`,
     });
 
     // res.set("Access-Control-Allow-Origin", "*");
@@ -113,6 +163,51 @@ exports.paymentResolver = async (req, res) => {
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message });
   }
+};
+exports.paymentResolverBit = async (req, res) => {
+  const { plannumber, codeStatus, country } = req.body;
+  let { thecode } = req.body;
+  console.log(plannumber);
+  console.log("codeStatus", codeStatus);
+  console.log("thecode", thecode);
+
+  // ---- refferal code apply-----
+
+  let finalamount = 0;
+  let discount = 0;
+
+  if (thecode != "" && codeStatus == true) {
+    // get discount %
+    let codedata = await refferal.findOne({ refCode: thecode });
+
+    console.log(codedata);
+
+    if (codedata.discount != "") {
+      discount = parseInt(codedata.discount);
+    }
+  }
+
+  finalamount = plans[plannumber] * (1 - discount / 100);
+  // finalamount *= 100;
+  bitproducts[plannumber - 1].local_price.amount = finalamount;
+
+  console.log(discount, finalamount);
+
+  // // --------------------------------------
+  // if (thecode == "") {
+  //   thecode = "00000";
+  // }
+
+  try {
+    const charge = await Charge.create(bitproducts[plannumber - 1]);
+    console.log(charge);
+    // res.set("Access-Control-Allow-Origin", "*");
+    res.status(200).send(charge);
+    // res.redirect(303, session.url);
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
+  // res.status(200).json({ status: "good" });
 };
 
 exports.confirmpayment = async (req, res) => {

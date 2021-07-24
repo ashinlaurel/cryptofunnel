@@ -115,6 +115,24 @@ function Payment() {
       console.log(error);
     }
   };
+  const handleBitSubmit = async () => {
+    try {
+      console.log("bitcoin ");
+      let session = await axios.post(
+        `${API}/payment/${UserProfile.getId()}/paymentBitRoute`,
+        {
+          plannumber: openTab,
+          codeStatus: codestatus,
+          thecode: thecode,
+          country: country,
+        }
+      );
+      console.log(session.data);
+      window.location.assign(session.data.hosted_url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (country == "IN") {
@@ -413,6 +431,19 @@ function Payment() {
                 }}
               >
                 {loading ? <>Loading...</> : <>PURCHASE</>}
+              </button>
+              <button
+                className={`px-4 py-1 text-white font-light tracking-wider ${
+                  loading
+                    ? `bg-primary-700`
+                    : `bg-gradient-to-r from-primary-600 to-primary-400 `
+                }  rounded hover:bg-gradient-to-r hover:from-primary-500 hover:to-primary-800`}
+                // disabled="true"
+                onClick={() => {
+                  handleBitSubmit();
+                }}
+              >
+                Purchase with Bitcoin
               </button>
             </div>
           </div>
