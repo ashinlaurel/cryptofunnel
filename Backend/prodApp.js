@@ -17,6 +17,7 @@ const userInfoRoutes = require("./routes/userInfo");
 const paymentRoutes = require("./routes/payments");
 const refferalRoutes = require("./routes/refferal");
 const mailRoutes = require("./routes/mail");
+const webHookRoutes = require("./routes/webhooks");
 
 //DB Connection
 mongoose
@@ -43,6 +44,7 @@ app.use("/api/payment", paymentRoutes);
 // refferal route
 app.use("/api/refferal", refferalRoutes);
 app.use("/api/mail", mailRoutes);
+app.use("/api/webhooks", webHookRoutes);
 
 // -----ssh keys-------------------------------
 
@@ -71,12 +73,12 @@ var server = https.createServer(credentials1, app);
 //PORT
 const port = process.env.PORT || 8000;
 
-//Starting a server production
+// //Starting a server production
 server.listen(port, () => {
   console.log(`app is running at ${port}`);
 });
 
-//Starting a server local
+// Starting a server local
 // app.listen(port, () => {
 //   console.log(`app is running at ${port}`);
 // });
