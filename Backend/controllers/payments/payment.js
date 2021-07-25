@@ -16,7 +16,7 @@ Client.init(process.env.COINBASE_API);
 
 const { Charge } = resources;
 
-const plans = { 1: 175, 2: 250, 3: 100 };
+const plans = { 1: 1, 2: 250, 3: 100 };
 const indplans = { 1: 13000, 2: 18500, 3: 7500 };
 
 const discReff = {
@@ -66,7 +66,7 @@ let bitproducts = [
     name: "Crypto 101",
     description: "Crypto 101",
     local_price: {
-      amount: 175.0,
+      amount: 1.0,
       currency: "USD",
     },
     pricing_type: "fixed_price",
