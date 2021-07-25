@@ -3,6 +3,7 @@ var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
 const { v1: uuidv1 } = require("uuid");
 const crypto = require("crypto");
+const axios = require("axios");
 
 ////////////////////////////////////// change link  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
@@ -189,6 +190,27 @@ exports.resetPassword = async (req, res) => {
     return res.status(200).json({ user });
   } catch (err) {
     console.log("REPASS ERROR", err);
+    return res.status(400).json({ error: err });
+  }
+};
+
+exports.AddToMailerList = async (req, res) => {
+  let { email, name } = req.body;
+  console.log("VERIFYING USER", req.body);
+  try {
+    const payload = { email: email, name: name };
+    const response = await axios({
+      url: `https://api.mailerlite.com/api/v2/groups/107848252/subscribers`,
+      method: "POST",
+      data: payload,
+      headers: {
+        "X-MailerLite-ApiKey": `${process.env.MAILERLITE_KEY}`,
+      },
+    });
+    // console.log(response);
+    return res.status(200).json({ res: "done" });
+  } catch (err) {
+    console.log("MailerLite Error", err);
     return res.status(400).json({ error: err });
   }
 };
