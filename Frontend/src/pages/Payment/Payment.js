@@ -116,8 +116,10 @@ function Payment() {
     }
   };
   const handleBitSubmit = async () => {
+    const userid = UserProfile.getId();
     try {
-      console.log("bitcoin ");
+      // console.log("bitcoin ");
+      console.log(userid);
       let session = await axios.post(
         `${API}/payment/${UserProfile.getId()}/paymentBitRoute`,
         {
@@ -125,6 +127,7 @@ function Payment() {
           codeStatus: codestatus,
           thecode: thecode,
           country: country,
+          userid: userid,
         }
       );
       console.log(session.data);

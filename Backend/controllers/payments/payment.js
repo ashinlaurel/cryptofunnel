@@ -72,6 +72,11 @@ let bitproducts = [
     pricing_type: "fixed_price",
     metadata: {
       user: "jeffd23",
+      refCode: "",
+      refUsed: "false",
+      finalamount: "",
+      discount: "0",
+      payable: 0,
     },
     redirect_url: `${process.env.FRONTEND_DOMAIN}`,
     cancel_url: `${process.env.FRONTEND_DOMAIN}`,
@@ -86,6 +91,11 @@ let bitproducts = [
     pricing_type: "fixed_price",
     metadata: {
       user: "jeffd23",
+      refCode: "",
+      refUsed: "false",
+      finalamount: "",
+      discount: "0",
+      payable: 0,
     },
     redirect_url: `${process.env.FRONTEND_DOMAIN}`,
     cancel_url: `${process.env.FRONTEND_DOMAIN}`,
@@ -100,6 +110,11 @@ let bitproducts = [
     pricing_type: "fixed_price",
     metadata: {
       user: "jeffd23",
+      refCode: "",
+      refUsed: "false",
+      finalamount: "",
+      discount: "0",
+      payable: 0,
     },
     redirect_url: `${process.env.FRONTEND_DOMAIN}`,
     cancel_url: `${process.env.FRONTEND_DOMAIN}`,
@@ -165,11 +180,12 @@ exports.paymentResolver = async (req, res) => {
   }
 };
 exports.paymentResolverBit = async (req, res) => {
-  const { plannumber, codeStatus, country } = req.body;
+  const { plannumber, codeStatus, country, userid } = req.body;
   let { thecode } = req.body;
   console.log(plannumber);
   console.log("codeStatus", codeStatus);
   console.log("thecode", thecode);
+  console.log("userid:", userid);
 
   // ---- refferal code apply-----
 
@@ -183,6 +199,9 @@ exports.paymentResolverBit = async (req, res) => {
     console.log(codedata);
 
     if (codedata.discount != "") {
+      bitproducts[plannumber - 1].metadata.refCode = thecode;
+      bitproducts[plannumber - 1].metadata.refUsed = "true";
+
       discount = parseInt(codedata.discount);
     }
   }
@@ -192,6 +211,11 @@ exports.paymentResolverBit = async (req, res) => {
   bitproducts[plannumber - 1].local_price.amount = finalamount;
 
   console.log(discount, finalamount);
+  bitproducts[plannumber - 1].metadata.user = userid;
+  bitproducts[plannumber - 1].metadata.finalamount = finalamount;
+  bitproducts[plannumber - 1].metadata.discount = discount;
+  bitproducts[plannumber - 1].metadata.payable =
+    plans[plannumber] * (discount / 100);
 
   // // --------------------------------------
   // if (thecode == "") {
@@ -255,6 +279,7 @@ exports.confirmpayment = async (req, res) => {
         curr: product.currency,
         refCode: "",
         discount: "",
+        method: "stripe",
       };
       // get refferal code data
       if (refStatus == "true") {

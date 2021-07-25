@@ -194,6 +194,7 @@ function UserPaymentHistory() {
               <TableCell>User</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Code</TableCell>
+              <TableCell>Method</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Plan</TableCell>
@@ -228,13 +229,19 @@ function UserPaymentHistory() {
                     {user.refCode == "" ? "Nil" : user.refCode}
                   </Badge>
                 </TableCell>
+
+                <TableCell>
+                  <p className="text-sm capitalize ">{user.method}</p>
+                </TableCell>
                 <TableCell>
                   <Badge className="text-sm ">{user.paymentStatus}</Badge>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm font-bold">
                     {user.curr == "inr" ? "₹ " : "$"}
-                    {parseInt(user.amountTotal) / 100}
+                    {user.method == "stripe"
+                      ? parseInt(user.amountTotal) / 100
+                      : parseInt(user.amountTotal)}
                   </span>
                 </TableCell>
                 <TableCell>
