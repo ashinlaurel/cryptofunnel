@@ -1,25 +1,19 @@
-var Webhook = require('coinbase-commerce-node').Webhook;
+var Webhook = require("coinbase-commerce-node").Webhook;
 
- exports.rawBody=async(req, res, next)=> {
-  req.setEncoding('utf8');
+exports.rawBody = (req, res, next) => {
+  req.setEncoding("utf8");
 
-  console.log("hereo");
+  var data = "";
 
-  var data = '';
-
- try {
-  req.on('data', function (chunk) {
+  req.on("data", function (chunk) {
     data += chunk;
   });
 
-  req.on('end', function () {
+  req.on("end", function () {
     req.rawBody = data;
     next();
-  });   
- } catch (error) {
-   console.log("error",error);
- }
-}
+  });
+};
 
 exports.coinbaseConfirmPayment = async (request, response) => {
   // const rawBody = req.rawBody;
@@ -31,26 +25,24 @@ exports.coinbaseConfirmPayment = async (request, response) => {
 
   var event;
 
-	console.log(request.headers);
-	// console.log(request.rawBody);
-
-
+  console.log(request.headers);
+  // console.log(request.rawBody);
 
   try {
-		event = Webhook.verifyEventBody(
-			request.rawBody,
-			request.headers['x-cc-webhook-signature'],
-			webhookSecret
-		);
-	} catch (error) {
-		console.log('Error occured', error.message);
+    event = Webhook.verifyEventBody(
+      request.rawBody,
+      request.headers["x-cc-webhook-signature"],
+      webhookSecret
+    );
+  } catch (error) {
+    console.log("Error occured", error.message);
 
-		return response.status(400).send('Webhook Error:' + error.message);
-	}
+    return response.status(400).send("Webhook Error:" + error.message);
+  }
 
-	console.log('Success', event.id);
+  console.log("Success", event.id);
 
-	response.status(200).send('Signed Webhook Received: ' + event.id);
+  response.status(200).send("Signed Webhook Received: " + event.id);
 
   // res.status(200);
   // try {
