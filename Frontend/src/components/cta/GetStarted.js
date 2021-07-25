@@ -8,6 +8,8 @@ import axios from "axios";
 
 import { Button, Input, HelperText, Label } from "@windmill/react-ui";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
+import { API } from "../../backend";
+import mailerBg from "../../images/mailerlite.png";
 
 const ColumnContainer = tw.div`lg:w-1/2 max-w-lg`;
 
@@ -29,18 +31,25 @@ export default ({
   const [name, setName] = useState("");
 
   const signUptoNewsLetter = async () => {
+    if (name == "") {
+      setModalMessage("Please provide a name.");
+      setMessageModal(true);
+      return;
+    }
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(email)) {
+      setModalMessage("Please provide valid email.");
+      setMessageModal(true);
+      return;
+    }
     try {
       const payload = { email: email, name: name };
-      const response = await axios.post(
-        `https://thecfsquad.com:8080/https://api.mailerlite.com/api/v2/groups/107848252/subscribers`,
-        payload,
-        {
-          headers: {
-            "X-MailerLite-ApiKey": `7cfdac204832b3681667d0bf5ea2c434`,
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
+      const response = await axios({
+        url: `${API}/mail/AddToMailerList`,
+        method: "POST",
+        data: payload,
+      });
       console.log("suss", response.data);
       setModalMessage("You are added to our mailing list!");
       setMessageModal(true);
@@ -74,54 +83,56 @@ export default ({
   };
 
   return (
-    <Container css={pushDownFooter && tw`mb-20 lg:mb-24`}>
+    <Container css={pushDownFooter && tw``}>
       {messageModalComponent()}
       <ContentWithPaddingXl>
-        <div class="flex justify-center px-6 my-12">
+        <div className="flex justify-center px-6 my-12">
           {/* <!-- Row --> */}
-          <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+          <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             {/* <!-- Col --> */}
             <div
-              class="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
+              className="w-full h-auto bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
               // style="background-image: url('https://source.unsplash.com/Mv9hjnEUHR4/600x800')"
-            ></div>
+            >
+              <img src={mailerBg} alt="mailer Image" />
+            </div>
             {/* <!-- Col --> */}
-            <div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-              <h3 class="pt-4 text-2xl text-center">
+            <div className="w-full lg:w-7/12 bg-gray-800 p-5 rounded-lg lg:rounded-l-none">
+              <h3 className="pt-4 text-2xl text-center text-green-300 font-semibold">
                 Sign Up For Our Newsletter!
               </h3>
-              <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-                <div class="mb-4 md:flex md:justify-between">
-                  <div class="mb-4 md:mr-2 md:mb-0">
+              <form className="px-8 pt-6 pb-8 mb-4 bg-gray-800 rounded">
+                <div className="mb-4 md:flex md:justify-between">
+                  <div className="mb-4 md:mr-2 md:mb-0">
                     <label
-                      class="block mb-2 text-sm font-bold text-gray-700"
+                      className="block mb-2 text-sm font-bold text-gray-100"
                       for="firstName"
                     >
                       Name
                     </label>
                     <input
-                      class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 text-sm border-gray-800 bg-gray-700 leading-tight text-gray-100 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="firstName"
                       type="text"
-                      placeholder="First Name"
+                      placeholder="Name"
                       value={name}
                       onChange={(e) => {
                         setName(e.target.value);
                       }}
                     />
                   </div>
-                  <div class="mb-4 md:mr-2 md:mb-0">
+                  <div className="mb-4 md:mr-2 md:mb-0">
                     <label
-                      class="block mb-2 text-sm font-bold text-gray-700"
+                      className="block mb-2 text-sm font-bold text-gray-100"
                       for="firstName"
                     >
                       Email
                     </label>
                     <input
-                      class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 text-sm border-gray-800 bg-gray-700 leading-tight text-gray-100 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="firstName"
                       type="email"
-                      placeholder="First Name"
+                      placeholder="Email"
                       value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
@@ -130,16 +141,15 @@ export default ({
                   </div>
                 </div>
 
-                <div class="mb-6 text-center">
+                <div className="mb-6 mt-8 text-center">
                   <button
-                    class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                    className="w-full px-4 py-2 font-bold text-gray-800 bg-green-300 rounded-full hover:bg-green-500 focus:outline-none focus:shadow-outline"
                     type="button"
                     onClick={signUptoNewsLetter}
                   >
                     Sign Up!
                   </button>
                 </div>
-                <hr class="mb-6 border-t" />
               </form>
             </div>
           </div>

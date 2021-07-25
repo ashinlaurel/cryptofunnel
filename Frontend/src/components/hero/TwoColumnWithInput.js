@@ -56,8 +56,8 @@ export default ({ roundedHeaderButton }) => {
         <TwoColumn>
           <LeftColumn>
             <Heading>
-              Trading <span tw="text-green-300">can't </span>
-              be taught!
+              Trading <span tw="text-green-300">Can't </span>
+              Be Taught!
             </Heading>
             <Paragraph>
               But it can be learnt. A few months from now you will look back and
@@ -77,7 +77,7 @@ export default ({ roundedHeaderButton }) => {
               </a>
             </Actions>
             <CustomersLogoStrip>
-              <p>Our TRUSTED Customers</p>
+              {/* <p>Our TRUSTED Customers</p> */}
               {/* <img src={CustomersLogoStripImage} alt="Our Customers" /> */}
             </CustomersLogoStrip>
           </LeftColumn>

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 
 import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
@@ -12,6 +12,21 @@ import logo from "../../images/crypto_logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import UserProfile from "../../helper/auth/UserProfile.js";
+
+import ImageLight from "../../assets/img/login-office.jpeg";
+import ImageDark from "../../assets/img/login-office-dark.jpeg";
+import { GithubIcon, TwitterIcon } from "../../icons";
+import { Label, Input, Button } from "@windmill/react-ui";
+import { useHistory } from "react-router-dom";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
+import { API } from "../../backend";
+import axios from "axios";
+import {
+  signin,
+  signup,
+  authenticate,
+  isAutheticated,
+} from "../../helper/auth/index";
 
 const Header = tw.header`
   flex justify-between items-center
@@ -81,6 +96,7 @@ export default ({
    * changing the defaultLinks variable below below.
    * If you manipulate links here, all the styling on the links is already done for you. If you pass links yourself though, you are responsible for styling the links or use the helper styled components that are defined here (NavLink)
    */
+
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss =
     collapseBreakPointCssMap[collapseBreakpointClass];
@@ -93,6 +109,433 @@ export default ({
       </LogoLink>
     </Link>
   );
+  // NAV LINKS HANDLE
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      let elem = document.getElementById(location.hash.slice(1));
+      if (elem) {
+        elem.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
+  }, [location]);
+  //LOGIN <-----------------------------------------------------------------------------------
+  let history = useHistory();
+  const [ispassmodal, setIspassmodal] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+    phone: "",
+    didRedirect: false,
+  });
+
+  const {
+    name,
+    email,
+    password,
+    error,
+    loading,
+    didRedirect,
+    confirmpassword,
+    phone,
+  } = values;
+  const [messageModal, setMessageModal] = useState(false);
+  const [modalmessage, setModalmessage] = useState("");
+  // const { user } = isAutheticated();
+
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, error: false, [name]: event.target.value });
+  };
+
+  const [isLoginModal, setIsLoginModal] = useState(false);
+  const [isSignUpModal, setIsSignUpModal] = useState(false);
+  const LogInModal = () => {
+    return (
+      <>
+        <Modal
+          className="bg-gray-900 px-12 py-10 rounded-lg "
+          isOpen={isLoginModal}
+          onClose={() => setIsLoginModal(false)}
+        >
+          <ModalHeader className="md:mx-32 mx-24 text-white">
+            <h1 className="mb-4 text-xl font-semibold text-gray-200">
+              {" "}
+              Login To Your Account{" "}
+            </h1>
+          </ModalHeader>
+          <ModalBody>
+            <div className="w-full">
+              <Label className="mt-4 ">
+                <span className="text-gray-500">Email</span>
+                <Input
+                  className="mt-1 placeholder-gray-700 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                  onChange={handleChange("email")}
+                  type="email"
+                  value={email}
+                  placeholder="john@doe.com"
+                />
+              </Label>
+              <Label className=" mt-4 mb-6 ">
+                <span className="text-gray-500">Password</span>
+                <Input
+                  className="mt-1 placeholder-gray-700 bg-gray-900 border text-white border-gray-700 p-2 rounded-md"
+                  onChange={handleChange("password")}
+                  type="password"
+                  value={password}
+                  placeholder="********"
+                />
+              </Label>
+
+              <span
+                className=" bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded cursor-pointer"
+                block
+                onClick={() => {
+                  LoginHandle();
+                }}
+              >
+                Log in
+              </span>
+
+              <hr className="my-8" />
+
+              <p className="mt-4">
+                <Link
+                  className="text-sm font-medium text-green-600 dark:text-green-400 hover:underline"
+                  // to="/forgot-password"
+                  onClick={() => setIspassmodal(true)}
+                >
+                  Forgot your password?
+                </Link>
+              </p>
+              <p className="mt-1">
+                <div
+                  className="text-sm font-medium text-green-600 dark:text-green-400 hover:underline"
+                  onClick={() => {
+                    setIsLoginModal(false);
+                    setIsSignUpModal(true);
+                  }}
+                >
+                  Create account
+                </div>
+              </p>
+            </div>
+          </ModalBody>
+          <ModalFooter></ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
+  const LoginHandle = () => {
+    setValues({ ...values, error: false, loading: true });
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(email)) {
+      setModalmessage("Please provide valid email.");
+      setMessageModal(true);
+      return;
+    }
+    if (password == "") {
+      setModalmessage("Please provide a password.");
+      setMessageModal(true);
+      return;
+    }
+
+    signin({ email, password })
+      .then((data) => {
+        // console.log("DATA", data);
+        if (data === undefined) {
+          history.push("/app");
+          return;
+        }
+        if (data.error) {
+          setModalmessage(data.error);
+          setMessageModal(true);
+          return;
+        }
+        localStorage.setItem("jwt", JSON.stringify(data));
+        // console.log("data", data.token);
+        UserProfile.setToken(data.token);
+        history.push("/app");
+        // return <Redirect to="/app" />;
+        // });
+      })
+      .catch((err) => {
+        console.log("signin request failed", err);
+      });
+  };
+
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal
+          isOpen={messageModal}
+          className="bg-gray-900 px-20 py-5 rounded-lg "
+          onClose={() => setMessageModal(false)}
+        >
+          <ModalHeader></ModalHeader>
+          <ModalBody className=" text-lg text-white">
+            <span className="text-white">{modalmessage}</span>
+          </ModalBody>
+          <ModalFooter>
+            <span
+              className=" bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded cursor-pointer"
+              onClick={() => setMessageModal(false)}
+            >
+              Okay!
+            </span>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+  // SIGNUp <-------------------------------------------------------------------------------------------------------
+
+  const AddToMailerList = async () => {
+    const payload = { email: values.email, name: values.name };
+    const response = await axios({
+      url: `${API}/mail/AddToMailerList`,
+      method: "POST",
+      data: payload,
+    });
+  };
+
+  const sendmail = async (data) => {
+    const payload = { id: data.id, name: data.name, email: data.email };
+    try {
+      const response = await axios.post(`${API}/mail/verifyEmail`, payload);
+      console.log("MAIL SEND", response.data);
+    } catch (err) {
+      console.log("verification mail error", err);
+    }
+  };
+
+  const signUpHandle = () => {
+    setValues({ ...values, error: false });
+    if (
+      values.name == "" ||
+      values.email == "" ||
+      values.password == "" ||
+      values.confirmpassword == "" ||
+      values.phone == ""
+    ) {
+      setModalmessage("Please fill all the details");
+      setMessageModal(true);
+      return;
+    }
+    if (values.password !== values.confirmpassword) {
+      setModalmessage("Confirm password does not match password");
+      setMessageModal(true);
+      return;
+    }
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(values.email)) {
+      setModalmessage("Email format is incorrect");
+      setMessageModal(true);
+      return;
+    }
+    if (!/[0-9]+/.test(values.phone)) {
+      setModalmessage("Phone Number format is incorrect");
+      setMessageModal(true);
+      return;
+    }
+
+    // console.log(values);
+    // return;
+    signup(values)
+      .then((data) => {
+        console.log("data", data);
+        sendmail(data);
+        if (data.err) {
+          setModalmessage(data.err);
+          setMessageModal(true);
+          return;
+        } else {
+          setIsLoginModal(true);
+          setModalmessage("Account Created, Please sign in to continue");
+          AddToMailerList();
+          setMessageModal(true);
+        }
+      })
+      .catch((err) => {
+        setModalmessage("Sorry, An error occured");
+        setMessageModal(true);
+        console.log("Error in signup", JSON.parse(err));
+      });
+  };
+  const SignUpModal = () => {
+    return (
+      <>
+        <Modal
+          className="bg-gray-900 px-12 py-10 rounded-lg "
+          isOpen={isSignUpModal}
+          onClose={() => setIsSignUpModal(false)}
+        >
+          <ModalHeader className="md:mx-32 mx-24 text-white">
+            <h1 className="mb-4 text-xl font-semibold text-gray-200">
+              {" "}
+              Create Your New Account{" "}
+            </h1>
+          </ModalHeader>
+          <ModalBody>
+            <div className="w-full">
+              <div className="flex flex-row ">
+                <Label className="mt-4 mr-2 w-full">
+                  <span className="text-gray-100 ">Name</span>
+                  <Input
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    onChange={handleChange("name")}
+                    type="text"
+                    value={name}
+                    placeholder="John Doe"
+                  />
+                </Label>
+                <Label className="mt-4 w-full">
+                  <span className="text-gray-100 ">Email</span>
+                  <Input
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    onChange={handleChange("email")}
+                    type="email"
+                    value={email}
+                    placeholder="john@doe.com"
+                  />
+                </Label>
+              </div>
+              <div className="flex flex-row">
+                <Label className="mt-4 w-full mr-2">
+                  <span className="text-gray-100 ">Password</span>
+                  <Input
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    onChange={handleChange("password")}
+                    type="password"
+                    value={password}
+                    placeholder="********"
+                  />
+                </Label>
+                <Label className="mt-4 w-full">
+                  <span className="text-gray-100 "> Confirm Password</span>
+                  <Input
+                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    onChange={handleChange("confirmpassword")}
+                    type="password"
+                    value={confirmpassword}
+                    placeholder="********"
+                  />
+                </Label>
+              </div>
+              <Label className="mt-4 mb-10 w-full">
+                <span className="text-gray-100 ">Phone</span>
+                <Input
+                  className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                  onChange={handleChange("phone")}
+                  type="text"
+                  value={phone}
+                />
+              </Label>
+
+              <span
+                className=" bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded cursor-pointer"
+                block
+                onClick={() => {
+                  signUpHandle();
+                }}
+              >
+                Sign Up
+              </span>
+
+              <hr className="my-8" />
+
+              <p className="mt-4">
+                <Link
+                  className="text-sm font-medium text-green-600 dark:text-green-400 hover:underline"
+                  // to="/forgot-password"
+                  onClick={() => setIspassmodal(true)}
+                >
+                  Forgot your password?
+                </Link>
+              </p>
+            </div>
+          </ModalBody>
+          <ModalFooter></ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+  // <--------------------------------------------------------------------------------------------------------------
+
+  const handleResetPassword = async () => {
+    const payload = { email: resetEmail };
+    try {
+      const response = await axios.post(`${API}/mail/resetpassemail`, payload);
+      // console.log(response.data);
+      setModalmessage(
+        "Link to reset your password has been sent to your email address."
+      );
+      setMessageModal(true);
+    } catch (err) {
+      console.log("RESETPASS err", err.response.data.error);
+      if (err.response.data.error == "USER email does not exists") {
+        setModalmessage("Sorry, a user with this email does not exist.");
+        setMessageModal(true);
+        return;
+      }
+      setModalmessage("Sorry, an error occured");
+      setMessageModal(true);
+    }
+  };
+
+  const RsestPassModal = () => {
+    return (
+      <>
+        <Modal
+          className="bg-gray-900 px-12 py-10 rounded-lg"
+          isOpen={ispassmodal}
+          onClose={() => setIspassmodal(false)}
+        >
+          <ModalHeader>
+            <span className="text-white">Recover Password</span>
+          </ModalHeader>
+          <ModalBody>
+            <div className="text-white">
+              Click Recover password to send email with password recovery email.
+              <Label className="mt-4 ">
+                <span className="text-gray-500">Email</span>
+                <Input
+                  className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                  onChange={(e) => {
+                    setResetEmail(e.target.value);
+                  }}
+                  type="email"
+                  value={resetEmail}
+                />
+              </Label>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <span
+              className=" bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded cursor-pointer"
+              block
+              onClick={() => {
+                handleResetPassword();
+                setIspassmodal(false);
+                // history.push("/signin");
+              }}
+            >
+              Recover Password
+            </span>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
 
   const defaultLinks = [
     <NavLinks key={1}>
@@ -101,22 +544,24 @@ export default ({
           Home
         </span>
       </Link>
-      <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
+      <Link to="/#aboutus">
+        {/* <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}> */}
         <span className="text-white font-semibold mx-5 cursor-pointer">
           About
         </span>
-      </ScrollLink>
+        {/* </ScrollLink> */}
+      </Link>
       {/* <NavLink href="/#">Blog</NavLink> */}
-      <ScrollLink activeClass="active" to="pricing" spy={true} smooth={true}>
+      <Link to="/#pricing">
         <span className="text-white font-semibold mx-5 cursor-pointer">
           Pricing
         </span>
-      </ScrollLink>
-      <ScrollLink activeClass="active" to="contactus" spy={true} smooth={true}>
+      </Link>
+      <Link to="/#contactus">
         <span className="text-white font-semibold mx-5 cursor-pointer">
           Contact Us
         </span>
-      </ScrollLink>
+      </Link>
       <Link to="/marketing">
         <span className="text-white font-semibold mx-5 cursor-pointer">
           Marketing
@@ -124,14 +569,28 @@ export default ({
       </Link>
       {UserProfile.getRole() == 99 ? (
         <>
-          <Link to="/signin">
+          {/* <Link to="/signin">
             <NavLink tw="lg:ml-12!">Login</NavLink>
-          </Link>
-          <Link to="/signup">
+          </Link> */}
+
+          <span onClick={() => setIsLoginModal(true)}>
+            <span className="text-white font-semibold mx-5 cursor-pointer">
+              Login{" "}
+            </span>
+          </span>
+
+          {/* <Link to="/signup">
             <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}>
               Sign Up
             </PrimaryLink>
-          </Link>
+          </Link> */}
+          <span onClick={() => setIsSignUpModal(true)}>
+            <span className="text-white font-semibold mx-5 cursor-pointer">
+              <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}>
+                SignUp{" "}
+              </PrimaryLink>
+            </span>
+          </span>
         </>
       ) : (
         <>
@@ -152,50 +611,56 @@ export default ({
           Home
         </span>
       </Link>
-      <ScrollLink activeClass="active" to="aboutus" spy={true} smooth={true}>
+      <Link to="/#aboutus">
         <div
           onClick={toggleNavbar}
           className="text-white font-semibold hover:cursor-pointer my-4 mx-6 cursor-pointer"
         >
           About
         </div>
-      </ScrollLink>
+      </Link>
       {/* <NavLink href="/#">Blog</NavLink> */}
-      <ScrollLink activeClass="active" to="pricing" spy={true} smooth={true}>
+      <Link to="/#pricing">
         <div
           onClick={toggleNavbar}
           className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer"
         >
           Pricing
         </div>
-      </ScrollLink>
-      <ScrollLink activeClass="active" to="contactus" spy={true} smooth={true}>
+      </Link>
+      <Link to="/#contactus">
         <div
           onClick={toggleNavbar}
           className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer"
         >
           Contact Us
         </div>
-      </ScrollLink>
+      </Link>
       <Link to="/marketing">
-        <span className="text-white font-semibold mx-5 cursor-pointer">
+        <span className="text-white font-semibold mx-5 pb-10 cursor-pointer">
           Marketing
         </span>
       </Link>
-      <Link to="/signin">
-        <NavLink tw="lg:ml-12!">
-          <div className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer">
-            Login
-          </div>
-        </NavLink>
-      </Link>
-      <Link to="/signup">
-        <div className="text-white font-semibold hover:cursor-pointer my-4 mt-10 mb-4 curson-pointer">
+
+      <div>
+        <div
+          onClick={() => setIsLoginModal(true)}
+          className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer"
+        >
+          Login
+        </div>
+      </div>
+
+      <div>
+        <div
+          onClick={() => setIsLoginModal(true)}
+          className="text-white font-semibold hover:cursor-pointer my-4 mx-8 cursor-pointer"
+        >
           <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}>
             Sign Up
           </PrimaryLink>
         </div>
-      </Link>
+      </div>
     </NavLinks>,
   ];
 
@@ -205,6 +670,10 @@ export default ({
 
   return (
     <Header className={className || "header-light"}>
+      {LogInModal()}
+      {messageModalComponent()}
+      {RsestPassModal()}
+      {SignUpModal()}
       <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
         {logoLink}
         {links}

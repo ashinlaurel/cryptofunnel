@@ -31,7 +31,7 @@ import {
 export default () => {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
   const HighlightedText = tw.span`text-green-300 `;
-  console.log(UserProfile.getRole());
+  // console.log(UserProfile.getRole());
 
   const [contactstate, setContactState] = useState(false);
 
@@ -209,7 +209,12 @@ export default () => {
         }
         faqs={[
           {
-            question: "Do You Post Trading Signals? ?",
+            question: "How do you reach us?",
+            answer:
+              "For any queries, feel free to email us at support@thecfsquad.com",
+          },
+          {
+            question: "Do You Post Trading Signals ?",
             answer:
               "Yes, cfsquad provides trading signals, research reports on altcoins and crypto newsletters depending on the plan you choose.",
           },
