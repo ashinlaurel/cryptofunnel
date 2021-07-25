@@ -324,8 +324,9 @@ function UserRefferals() {
       <div className=" w-1/2 mt-12 mb-4 text-gray-900">
         <p>
           You can get your own referal codes only with an Influencer account.
-          Click the button to apply and reach out to us at cfemail@gmail.com
-          with your resume to get your Influencer account.
+          Click the button to apply and reach out to us at
+          support@thecfsquad.com with your resume to get your Influencer
+          account.
         </p>
         <Button onClick={applyInfluencer} size="small" className="mt-5">
           Apply for Influencer

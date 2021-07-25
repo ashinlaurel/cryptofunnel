@@ -97,19 +97,20 @@ function Dashboard() {
         <>
           <Card className="mb-5 text-gray-900 border rounded-lg">
             <CardBody>
-              <div className="flex items-center">
+              <div className="flex items-center ">
                 <div>
                   <p className="mb-4 font-semibold">Verify Your Email!</p>
                   <p>
                     Please verify your email in order to continue with any
-                    purchases!
+                    purchases! A verification email is already sent to your
+                    email address. In case you missed it,
                     <span
                       onClick={handleVerifyEmail}
                       className="ml-1 underline text-blue-600 cursor-pointer"
                     >
                       Click Here{" "}
                     </span>{" "}
-                    to verify your email.
+                    to resend verification email.
                   </p>
                 </div>
 

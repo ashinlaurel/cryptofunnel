@@ -108,6 +108,7 @@ const AdminSignup = () => {
           return;
         } else {
           setModalMessage("Account Created");
+          AddToMailerList();
           setMessageModal(true);
           history.push("/signin");
           return;
@@ -139,6 +140,15 @@ const AdminSignup = () => {
   //     return <Redirect to="/signin" />;
   //   }
   // };
+
+  const AddToMailerList = async () => {
+    const payload = { email: values.email, name: values.name };
+    const response = await axios({
+      url: `${API}/mail/AddToMailerList`,
+      method: "POST",
+      data: payload,
+    });
+  };
 
   const messageModalComponent = () => {
     return (
