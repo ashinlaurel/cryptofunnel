@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const fs = require("fs");
+var unless = require("express-unless");
 const http = require("http");
 const https = require("https");
 const mongoose = require("mongoose");
@@ -18,6 +19,7 @@ const paymentRoutes = require("./routes/payments");
 const refferalRoutes = require("./routes/refferal");
 const mailRoutes = require("./routes/mail");
 const webHookRoutes = require("./routes/webhooks");
+const latestWebHook = require("./latestwebhook");
 const { rawBody } = require("./controllers/webhooks");
 
 //DB Connection
@@ -32,7 +34,21 @@ mongoose
   });
 
 //Middlewares
-app.use(express.json());
+var maybe = function (path, middleware) {
+  return function (req, res, next) {
+    console.log(req.path);
+    if (path === req.path) {
+      console.log("webhookkk");
+      return next();
+    } else {
+      return middleware(req, res, next);
+    }
+  };
+};
+app.use(maybe("/api/webhooks/confirmBitPayment", express.json()));
+// app.use(express.json().unless({ path: ["/api/webhooks"] }));
+// app.use(express.json()).unless({ path: ["/online"] });
+
 app.use(cookieParser());
 app.use(cors());
 // app.use(rawBody);
@@ -46,7 +62,6 @@ app.use("/api/payment", paymentRoutes);
 // refferal route
 app.use("/api/refferal", refferalRoutes);
 app.use("/api/mail", mailRoutes);
-
 app.use("/api/webhooks", webHookRoutes);
 
 // -----ssh keys-------------------------------
