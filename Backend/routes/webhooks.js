@@ -5,6 +5,6 @@ const { coinbaseConfirmPayment, rawBody } = require("../controllers/webhooks");
 
 // router.param("userId", getUserById);
 
-router.post("/confirmBitPayment", coinbaseConfirmPayment);
+router.post("/confirmBitPayment", rawBody, coinbaseConfirmPayment);
 
 module.exports = router;

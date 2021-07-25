@@ -2,6 +2,8 @@ var Webhook = require("coinbase-commerce-node").Webhook;
 
 exports.rawBody = (req, res, next) => {
   req.setEncoding("utf8");
+  console.log("middleware working");
+  // next();
 
   var data = "";
 
@@ -21,7 +23,7 @@ exports.coinbaseConfirmPayment = async (request, response) => {
   // const webhookSecret = `${process.env.WEBHOOK_SECRET}`;
   const webhookSecret = "219d37cd-8d83-40f7-bec8-378bd51cada1";
 
-  // console.log("printing:",req);
+  // console.log("printing:", request);
 
   var event;
 
