@@ -562,11 +562,11 @@ export default ({
           Contact Us
         </span>
       </Link>
-      <Link to="/marketing">
+      {/* <Link to="/marketing">
         <span className="text-white font-semibold mx-5 cursor-pointer">
           Marketing
         </span>
-      </Link>
+      </Link> */}
       {UserProfile.getRole() == 99 ? (
         <>
           {/* <Link to="/signin">
@@ -636,11 +636,11 @@ export default ({
           Contact Us
         </div>
       </Link>
-      <Link to="/marketing">
+      {/* <Link to="/marketing">
         <span className="text-white font-semibold mx-5 pb-10 cursor-pointer">
           Marketing
         </span>
-      </Link>
+      </Link> */}
 
       <div>
         <div
