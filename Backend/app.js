@@ -36,7 +36,7 @@ mongoose
 //Middlewares
 var maybe = function (path, middleware) {
   return function (req, res, next) {
-    console.log(req.path);
+    // console.log(req.path);
     if (path === req.path) {
       console.log("webhookkk");
       return next();

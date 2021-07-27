@@ -1,4 +1,7 @@
 var Webhook = require("coinbase-commerce-node").Webhook;
+const paymentHistory = require("../models/paymentHistory");
+const refferal = require("../models/refferal");
+const user = require("../models/user");
 
 exports.rawBody = (req, res, next) => {
   req.setEncoding("utf8");
@@ -27,7 +30,7 @@ exports.coinbaseConfirmPayment = async (request, response) => {
 
   var event;
 
-  console.log(request.headers);
+  // console.log(request.headers);
   // console.log(request.rawBody);
 
   try {
@@ -36,6 +39,110 @@ exports.coinbaseConfirmPayment = async (request, response) => {
       request.headers["x-cc-webhook-signature"],
       webhookSecret
     );
+    console.log("The event", event);
+
+    if (event.type === "charge:created") {
+      console.log("Charge Created");
+      // console.log(metadata, event.metadata);
+      const payload = {
+        sessionId: event.data.id,
+        customerId: event.data.metadata.user,
+        amountTotal: event.data.metadata.finalamount,
+        paymentStatus: "Payment Initiated",
+        planName: event.data.name,
+        curr: "USD",
+        refCode: event.data.metadata.refCode,
+        discount: event.data.metadata.discount,
+        method: "coinbase",
+      };
+
+      const newpayment = new paymentHistory(payload);
+      const response = await newpayment.save();
+    }
+
+    if (event.type === "charge:pending") {
+      console.log("Charge Pending");
+      let paymenthistory = await paymentHistory.findOneAndUpdate(
+        {
+          sessionId: event.data.id,
+          customerId: event.data.metadata.user,
+        },
+        { paymentStatus: "Payment Pending" }
+      );
+    }
+
+    if (event.type === "charge:confirmed") {
+      console.log("Charge Confirmed");
+
+      // payment update
+      let paymenthistory = await paymentHistory.findOneAndUpdate(
+        {
+          sessionId: event.data.id,
+          customerId: event.data.metadata.user,
+        },
+        { paymentStatus: "Success" }
+      );
+
+      // handling refferal code creator payable amount
+
+      if (event.data.metadata.refCode != "") {
+        let codedata = await refferal.findOne({
+          refCode: event.data.metadata.refCode,
+        });
+
+        if (codedata._id != "") {
+          // updating the influncer account
+          await user.findByIdAndUpdate(
+            { _id: codedata.creatorId },
+            { $inc: { payable: event.data.metadata.payable } }
+          );
+        }
+      }
+
+      // updating roles
+      let plannumber = 0;
+      switch (event.data.name) {
+        case "Crypto 101":
+          plannumber = 1;
+          break;
+        case "Crypto 201":
+          plannumber = 2;
+          break;
+        case "Signals & Analysis":
+          plannumber = 3;
+          break;
+
+        default:
+          break;
+      }
+
+      // updating the buyers account
+      await user.findByIdAndUpdate(
+        { _id: event.data.metadata.user },
+        { role: 3, plan: plannumber }
+      );
+    }
+
+    if (event.type === "charge:failed") {
+      console.log("Charge Failed");
+
+      let paymenthistory = await paymentHistory.findOneAndUpdate(
+        {
+          sessionId: event.data.id,
+          customerId: event.data.metadata.user,
+        },
+        { paymentStatus: "Payment Failed" }
+      );
+
+      // updating the buyers account
+      await user.findByIdAndUpdate(
+        { _id: event.data.metadata.user },
+        { role: 2, plan: 0 }
+      );
+
+      // TODO
+      // charge failed or expired
+    }
   } catch (error) {
     console.log("Error occured", error.message);
 
@@ -43,32 +150,5 @@ exports.coinbaseConfirmPayment = async (request, response) => {
   }
 
   console.log("Success", event.id);
-
   response.status(200).send("Signed Webhook Received: " + event.id);
-
-  // res.status(200);
-  // try {
-  //   const event = Webhook.verifySigHeader(rawBody, signature, webhookSecret);
-
-  //   if (event.type === "charge:pending") {
-  //     // TODO
-  //     // user paid, but transaction not confirm on blockchain yet
-  //   }
-
-  //   if (event.type === "charge:confirmed") {
-  //     // TODO
-  //     // all good, charge confirmed
-  //   }
-
-  //   if (event.type === "charge:failed") {
-  //     // TODO
-  //     // charge failed or expired
-  //   }
-  //   // res.status(200).json({ raw: rawBody, status: event.id });
-  //   // res.send(`success ${event.id}`);
-  // } catch (error) {
-  //   // functions.logger.error(error);
-  //   console.log(error);
-  //   res.status(400).send("failure!");
-  // }
 };

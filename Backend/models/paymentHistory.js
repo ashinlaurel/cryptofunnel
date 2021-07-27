@@ -34,6 +34,9 @@ var paymentHistorySchema = new mongoose.Schema(
       maxlength: 2,
       default: "00000000",
     },
+    method: {
+      type: String, // bitcoin or stripe
+    },
     // reffIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
