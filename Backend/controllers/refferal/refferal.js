@@ -83,6 +83,7 @@ exports.getByUser = async (req, res) => {
     // populate: "product",
     page: pages.page,
     limit: pages.limit,
+    sort: { createdAt: -1 },
   };
 
   let filteroptions = {

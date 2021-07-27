@@ -391,7 +391,7 @@ function Payment() {
                   />
                 </div>
                 <button
-                  class="px-4 py-1  text-white text-sm font-light tracking-wider bg-green-500 hover:bg-green-600 rounded"
+                  class="px-4 py-1  text-white text-sm font-light tracking-wider bg-primary-500 hover:bg-primary-600 rounded"
                   onClick={() => {
                     handleRefferalCheck();
                   }}
@@ -417,33 +417,33 @@ function Payment() {
               </div>
             )}
 
-            <div class="mt-4">
+            <div class="mt-4 flex flex-col">
               <button
-                className={`px-4 py-1 text-white font-light tracking-wider ${
+                className={`px-4 py-1 text-white font-light  my-4 tracking-wider ${
                   loading
                     ? `bg-primary-700`
-                    : `bg-gradient-to-r from-primary-600 to-primary-400 `
-                }  rounded hover:bg-gradient-to-r hover:from-primary-500 hover:to-primary-800`}
+                    : `bg-gradient-to-r from-green-600 to-green-400 `
+                }  rounded hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600`}
                 disabled={loading ? "true" : ""}
                 // disabled="true"
                 onClick={() => {
                   handleSubmit();
                 }}
               >
-                {loading ? <>Loading...</> : <>PURCHASE</>}
+                {loading ? <>Loading...</> : <>PURCHASE WITH CARD (FIAT)</>}
               </button>
               <button
                 className={`px-4 py-1 text-white font-light tracking-wider ${
                   loading
                     ? `bg-primary-700`
-                    : `bg-gradient-to-r from-primary-600 to-primary-400 `
-                }  rounded hover:bg-gradient-to-r hover:from-primary-500 hover:to-primary-800`}
+                    : `bg-gradient-to-r from-orange-600 to-orange-400 `
+                }  rounded hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-600`}
                 // disabled="true"
                 onClick={() => {
                   handleBitSubmit();
                 }}
               >
-                Purchase with Bitcoin
+                PURCHASE WITH CRYPTO
               </button>
             </div>
           </div>

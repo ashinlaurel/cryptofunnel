@@ -255,22 +255,23 @@ function UserRefferals() {
 
       {/* <CTA /> */}
 
-      {codeExists ? (
-        <TableContainer>
-          <Table>
-            <TableHeader>
-              <tr>
-                {/* <TableCell>Client</TableCell> */}
-                <TableCell>Code</TableCell>
-                <TableCell>Discount</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Created At</TableCell>
-              </tr>
-            </TableHeader>
-            <TableBody>
-              {data.map((user, i) => (
-                <TableRow key={i}>
-                  {/* <TableCell>
+      {
+        codeExists ? (
+          <TableContainer>
+            <Table>
+              <TableHeader>
+                <tr>
+                  {/* <TableCell>Client</TableCell> */}
+                  <TableCell>Code</TableCell>
+                  <TableCell>Discount</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Created At</TableCell>
+                </tr>
+              </TableHeader>
+              <TableBody>
+                {data.map((user, i) => (
+                  <TableRow key={i}>
+                    {/* <TableCell>
                   <div className="flex items-center text-sm">
                     <Avatar
                       className="hidden mr-3 md:block"
@@ -285,27 +286,27 @@ function UserRefferals() {
                     </div>
                   </div>
                 </TableCell> */}
-                  <TableCell>
-                    <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
-                      {user.refCode}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm ">{user.discount}%</span>
-                  </TableCell>
-                  <TableCell>
-                    <Badge type={user.status}>Active</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">
-                      {new Date(user.createdAt).toLocaleDateString()}
-                    </span>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          {/* <TableFooter>
+                    <TableCell>
+                      <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
+                        {user.refCode}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm ">{user.discount}%</span>
+                    </TableCell>
+                    <TableCell>
+                      <Badge type={user.status}>Active</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">
+                        {new Date(user.createdAt).toLocaleDateString()}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            {/* <TableFooter>
           <Pagination
             totalResults={totalResults}
             resultsPerPage={resultsPerPage}
@@ -313,15 +314,15 @@ function UserRefferals() {
             onChange={onPageChange}
           />
         </TableFooter> */}
-        </TableContainer>
-      ) : (
-        <div className="mt-2 mb-4">
-          <Button onClick={getNewCode} size="large">
-            Get New Refferal Code +
-          </Button>
-        </div>
-      )}
-      <div className=" w-1/2 mt-12 mb-4 text-gray-900">
+          </TableContainer>
+        ) : null
+        // <div className="mt-2 mb-4">
+        //   <Button onClick={getNewCode} size="large">
+        //     Get New Refferal Code +
+        //   </Button>
+        // </div>
+      }
+      <div className=" w-1/2 mt-6 mb-4 text-gray-900">
         <p>
           You can get your own referal codes only with an Influencer account.
           Click the button to apply and reach out to us at
