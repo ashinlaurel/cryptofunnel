@@ -44,7 +44,7 @@ exports.coinbaseConfirmPayment = async (request, response) => {
     console.log("The event", event);
 
     if (event.type === "charge:created") {
-      console.log("Charge Created");
+      console.log("Charge Create+d");
       // console.log(metadata, event.metadata);
       const payload = {
         sessionId: event.data.id,

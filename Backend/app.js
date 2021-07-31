@@ -19,7 +19,6 @@ const paymentRoutes = require("./routes/payments");
 const refferalRoutes = require("./routes/refferal");
 const mailRoutes = require("./routes/mail");
 const webHookRoutes = require("./routes/webhooks");
-const latestWebHook = require("./latestwebhook");
 const { rawBody } = require("./controllers/webhooks");
 
 //DB Connection
