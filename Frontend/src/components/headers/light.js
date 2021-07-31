@@ -109,6 +109,8 @@ export default ({
       </LogoLink>
     </Link>
   );
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   // NAV LINKS HANDLE
 
   const location = useLocation();
@@ -184,6 +186,10 @@ export default ({
                   placeholder="john@doe.com"
                 />
               </Label>
+              {email != "" && !re.test(email) ? (
+                <span className="text-red-500">Please enter valid email</span>
+              ) : null}
+
               <Label className=" mt-4 mb-6 ">
                 <span className="text-gray-500">Password</span>
                 <Input
@@ -237,8 +243,7 @@ export default ({
 
   const LoginHandle = () => {
     setValues({ ...values, error: false, loading: true });
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (!re.test(email)) {
       setModalmessage("Please provide valid email.");
       setMessageModal(true);
@@ -337,8 +342,7 @@ export default ({
       setMessageModal(true);
       return;
     }
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (!re.test(values.email)) {
       setModalmessage("Email format is incorrect");
       setMessageModal(true);
@@ -409,6 +413,11 @@ export default ({
                     value={email}
                     placeholder="john@doe.com"
                   />
+                  {email != "" && !re.test(email) ? (
+                    <span className="text-red-500">
+                      Please enter valid email
+                    </span>
+                  ) : null}
                 </Label>
               </div>
               <div className="flex flex-row">
@@ -431,6 +440,11 @@ export default ({
                     value={confirmpassword}
                     placeholder="********"
                   />
+                  {password != confirmpassword ? (
+                    <span className="text-red-500">
+                      Passwords do not match!
+                    </span>
+                  ) : null}
                 </Label>
               </div>
               <Label className="mt-4 mb-10 w-full">

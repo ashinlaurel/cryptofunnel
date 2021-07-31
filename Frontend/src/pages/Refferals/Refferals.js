@@ -35,6 +35,8 @@ function Refferals() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [condition, setCondition] = useState("");
+  const [messageModal, setMessageModal] = useState(false);
+  const [modalmessage, setModalmessage] = useState("");
 
   // pagination setup
   const resultsPerPage = 10;
@@ -118,6 +120,25 @@ function Refferals() {
     );
   };
 
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal isOpen={messageModal} onClose={() => setMessageModal(false)}>
+          <ModalHeader>{modalmessage}</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setMessageModal(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+
   // on page change, load new sliced data
   // here you would make another server request for new data
 
@@ -188,9 +209,28 @@ function Refferals() {
     setIsModalOpen(false);
   };
 
+  const HandleDeleteRefferal = async (id) => {
+    try {
+      const response = await axios.post(
+        `${API}/refferal/${UserProfile.getId()}/deleteRefferal`,
+        { id: id }
+      );
+      console.log(response);
+      let temp = data.filter((e) => e._id != id);
+      setData(temp);
+      setModalmessage("Deleted");
+      setMessageModal(true);
+    } catch (err) {
+      console.log("Delete error", err);
+      setModalmessage("Sorry,an error occured");
+      setMessageModal(true);
+    }
+  };
+
   return (
     <>
       {theModal()}
+      {messageModalComponent()}
       <PageTitle>Refferals </PageTitle>
 
       {/* <CTA /> */}
@@ -305,6 +345,7 @@ function Refferals() {
               <TableCell>Discount</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Created At</TableCell>
+              <TableCell>Delete</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
@@ -340,6 +381,14 @@ function Refferals() {
                   <span className="text-sm">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </span>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    layout="outline"
+                    onClick={() => HandleDeleteRefferal(user._id)}
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

@@ -8,6 +8,7 @@ const {
   checkIfExist,
   getNewCode,
   getCodeData,
+  deleteRefferal,
 } = require("../controllers/refferal/refferal");
 const { getUserById } = require("../controllers/user");
 
@@ -20,5 +21,6 @@ router.post("/:userId/getbyuser", isSignedIn, getByUser);
 // router.post("/:userId/checkIfExists", isSignedIn, checkIfExist);
 router.post("/:userId/checkIfExists", isSignedIn, checkIfExist);
 router.post("/:userId/getCodeData", getCodeData);
+router.post("/:userId/deleteRefferal", deleteRefferal);
 
 module.exports = router;

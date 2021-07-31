@@ -1,5 +1,6 @@
 const { response } = require("express");
 let referralCodeGenerator = require("referral-code-generator");
+const { findByIdAndRemove } = require("../../models/refferal");
 const refferal = require("../../models/refferal");
 
 const Refferal = require("../../models/refferal");
@@ -42,6 +43,20 @@ exports.createNewRefferal = async (req, res) => {
     let response = newrefferal.save();
 
     res.status(200).send(response);
+  } catch (err) {
+    res.status(500).json({ statusCode: 500, message: err.message });
+  }
+};
+exports.deleteRefferal = async (req, res) => {
+  try {
+    // console.log(req.body);
+    let { id } = req.body;
+
+    // console.log("here", payload);
+
+    await Refferal.findByIdAndRemove(id);
+
+    res.status(200).send({ message: "success" });
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message });
   }
