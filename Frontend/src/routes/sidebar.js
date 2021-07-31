@@ -82,7 +82,7 @@ if (UserProfile.getRole() == 4)
     {
       path: `/app/influencerpage/${UserProfile.getId()}`, // the url
       icon: "HomeIcon", // the component being exported from icons/index.js
-      name: "Profine ", // name that appear in Sidebar
+      name: "Profile ", // name that appear in Sidebar
     }
   );
 

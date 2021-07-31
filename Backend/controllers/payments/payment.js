@@ -362,6 +362,7 @@ exports.getAllPayHist = (req, res) => {
     populate: "customerId",
     page: pages.page,
     limit: pages.limit,
+    sort: { createdAt: -1 },
   };
 
   let filteroptions = {
