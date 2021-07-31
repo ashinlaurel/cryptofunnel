@@ -116,7 +116,9 @@ export default ({
   useEffect(() => {
     if (location.hash) {
       let elem = document.getElementById(location.hash.slice(1));
-      if (elem) {
+      console.log(location.hash.slice(1));
+      if (location.hash.slice(1) == "signup") setIsSignUpModal(true);
+      else if (elem) {
         elem.scrollIntoView({ behavior: "smooth" });
       }
     } else {
@@ -323,8 +325,8 @@ export default ({
       values.name == "" ||
       values.email == "" ||
       values.password == "" ||
-      values.confirmpassword == "" ||
-      values.phone == ""
+      values.confirmpassword == ""
+      // values.phone == ""
     ) {
       setModalmessage("Please fill all the details");
       setMessageModal(true);

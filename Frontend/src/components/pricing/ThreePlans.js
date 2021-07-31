@@ -202,7 +202,7 @@ export default ({
                 ))}
               </PlanFeatures>
               <PlanAction>
-                <Link to="/app/dashboard">
+                <Link to="/#signup">
                   <BuyNowButton
 
                   // css={!plan.featured && highlightGradientsCss[index]}
