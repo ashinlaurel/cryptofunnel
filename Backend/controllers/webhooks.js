@@ -165,7 +165,7 @@ exports.stripeWebhook = async (req, res) => {
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
     let signature = req.headers["stripe-signature"];
-    console.log(`req.body`, req.rawBody);
+    // console.log(`req.body`, req.rawBody);
 
     try {
       event = stripe.webhooks.constructEvent(
@@ -186,8 +186,47 @@ exports.stripeWebhook = async (req, res) => {
     data = req.rawBody.data;
     eventType = req.rawBody.type;
   }
+  // console.log("eventType", eventType, data);
 
   switch (eventType) {
+    case "customer.subscription.deleted":
+      let customerId = data.object.customer;
+      // customerId = "0"; //........................................................
+      try {
+        let updateuser = await user.findOneAndUpdate(
+          { stripeCustomerId: customerId },
+          { role: 2, plan: 0, stripeCustomerId: "0" },
+          {
+            safe: true,
+            useFindAndModify: false,
+            returnOriginal: false,
+          }
+        );
+        if (updateuser == null) {
+          console.log("Cancel failed", updateuser);
+          return;
+        }
+
+        const payload = {
+          sessionId: "Nil",
+          customerId: updateuser._id,
+          amountTotal: "0",
+          paymentStatus: "Cancelled",
+          planName: "Signals & Analysis",
+          curr: "",
+          refCode: "",
+          discount: "0",
+          method: "stripe",
+        };
+        const newpayment = new paymentHistory(payload);
+        await newpayment.save();
+        console.log("CANCELLED Successfully");
+        // return res.status(200).json(portalSession);
+      } catch (err) {
+        console.log("ERROR", err);
+      }
+
+      break;
     case "checkout.session.completed":
       // Payment is successful and the subscription is created.
       // You should provision the subscription and save the customer ID to your database.

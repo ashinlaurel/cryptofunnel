@@ -42,10 +42,15 @@ var userSchema = new mongoose.Schema(
       type: Number,
       default: 0, /// 0: No plan purchased ,1: 1st plan purchased, 2: 2nd plan purchased , 3:  3rd plan purchased
     },
+    stripeCustomerId: {
+      type: String,
+      default: "0",
+    },
     purchases: {
       type: Array,
       default: [],
     },
+
     InfulencerRequest: {
       type: Boolean,
       default: false,

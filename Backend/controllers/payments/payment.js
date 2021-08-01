@@ -49,14 +49,7 @@ let products = [
     quantity: 1,
   },
   {
-    price_data: {
-      currency: "usd",
-      product_data: {
-        name: "Signals & Analysis",
-        images: ["https://i.imgur.com/7JApXKO.png"],
-      },
-      unit_amount: 10000,
-    },
+    price: process.env.SIGANDANALPRICEID,
     quantity: 1,
   },
 ];
@@ -143,16 +136,17 @@ exports.paymentResolver = async (req, res) => {
       discount = parseInt(codedata.discount);
     }
   }
-
-  if (country == "notIN") {
-    finalamount = plans[plannumber] * (1 - discount / 100);
-    finalamount *= 100;
-    products[plannumber - 1].price_data.unit_amount = finalamount;
-  } else {
-    finalamount = indplans[plannumber] * (1 - discount / 100);
-    finalamount *= 100;
-    products[plannumber - 1].price_data.unit_amount = finalamount;
-    products[plannumber - 1].price_data.currency = "inr";
+  if (plannumber <= 2) {
+    if (country == "notIN") {
+      finalamount = plans[plannumber] * (1 - discount / 100);
+      finalamount *= 100;
+      products[plannumber - 1].price_data.unit_amount = finalamount;
+    } else {
+      finalamount = indplans[plannumber] * (1 - discount / 100);
+      finalamount *= 100;
+      products[plannumber - 1].price_data.unit_amount = finalamount;
+      products[plannumber - 1].price_data.currency = "inr";
+    }
   }
 
   console.log(discount, finalamount);
@@ -166,7 +160,7 @@ exports.paymentResolver = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [products[plannumber - 1]],
-      mode: "payment",
+      mode: plannumber == 3 ? "subscription" : "payment",
       // allow_promotion_codes: true,
       success_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/true/{CHECKOUT_SESSION_ID}/${thecode}/${codeStatus}`,
       cancel_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/paymentfailed`,
@@ -273,6 +267,7 @@ exports.confirmpayment = async (req, res) => {
       const payload = {
         sessionId: session.id,
         customerId: id,
+
         amountTotal: session.amount_total,
         paymentStatus: payloadstatus,
         planName: product.description,
@@ -335,12 +330,12 @@ exports.confirmpayment = async (req, res) => {
         // updating the buyers account
         await user.findByIdAndUpdate(
           { _id: id },
-          { role: 3, plan: plannumber }
+          { role: 3, plan: plannumber, stripeCustomerId: customer.id }
         );
       }
     }
 
-    // console.log(session.payment_status);
+    // console.log("Customer", customer);
     res
       .status(200)
       .send({ message: "success", product: outproduct, customer: outcustomer });
@@ -459,6 +454,27 @@ exports.getPaymentIntent = async (req, res) => {
     // res.status(200).send(finalamount);
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message });
+  }
+};
+
+exports.getMangeSubscriptionURL = async (req, res) => {
+  const { id } = req.body;
+  const returnUrl = "http://localhost:3000/app/myplan";
+  // console.log(id);
+
+  try {
+    let users = await user.findById(id).exec();
+    // let user = users[0];
+    const customerId = users.stripeCustomerId;
+    // console.log(users);
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl,
+    });
+    return res.status(200).json(portalSession);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
 };
 

@@ -4,7 +4,7 @@ import PageTitle from "../components/Typography/PageTitle";
 import SectionTitle from "../components/Typography/SectionTitle";
 import CTA from "../components/CTA";
 import InfoCard from "../components/Cards/InfoCard";
-import { Card, CardBody } from "@windmill/react-ui";
+import { Card, CardBody, Button } from "@windmill/react-ui";
 import { CartIcon, ChatIcon, MoneyIcon, PeopleIcon } from "../icons";
 import RoundIcon from "../components/RoundIcon";
 import Payment from "./Payment/Payment";
@@ -43,6 +43,21 @@ function Cards() {
   useEffect(() => {
     getCustomerInfo();
   }, []);
+
+  const GetSubURL = async () => {
+    try {
+      let session = await Axios.post(
+        `${API}/payment/${UserProfile.getId()}/getMangeSubscriptionURL`,
+        {
+          id: UserProfile.getId(),
+        }
+      );
+      console.log(session.data.url);
+      window.location.assign(session.data.url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       {UserProfile.getRole() == 2 ? (
@@ -75,6 +90,12 @@ function Cards() {
                       </p>
                     </>
                   ) : null}
+                  {plan == 3 ? (
+                    <Button className="my-4 " onClick={GetSubURL}>
+                      Manage Subscription
+                    </Button>
+                  ) : null}
+                  <div></div>
                 </div>
 
                 {/* <div className="ml-10">

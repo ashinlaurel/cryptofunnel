@@ -10,6 +10,7 @@ import { Subheading } from "../../components/misc/Headings";
 import DashBoardPlans from "../../components/pricing/PricingPlans";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
 import { Label, Input, Button } from "@windmill/react-ui";
+import { Link, useLocation } from "react-router-dom";
 
 function Payment() {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
@@ -72,6 +73,14 @@ function Payment() {
     setThecode(e.target.value);
   };
   const handleRefferalCheck = async () => {
+    if (openTab == 3) {
+      setModalmessage(
+        "You cannot avail a discount on this plan using this referral code. This code is appliable only for 'Crypto 101' and 'Crypto 201'."
+      );
+      setMessageModal(true);
+      setDiscount(0);
+      return;
+    }
     try {
       console.log(thecode);
       let response = await axios.post(
@@ -116,6 +125,13 @@ function Payment() {
     }
   };
   const handleBitSubmit = async () => {
+    if (openTab == 3) {
+      setModalmessage(
+        "This plan can only be purchased with card as it is on a subscription basis. Please select Pay with crypto to continue"
+      );
+      setMessageModal(true);
+      return;
+    }
     const userid = UserProfile.getId();
     try {
       // console.log("bitcoin ");
@@ -229,6 +245,13 @@ function Payment() {
                     onClick={(e) => {
                       e.preventDefault();
                       setOpenTab(3);
+                      if (discount !== 0) {
+                        setModalmessage(
+                          "Referral code not compatible with this plan."
+                        );
+                        setMessageModal(true);
+                        setDiscount(0);
+                      }
                     }}
                     data-toggle="tab"
                     href="#link3"
@@ -448,6 +471,20 @@ function Payment() {
               >
                 PURCHASE WITH CRYPTO
               </button>
+              <p className=" mt-2 font-light text-sm text-gray-700 leading-4">
+                By cliking purchase options, you are agreeing to our{" "}
+                <Link to="/TermsAndConditions" className="font-semibold">
+                  Terms and Conditions
+                </Link>
+              </p>
+              <p className=" mt-2 font-light text-sm text-gray-600 leading-4">
+                *Please not that referral discounts are not applicable with
+                Signals & Analysis plan.
+              </p>
+              <p className="font-light text-sm text-gray-600 leading-4">
+                *Subscibtion based plan "Signals & Analysis" can only be
+                purchased with card, not via crypto.
+              </p>
             </div>
           </div>
         </div>

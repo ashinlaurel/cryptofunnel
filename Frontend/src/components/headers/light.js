@@ -348,11 +348,6 @@ export default ({
       setMessageModal(true);
       return;
     }
-    if (!/[0-9]+/.test(values.phone)) {
-      setModalmessage("Phone Number format is incorrect");
-      setMessageModal(true);
-      return;
-    }
 
     // console.log(values);
     // return;
