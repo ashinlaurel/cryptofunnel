@@ -15,7 +15,7 @@ import * as serviceWorker from "./serviceWorker";
 ReactDOM.render(
   <SidebarProvider>
     <Suspense fallback={<ThemedSuspense />}>
-      <Windmill dark usePreferences>
+      <Windmill dark>
         <App />
       </Windmill>
     </Suspense>
