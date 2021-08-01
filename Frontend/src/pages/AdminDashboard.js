@@ -99,7 +99,7 @@ function Dashboard() {
           {/* ---------------------------Condition Drop Down-------------------------------------- */}
           <div class="relative mx-1 ">
             <select
-              class=" shadow-md h-full rounded border block dark:appearance-none w-full bg-gray-900 border-gray-500 text-gray-100 py-1 xl:py-2  xl: px-4  leading-tight "
+              class=" shadow-md h-full rounded border block dark:appearance-none w-full bg-cool-gray-900 border-gray-500 text-gray-100 py-1 xl:py-2  xl: px-4  leading-tight "
               // value={condition}
               onChange={(e) => {
                 setPlan(e.target.value);
@@ -146,7 +146,7 @@ function Dashboard() {
                 value={searchquery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search"
-                class="shadow-md z-20 appearance-none rounded border bg-gray-900 border-gray-500 text-gray-100 border-b block py-1 px-8  xl:pl-8 xl:pr-6 xl:py-2 w-full  text-sm placeholder-gray-400  "
+                class="shadow-md z-20 appearance-none rounded border bg-cool-gray-900 border-gray-500 text-gray-100 border-b block py-1 px-8  xl:pl-8 xl:pr-6 xl:py-2 w-full  text-sm placeholder-gray-400  "
               />
             </form>
           </div>

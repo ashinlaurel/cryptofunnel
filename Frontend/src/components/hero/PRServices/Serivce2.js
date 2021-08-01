@@ -23,7 +23,7 @@ const Paragraph = tw.p`my-5 lg:my-8 text-base text-gray-100 xl:text-lg`;
 const Actions = styled.div`
   ${tw`relative max-w-md text-center mx-auto lg:-ml-1`}
   input {
-    ${tw`sm:pr-48 pl-8 py-4 sm:py-5  text-gray-300 rounded-full bg-gray-900 border-2 w-full border-green-300 font-medium focus:outline-none transition duration-300  focus:border-green-500 hover:border-green-500`}
+    ${tw`sm:pr-48 pl-8 py-4 sm:py-5  text-gray-300 rounded-full bg-cool-gray-900 border-2 w-full border-green-300 font-medium focus:outline-none transition duration-300  focus:border-green-500 hover:border-green-500`}
   }
   button {
     ${tw`w-full  sm:absolute right-0 top-0 bottom-0 bg-green-600 text-gray-100 font-bold mr-2 my-4 sm:my-2 rounded-full py-4 flex items-center justify-center sm:w-40 sm:leading-none focus:outline-none hover:bg-green-800 transition duration-300`}

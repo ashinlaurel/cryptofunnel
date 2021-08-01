@@ -87,7 +87,7 @@ const AdminLogin = () => {
               <Label className="mt-4 ">
                 <span className="text-gray-500">Email</span>
                 <Input
-                  className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                  className="mt-1 bg-cool-gray-900 text-white border border-gray-700 p-2 rounded-md"
                   onChange={(e) => {
                     setResetEmail(e.target.value);
                   }}
@@ -136,10 +136,10 @@ const AdminLogin = () => {
 
   const loginForm = () => {
     return (
-      <div className="flex items-center min-h-screen p-6 bg-gray-50 bg-gray-900">
+      <div className="flex items-center min-h-screen p-6 bg-gray-50 bg-cool-gray-900">
         {RsestPassModal()}
         {messageModalComponent()}
-        <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-gray-900 border border-gray-700 rounded-lg shadow-xl dark:bg-gray-800">
+        <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-cool-gray-900 border border-gray-700 rounded-lg shadow-xl dark:bg-gray-800">
           <div className="flex flex-col overflow-y-auto md:flex-row">
             <div className="h-32 md:h-auto md:w-1/2">
               <img
@@ -163,7 +163,7 @@ const AdminLogin = () => {
                 <Label className="mt-4 ">
                   <span className="text-gray-500">Email</span>
                   <Input
-                    className="mt-1 placeholder-gray-700 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                    className="mt-1 placeholder-gray-700 bg-cool-gray-900 text-white border border-gray-700 p-2 rounded-md"
                     onChange={handleChange("email")}
                     type="email"
                     value={email}
@@ -173,7 +173,7 @@ const AdminLogin = () => {
                 <Label className="mt-4 ">
                   <span className="text-gray-500">Password</span>
                   <Input
-                    className="mt-1 placeholder-gray-700 bg-gray-900 border text-white border-gray-700 p-2 rounded-md"
+                    className="mt-1 placeholder-gray-700 bg-cool-gray-900 border text-white border-gray-700 p-2 rounded-md"
                     onChange={handleChange("password")}
                     type="password"
                     value={password}

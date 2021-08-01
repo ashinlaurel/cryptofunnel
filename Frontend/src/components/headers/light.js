@@ -66,7 +66,7 @@ export const NavToggle = tw.button`
   lg:hidden z-20 focus:outline-none hocus:text-gray-500 transition duration-300
 `;
 export const MobileNavLinks = motion(styled.div`
-  ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg bg-gray-900  text-gray-900 `}
+  ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg bg-cool-gray-900  text-gray-900 `}
   ${NavLinks} {
     ${tw`flex flex-col items-center `}
   }
@@ -160,11 +160,18 @@ export default ({
 
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isSignUpModal, setIsSignUpModal] = useState(false);
+
+  const handleKeyPress = (event) => {
+    // look for the `Enter` keyCode
+    if (event.keyCode === 13 || event.which === 13) {
+      LoginHandle();
+    }
+  };
   const LogInModal = () => {
     return (
       <>
         <Modal
-          className="bg-gray-900 px-12 py-10 rounded-lg  "
+          className="bg-cool-gray-900 px-12 py-10 rounded-lg  "
           isOpen={isLoginModal}
           onClose={() => setIsLoginModal(false)}
         >
@@ -179,10 +186,11 @@ export default ({
               <Label className="mt-4 ">
                 <span className="text-gray-500">Email</span>
                 <Input
-                  className="mt-1 placeholder-gray-700 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                  className="mt-1 placeholder-gray-700 bg-cool-gray-900 text-white border border-gray-700 p-2 rounded-md"
                   onChange={handleChange("email")}
                   type="email"
                   value={email}
+                  onKeyPress={handleKeyPress}
                   placeholder="john@doe.com"
                 />
               </Label>
@@ -193,10 +201,11 @@ export default ({
               <Label className=" mt-4 mb-6 ">
                 <span className="text-gray-500">Password</span>
                 <Input
-                  className="mt-1 placeholder-gray-700 bg-gray-900 border text-white border-gray-700 p-2 rounded-md"
+                  className="mt-1 placeholder-gray-700 bg-cool-gray-900 border text-white border-gray-700 p-2 rounded-md"
                   onChange={handleChange("password")}
                   type="password"
                   value={password}
+                  onKeyPress={handleKeyPress}
                   placeholder="********"
                 />
               </Label>
@@ -284,7 +293,7 @@ export default ({
       <>
         <Modal
           isOpen={messageModal}
-          className="bg-gray-900 px-20 py-5 rounded-lg "
+          className="bg-cool-gray-900 px-20 py-5 rounded-lg "
           onClose={() => setMessageModal(false)}
         >
           <ModalHeader></ModalHeader>
@@ -376,7 +385,7 @@ export default ({
     return (
       <>
         <Modal
-          className="bg-gray-900 px-12 py-10 rounded-lg "
+          className="bg-cool-gray-900 px-12 py-10 rounded-lg "
           isOpen={isSignUpModal}
           onClose={() => setIsSignUpModal(false)}
         >
@@ -392,7 +401,7 @@ export default ({
                 <Label className="mt-4 mr-2 w-full">
                   <span className="text-gray-100 ">Name</span>
                   <Input
-                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("name")}
                     type="text"
                     value={name}
@@ -402,7 +411,7 @@ export default ({
                 <Label className="mt-4 w-full">
                   <span className="text-gray-100 ">Email</span>
                   <Input
-                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("email")}
                     type="email"
                     value={email}
@@ -419,7 +428,7 @@ export default ({
                 <Label className="mt-4 w-full mr-2">
                   <span className="text-gray-100 ">Password</span>
                   <Input
-                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("password")}
                     type="password"
                     value={password}
@@ -429,7 +438,7 @@ export default ({
                 <Label className="mt-4 w-full">
                   <span className="text-gray-100 "> Confirm Password</span>
                   <Input
-                    className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                    className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("confirmpassword")}
                     type="password"
                     value={confirmpassword}
@@ -445,7 +454,7 @@ export default ({
               <Label className="mt-4 mb-10 w-full">
                 <span className="text-gray-100 ">Phone</span>
                 <Input
-                  className="mt-1 bg-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
+                  className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                   onChange={handleChange("phone")}
                   type="text"
                   value={phone}
@@ -507,7 +516,7 @@ export default ({
     return (
       <>
         <Modal
-          className="bg-gray-900 px-12 py-10 rounded-lg"
+          className="bg-cool-gray-900 px-12 py-10 rounded-lg"
           isOpen={ispassmodal}
           onClose={() => setIspassmodal(false)}
         >
@@ -520,7 +529,7 @@ export default ({
               <Label className="mt-4 ">
                 <span className="text-gray-500">Email</span>
                 <Input
-                  className="mt-1 bg-gray-900 text-white border border-gray-700 p-2 rounded-md"
+                  className="mt-1 bg-cool-gray-900 text-white border border-gray-700 p-2 rounded-md"
                   onChange={(e) => {
                     setResetEmail(e.target.value);
                   }}
