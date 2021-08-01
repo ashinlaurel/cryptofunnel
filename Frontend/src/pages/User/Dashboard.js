@@ -95,7 +95,7 @@ function Dashboard() {
       {/* <!-- Cards --> */}
       {UserProfile.getRole() == 0 ? (
         <>
-          <Card className="mb-5 text-gray-900 border rounded-lg">
+          <Card className="mb-5 text-gray-100 border rounded-lg">
             <CardBody>
               <div className="flex items-center ">
                 <div>
@@ -126,7 +126,7 @@ function Dashboard() {
       ) : null}
       {/* ------Plans Ad */}
 
-      <div className="text-xl xl:text-2xl text-gray-700 font-semibold">
+      <div className="text-xl xl:text-2xl text-gray-100 font-semibold">
         Buy a Plan
       </div>
       <DashBoardPlans
