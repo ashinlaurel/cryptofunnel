@@ -947,6 +947,11 @@ const colors = {
     900: "#751a3d",
   },
 };
+// const theBoxShadow = (theme) => ({
+//   bottom:
+//     "0 5px 6px -7px rgba(0, 0, 0, 0.6), 0 2px 4px -5px rgba(0, 0, 0, 0.06)",
+//   ...theme("opacity"),
+// });
 
 const backgroundOpacity = (theme) => ({
   10: "0.1",
@@ -961,17 +966,23 @@ const maxHeight = (theme) => ({
 
 const windmillConfig = {
   darkMode: "class",
-  // purge: {
-  //   content: [
-  //     "node_modules/@windmill/react-ui/lib/defaultTheme.js",
-  //     "node_modules/@windmill/react-ui/dist/index.js",
-  //   ],
-  // },
-  purge: ["src/**/*.js"],
+  purge: {
+    content: [
+      "node_modules/@windmill/react-ui/lib/defaultTheme.js",
+      "node_modules/@windmill/react-ui/dist/index.js",
+      "src/**/*.js",
+    ],
+  },
+  // purge: [
+  //   "src/**/*.js",
+  //   "node_modules/@windmill/react-ui/lib/defaultTheme.js",
+  //   "node_modules/@windmill/react-ui/dist/index.js",
+  // ],
   theme: {
     colors,
     backgroundOpacity,
     maxHeight,
+    // theBoxShadow,
     extend: {
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
@@ -997,7 +1008,7 @@ const windmillConfig = {
     placeholderColor: ["responsive", "focus", "dark"],
     borderColor: ["responsive", "hover", "focus", "dark"],
     divideColor: ["responsive", "dark"],
-    boxShadow: ["responsive", "hover", "focus", "dark"],
+    //   // boxShadow: ["responsive", "hover", "focus", "dark"],
     margin: ["responsive", "last"],
   },
   plugins: [customFormsPlugin],
