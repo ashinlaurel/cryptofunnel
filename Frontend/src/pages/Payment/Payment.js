@@ -188,7 +188,7 @@ function Payment() {
                         ? "text-white bg-" + color + "-600"
                         : "text-" +
                           color +
-                          "-600 bg-gray-900 border border-gray-500")
+                          "-600 bg-cool-gray-900 border border-gray-500")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -209,7 +209,7 @@ function Payment() {
                         ? "text-white bg-" + color + "-600"
                         : "text-" +
                           color +
-                          "-600 bg-gray-900 border border-gray-500")
+                          "-600 bg-cool-gray-900 border border-gray-500")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -230,7 +230,7 @@ function Payment() {
                         ? "text-white bg-" + color + "-600"
                         : "text-" +
                           color +
-                          "-600 bg-gray-900 border border-gray-500")
+                          "-600 bg-cool-gray-900 border border-gray-500")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -244,7 +244,7 @@ function Payment() {
                   </a>
                 </li>
               </ul>
-              <div className="relative flex flex-col min-w-0 break-words bg-gray-900 w-full mb-6 shadow-lg rounded ">
+              <div className="relative flex flex-col min-w-0 break-words bg-cool-gray-900 w-full mb-6 shadow-lg rounded ">
                 <div className="">
                   <div className="flex-row flex items-center justify-center">
                     <div
@@ -332,7 +332,7 @@ function Payment() {
 
       <div className="w-full lg:mt-12 ">
         <div class="leading-loose ">
-          <div class="max-w-xl my-4 p-10 bg-gray-900 border border-gray-400 rounded shadow-xl">
+          <div class="max-w-xl my-4 p-10 bg-cool-gray-900 border border-gray-400 rounded shadow-xl">
             <p class="text-gray-100 font-lg font-semibold">
               Selected Plan{" "}
               {openTab == 1
@@ -356,7 +356,7 @@ function Payment() {
                 Country
               </label>
               {/* <input
-                class="w-full px-2 py-1 text-sm text-gray-100 bg-gray-900 border shadow rounded "
+                class="w-full px-2 py-1 text-sm text-gray-100 bg-cool-gray-900 border shadow rounded "
                 value={customer.country}
                 onChange={handleCustomerChange}
                 name="country"
@@ -371,7 +371,7 @@ function Payment() {
                 onChange={(e) => {
                   setcountry(e.target.value);
                 }}
-                class="w-full px-2 py-2 text-sm text-gray-100 bg-gray-900 border border-gray-500 shadow rounded "
+                class="w-full px-2 py-2 text-sm text-gray-100 bg-cool-gray-900 border border-gray-500 shadow rounded "
               >
                 <option selected value="IN">
                   India
@@ -389,7 +389,7 @@ function Payment() {
                     Refferal Code
                   </label>
                   <input
-                    class="w-full px-2 py-1 text-sm text-gray-100 bg-gray-900 border border-gray-500 shadow rounded "
+                    class="w-full px-2 py-1 text-sm text-gray-100 bg-cool-gray-900 border border-gray-500 shadow rounded "
                     value={thecode}
                     onChange={handleRefferalCode}
                     name="thecode"

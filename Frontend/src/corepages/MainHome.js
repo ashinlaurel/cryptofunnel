@@ -39,7 +39,7 @@ export default () => {
     return (
       <>
         <Modal
-          className="bg-gray-900 px-10 py-10 rounded-lg "
+          className="bg-cool-gray-900 px-10 py-10 rounded-lg "
           isOpen={contactstate}
           onClose={() => setContactState(false)}
         >

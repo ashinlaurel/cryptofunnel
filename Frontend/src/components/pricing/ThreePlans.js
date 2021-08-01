@@ -185,7 +185,7 @@ export default ({
                 // css={
                 //   highlightGradientsCss[index % highlightGradientsCss.length]
                 // }
-                // className="bg-gray-900"
+                // className="bg-cool-gray-900"
                 />
               )}
               <PlanHeader>

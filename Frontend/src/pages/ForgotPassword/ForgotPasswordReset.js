@@ -90,10 +90,10 @@ const ForgotPasswordReset = () => {
 
   const loginForm = () => {
     return (
-      <div className="flex items-center min-h-screen p-6 bg-gray-50 bg-gray-900">
+      <div className="flex items-center min-h-screen p-6 bg-gray-50 bg-cool-gray-900">
         {messageModalComponent()}
         {resetSuccessfullModal()}
-        <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-gray-900  shadow-xl dark:bg-gray-800">
+        <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-cool-gray-900  shadow-xl dark:bg-gray-800">
           <div className=" overflow-y-auto md:flex-row  text-white  font-semibold">
             <div className="text-xl">Reset Password</div>
             <div>

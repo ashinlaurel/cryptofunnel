@@ -1,14 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import ImageLight from '../assets/img/create-account-office.jpeg'
-import ImageDark from '../assets/img/create-account-office-dark.jpeg'
-import { GithubIcon, TwitterIcon } from '../icons'
-import { Input, Label, Button } from '@windmill/react-ui'
+import ImageLight from "../assets/img/create-account-office.jpeg";
+import ImageDark from "../assets/img/create-account-office-dark.jpeg";
+import { GithubIcon, TwitterIcon } from "../icons";
+import { Input, Label, Button } from "@windmill/react-ui";
 
 function Login() {
   return (
-    <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+    <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-700">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
         <div className="flex flex-col overflow-y-auto md:flex-row">
           <div className="h-32 md:h-auto md:w-1/2">
@@ -32,21 +32,34 @@ function Login() {
               </h1>
               <Label>
                 <span>Email</span>
-                <Input className="mt-1" type="email" placeholder="john@doe.com" />
+                <Input
+                  className="mt-1"
+                  type="email"
+                  placeholder="john@doe.com"
+                />
               </Label>
               <Label className="mt-4">
                 <span>Password</span>
-                <Input className="mt-1" placeholder="***************" type="password" />
+                <Input
+                  className="mt-1"
+                  placeholder="***************"
+                  type="password"
+                />
               </Label>
               <Label className="mt-4">
                 <span>Confirm password</span>
-                <Input className="mt-1" placeholder="***************" type="password" />
+                <Input
+                  className="mt-1"
+                  placeholder="***************"
+                  type="password"
+                />
               </Label>
 
               <Label className="mt-6" check>
                 <Input type="checkbox" />
                 <span className="ml-2">
-                  I agree to the <span className="underline">privacy policy</span>
+                  I agree to the{" "}
+                  <span className="underline">privacy policy</span>
                 </span>
               </Label>
 
@@ -78,7 +91,7 @@ function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

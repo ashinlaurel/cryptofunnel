@@ -20,7 +20,7 @@ function Layout() {
 
   return (
     <div
-      className={`flex h-screen bg-white dark:bg-gray-900 ${
+      className={`flex h-screen bg-white dark:bg-gray-700 ${
         isSidebarOpen && "overflow-hidden"
       }`}
     >
