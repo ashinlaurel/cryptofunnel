@@ -160,6 +160,13 @@ export default ({
 
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isSignUpModal, setIsSignUpModal] = useState(false);
+
+  const handleKeyPress = (event) => {
+    // look for the `Enter` keyCode
+    if (event.keyCode === 13 || event.which === 13) {
+      LoginHandle();
+    }
+  };
   const LogInModal = () => {
     return (
       <>
@@ -183,6 +190,7 @@ export default ({
                   onChange={handleChange("email")}
                   type="email"
                   value={email}
+                  onKeyPress={handleKeyPress}
                   placeholder="john@doe.com"
                 />
               </Label>
@@ -197,6 +205,7 @@ export default ({
                   onChange={handleChange("password")}
                   type="password"
                   value={password}
+                  onKeyPress={handleKeyPress}
                   placeholder="********"
                 />
               </Label>
