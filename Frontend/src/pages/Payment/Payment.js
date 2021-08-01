@@ -202,7 +202,9 @@ function Payment() {
                       "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                       (openTab === 1
                         ? "text-white bg-" + color + "-600"
-                        : "text-" + color + "-600 bg-white")
+                        : "text-" +
+                          color +
+                          "-600 bg-gray-900 border border-gray-500")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -221,7 +223,9 @@ function Payment() {
                       "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                       (openTab === 2
                         ? "text-white bg-" + color + "-600"
-                        : "text-" + color + "-600 bg-white")
+                        : "text-" +
+                          color +
+                          "-600 bg-gray-900 border border-gray-500")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -240,7 +244,9 @@ function Payment() {
                       "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                       (openTab === 3
                         ? "text-white bg-" + color + "-600"
-                        : "text-" + color + "-600 bg-white")
+                        : "text-" +
+                          color +
+                          "-600 bg-gray-900 border border-gray-500")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -261,7 +267,7 @@ function Payment() {
                   </a>
                 </li>
               </ul>
-              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+              <div className="relative flex flex-col min-w-0 break-words bg-gray-900 w-full mb-6 shadow-lg rounded ">
                 <div className="">
                   <div className="flex-row flex items-center justify-center">
                     <div
@@ -349,8 +355,8 @@ function Payment() {
 
       <div className="w-full lg:mt-12 ">
         <div class="leading-loose ">
-          <div class="max-w-xl my-4 p-10 bg-white rounded shadow-xl">
-            <p class="text-gray-800 font-lg font-semibold">
+          <div class="max-w-xl my-4 p-10 bg-gray-900 border border-gray-400 rounded shadow-xl">
+            <p class="text-gray-100 font-lg font-semibold">
               Selected Plan{" "}
               {openTab == 1
                 ? "Crypto 101"
@@ -366,14 +372,14 @@ function Payment() {
                 {plans[openTab]}
               </span>
             </p>
-            <p class="text-gray-800 font-medium">Customer information</p>
+            <p class="text-gray-100 font-medium">Customer information</p>
 
             <div class="inline-block mt-2 w-full pr-1">
-              <label class=" block text-sm text-gray-600" for="cus_email">
+              <label class=" block text-sm text-gray-100" for="cus_email">
                 Country
               </label>
               {/* <input
-                class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+                class="w-full px-2 py-1 text-sm text-gray-100 bg-gray-900 border shadow rounded "
                 value={customer.country}
                 onChange={handleCustomerChange}
                 name="country"
@@ -388,7 +394,7 @@ function Payment() {
                 onChange={(e) => {
                   setcountry(e.target.value);
                 }}
-                class="w-full px-2 py-2 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+                class="w-full px-2 py-2 text-sm text-gray-100 bg-gray-900 border border-gray-500 shadow rounded "
               >
                 <option selected value="IN">
                   India
@@ -402,11 +408,11 @@ function Payment() {
             <div>
               <div class="mt-2 flex items-end justify-center space-x-1">
                 <div className="w-full">
-                  <label class=" text-sm block text-gray-600" for="cus_email">
+                  <label class=" text-sm block text-gray-100" for="cus_email">
                     Refferal Code
                   </label>
                   <input
-                    class="w-full px-2 py-1 text-sm text-gray-700 bg-gray-100 border shadow rounded "
+                    class="w-full px-2 py-1 text-sm text-gray-100 bg-gray-900 border border-gray-500 shadow rounded "
                     value={thecode}
                     onChange={handleRefferalCode}
                     name="thecode"

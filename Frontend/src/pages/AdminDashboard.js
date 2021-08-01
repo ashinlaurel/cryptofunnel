@@ -91,7 +91,7 @@ function Dashboard() {
 
       {/* <CTA /> */}
 
-      <div className="font-bold text-gray-700 text-xl">Users</div>
+      <div className="font-bold text-gray-100 text-xl">Users</div>
 
       <div className="mb-4">
         {/* -------------------------------------Row 1 ------------------------------------------------------------------------------- */}
@@ -99,7 +99,7 @@ function Dashboard() {
           {/* ---------------------------Condition Drop Down-------------------------------------- */}
           <div class="relative mx-1 ">
             <select
-              class=" shadow-md h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-1 xl:py-2  xl: px-4  leading-tight focus:outline-none   focus:bg-white focus:border-gray-500"
+              class=" shadow-md h-full rounded border block dark:appearance-none w-full bg-gray-900 border-gray-500 text-gray-100 py-1 xl:py-2  xl: px-4  leading-tight "
               // value={condition}
               onChange={(e) => {
                 setPlan(e.target.value);
@@ -115,7 +115,7 @@ function Dashboard() {
               <option value="3">Signals & Analysis</option>
             </select>
 
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            {/* <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
                 class="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +123,7 @@ function Dashboard() {
               >
                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
               </svg>
-            </div>
+            </div> */}
           </div>
 
           {/* -----------------Search Bar------------------------------------ */}
@@ -146,7 +146,7 @@ function Dashboard() {
                 value={searchquery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search"
-                class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block py-1 px-8  xl:pl-8 xl:pr-6 xl:py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                class="shadow-md z-20 appearance-none rounded border bg-gray-900 border-gray-500 text-gray-100 border-b block py-1 px-8  xl:pl-8 xl:pr-6 xl:py-2 w-full  text-sm placeholder-gray-400  "
               />
             </form>
           </div>

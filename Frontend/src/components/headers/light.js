@@ -164,11 +164,11 @@ export default ({
     return (
       <>
         <Modal
-          className="bg-gray-900 px-12 py-10 rounded-lg "
+          className="bg-gray-900 px-12 py-10 rounded-lg  "
           isOpen={isLoginModal}
           onClose={() => setIsLoginModal(false)}
         >
-          <ModalHeader className="md:mx-32 mx-24 text-white">
+          <ModalHeader className="md:mx-32 mx-5 text-white">
             <h1 className="mb-4 text-xl font-semibold text-gray-200">
               {" "}
               Login To Your Account{" "}

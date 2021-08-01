@@ -80,7 +80,7 @@ function Header() {
           </li> */}
           {/* <!-- Notifications menu --> */}
           <a
-            className="text-gray-900 cursor-pointer font-semibold"
+            className="text-gray-100 cursor-pointer font-semibold"
             onClick={() => {
               signout();
               // history.push("/");
