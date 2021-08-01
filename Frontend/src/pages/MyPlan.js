@@ -68,7 +68,7 @@ function Cards() {
       ) : (
         <>
           <PageTitle>Your Plan</PageTitle>
-          <Card className="mb-5 text-gray-900 border rounded-lg">
+          <Card className="mb-5 text-gray-100  rounded-lg">
             <CardBody>
               <div className="flex items-center">
                 <div>

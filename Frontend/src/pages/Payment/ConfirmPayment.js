@@ -69,7 +69,7 @@ export default function ConfirmPayment() {
                 <span className="font-semibold">
                   {" "}
                   Product Name:
-                  <span className="text-xl text-primary-600 mx-3">
+                  <span className="text-xl text-purple-400 mx-3">
                     {values.description}{" "}
                   </span>
                 </span>{" "}
@@ -78,13 +78,13 @@ export default function ConfirmPayment() {
                 <span className="font-semibold">
                   {" "}
                   Price:
-                  <span className="text-xl text-primary-600 mx-3">
+                  <span className="text-xl text-purple-400 mx-3">
                     {values.currency == "inr" ? <>₹</> : <>$</>}
                     {values.amount_subtotal / 100}
                   </span>
                 </span>
               </p>
-              <p className="text-secondary-400">
+              <p className="text-gray-100">
                 {" "}
                 We will contant you with you shortly with more information
                 regarding the amazing crouse you just bought! For any queries

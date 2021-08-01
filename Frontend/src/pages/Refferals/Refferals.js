@@ -66,7 +66,7 @@ function Refferals() {
           <div className="flex items-center justify-left my-2">
             <label>
               Code:
-              <div className="bg-gray-200 my-2 flex font-bold py-2 px-32 text-lg  items-center justify-center rounded-lg">
+              <div className="bg-gray-700 my-2 flex font-bold py-2 px-32 text-lg  text-white items-center justify-center rounded-lg">
                 {/* <div>Code:</div> */}
                 <div>{tempcode}</div>
               </div>
@@ -84,7 +84,7 @@ function Refferals() {
                     value={discount}
                     onChange={(e) => setDiscount(e.target.value)}
                     placeholder="Enter the discount %"
-                    class="shadow-md z-20 my-2 appearance-none rounded border border-gray-400 border-b block pl-2 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                    class="shadow-md z-20 my-2 appearance-none rounded border border-gray-600 border-b block pl-2 pr-6 py-2 placeholder-gray-100 w-full bg-cool-gray-900 text-sm placeholder-gray-410 text-gray-100  fne-none"
                   />
                 </label>
               </form>
@@ -245,11 +245,11 @@ function Refferals() {
         {/* -------------------------------------Row 1 ------------------------------------------------------------------------------- */}
         <div class="my-2 flex sm:flex-row flex-col items-start sm:items-center sm:justify-left h-full space-x-2 ">
           {/* ---------------------------Condition Drop Down-------------------------------------- */}
-          <label className="text-gray-700 mb-1 text-sm">
+          <label className="text-gray-100 mb-1 text-sm">
             Created By:
             <div class="relative  ">
               <select
-                class=" shadow-md h-full rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none   focus:bg-white focus:border-gray-500"
+                class=" shadow-md h-full rounded border block appearance-none placeholder-gray-100 w-full bg-cool-gray-900 border-gray-600 text-gray-100 py-2 px-4 pr-8 leading-tight "
                 // value={condition}
                 onChange={(e) => {
                   setCondition(e.target.value);
@@ -264,7 +264,7 @@ function Refferals() {
                 <option value={UserProfile.getId()}>Admin</option>
               </select>
 
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
                 {/* <svg
                   class="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +277,7 @@ function Refferals() {
           </label>
 
           {/* -----------------Search Bar------------------------------------ */}
-          <label className="text-gray-700 mb-1 text-sm">
+          <label className="text-gray-100 mb-1 text-sm">
             Search:
             <div class="block relative ">
               <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
@@ -298,25 +298,25 @@ function Refferals() {
                   // value={searchquery}
                   // onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search"
-                  class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                  class="shadow-md z-20 appearance-none rounded border border-gray-600 border-b block pl-8 pr-6 py-2 placeholder-gray-100 w-full bg-cool-gray-900 text-sm  text-gray-100  fne-none"
                 />
               </form>
             </div>
           </label>
 
-          <label className="text-gray-700 mb-1 text-sm">
+          <label className="text-gray-100 mb-1 text-sm">
             <span>From Date</span>
             <input
-              class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+              class="shadow-md z-20 appearance-none rounded border border-gray-600 border-b block pl-8 pr-6 py-2 placeholder-gray-100 w-full bg-cool-gray-900 text-sm  text-gray-100  fne-none"
               type="date"
               value={fromDate}
               onChange={(e) => setFromDate(e.target.value)}
             />
           </label>
-          <label className="text-gray-700 mb-1 text-sm">
+          <label className="text-gray-100 mb-1 text-sm">
             <span>To Date</span>
             <input
-              class="shadow-md z-20 appearance-none rounded border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+              class="shadow-md z-20 appearance-none rounded border border-gray-600 border-b block pl-8 pr-6 py-2 placeholder-gray-100 w-full bg-cool-gray-900 text-sm placeholder-gray-410 text-gray-100  fne-none"
               type="date"
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
@@ -367,7 +367,7 @@ function Refferals() {
                   </div>
                 </TableCell> */}
                 <TableCell>
-                  <span className="text-sm bg-gray-200 py-1 px-2 font-bold rounded-lg">
+                  <span className="text-sm text-white bg-gray-600 py-1 px-2 font-bold rounded-lg">
                     {user.refCode}
                   </span>
                 </TableCell>

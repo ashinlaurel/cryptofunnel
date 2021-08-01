@@ -144,7 +144,7 @@ const AdminSignup = () => {
   const AddToMailerList = async () => {
     const payload = { email: values.email, name: values.name };
     const response = await axios({
-      url: `${API}/mail/AddToMailerList`,
+      url: `${API}/mail/AddToSignUpList`,
       method: "POST",
       data: payload,
     });

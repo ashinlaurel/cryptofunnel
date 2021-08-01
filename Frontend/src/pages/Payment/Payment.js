@@ -101,6 +101,7 @@ function Payment() {
       setCodeStatus(response.data.thestatus);
       setCodeError(true);
     } catch (err) {
+      setDiscount(0);
       setCodeError(true);
       setCodeStatus(false);
       // setModalmessage("Sorry, code does not work");
@@ -202,9 +203,7 @@ function Payment() {
                       "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                       (openTab === 1
                         ? "text-white bg-" + color + "-600"
-                        : "text-" +
-                          color +
-                          "-600 bg-cool-gray-900 border border-gray-500")
+                        : "text-purple-200 bg-gray-800 border border-gray-800")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -223,9 +222,7 @@ function Payment() {
                       "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                       (openTab === 2
                         ? "text-white bg-" + color + "-600"
-                        : "text-" +
-                          color +
-                          "-600 bg-cool-gray-900 border border-gray-500")
+                        : "text-purple-200 bg-gray-800 border border-gray-800")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -244,9 +241,7 @@ function Payment() {
                       "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                       (openTab === 3
                         ? "text-white bg-" + color + "-600"
-                        : "text-" +
-                          color +
-                          "-600 bg-cool-gray-900 border border-gray-500")
+                        : "text-purple-200 bg-gray-800 border border-gray-800")
                     }
                     onClick={(e) => {
                       e.preventDefault();
@@ -267,7 +262,7 @@ function Payment() {
                   </a>
                 </li>
               </ul>
-              <div className="relative flex flex-col min-w-0 break-words bg-cool-gray-900 w-full mb-6 shadow-lg rounded ">
+              <div className="relative flex flex-col min-w-0 break-words  w-full mb-6 shadow-lg rounded ">
                 <div className="">
                   <div className="flex-row flex items-center justify-center">
                     <div
@@ -355,7 +350,7 @@ function Payment() {
 
       <div className="w-full lg:mt-12 ">
         <div class="leading-loose ">
-          <div class="max-w-xl my-4 p-10 bg-cool-gray-900 border border-gray-400 rounded shadow-xl">
+          <div class="max-w-xl my-4 p-10 bg-cool-gray-900 border border-gray-800 rounded-lg shadow-xl">
             <p class="text-gray-100 font-lg font-semibold">
               Selected Plan{" "}
               {openTab == 1
@@ -366,10 +361,10 @@ function Payment() {
                 ? "Signals & Analysis"
                 : ""}{" "}
               :
-              <span className="text-primary-500 font-bold">
+              <span className="text-green-300 font-bold">
                 {" "}
                 {currency}
-                {plans[openTab]}
+                {plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100}
               </span>
             </p>
             <p class="text-gray-100 font-medium">Customer information</p>
@@ -438,7 +433,7 @@ function Payment() {
               ) : null}
             </div>
             {codestatus == false ? null : (
-              <div class="mt-2  text-sm">
+              <div class="mt-2  text-sm text-gray-100">
                 <div className="w-full">
                   Refferal Successful! Discount of{" "}
                   <span className="font-semibold">
@@ -477,17 +472,17 @@ function Payment() {
               >
                 PURCHASE WITH CRYPTO
               </button>
-              <p className=" mt-2 font-light text-sm text-gray-700 leading-4">
+              <p className=" mt-4 font-light text-sm text-gray-300 leading-4">
                 By cliking purchase options, you are agreeing to our{" "}
                 <Link to="/TermsAndConditions" className="font-semibold">
                   Terms and Conditions
                 </Link>
               </p>
-              <p className=" mt-2 font-light text-sm text-gray-600 leading-4">
-                *Please not that referral discounts are not applicable with
+              <p className=" my-2 font-light text-sm text-gray-400 leading-4">
+                *Please not that refferal discounts are not applicable with
                 Signals & Analysis plan.
               </p>
-              <p className="font-light text-sm text-gray-600 leading-4">
+              <p className="font-light text-sm text-gray-400 leading-4">
                 *Subscibtion based plan "Signals & Analysis" can only be
                 purchased with card, not via crypto.
               </p>

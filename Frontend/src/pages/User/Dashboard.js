@@ -95,7 +95,7 @@ function Dashboard() {
       {/* <!-- Cards --> */}
       {UserProfile.getRole() == 0 ? (
         <>
-          <Card className="mb-5 text-gray-100 border rounded-lg">
+          <Card className="mb-5 text-gray-100  rounded-lg">
             <CardBody>
               <div className="flex items-center ">
                 <div>
@@ -149,6 +149,7 @@ function Dashboard() {
               "Live Doubt Clearence",
               "Trading Bots",
             ],
+            featured: true,
           },
           {
             name: "Crypto 201",
@@ -162,6 +163,7 @@ function Dashboard() {
               "Trading Bots",
               "5 Live Trading Sessions",
             ],
+            featured: true,
           },
           {
             name: "Signals & Analysis",

@@ -8,6 +8,7 @@ const {
   ForgotPasswordMail,
   resetPassword,
   AddToMailerList,
+  AddToSignUpList,
 } = require("../controllers/mail");
 
 const { getUserById } = require("../controllers/user");
@@ -20,5 +21,6 @@ router.post("/verifyUser", isSignedIn, verifyUserByToken);
 router.post("/resetpassemail", ForgotPasswordMail);
 router.post("/resetpasswordbytoken", isSignedIn, resetPassword);
 router.post("/AddToMailerList", AddToMailerList);
+router.post("/AddToSignUpList", AddToSignUpList);
 
 module.exports = router;

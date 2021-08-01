@@ -244,7 +244,7 @@ export default ({
               </p>
             </div>
           </ModalBody>
-          <ModalFooter></ModalFooter>
+          {/* <ModalFooter></ModalFooter> */}
         </Modal>
       </>
     );
@@ -316,11 +316,16 @@ export default ({
 
   const AddToMailerList = async () => {
     const payload = { email: values.email, name: values.name };
-    const response = await axios({
-      url: `${API}/mail/AddToMailerList`,
-      method: "POST",
-      data: payload,
-    });
+    try {
+      const response = await axios({
+        url: `${API}/mail/AddToSignUpList`,
+        method: "POST",
+        data: payload,
+      });
+      console.log(`maielr reposnse`, response);
+    } catch (err) {
+      console.log("Mailerlite Err", err);
+    }
   };
 
   const sendmail = async (data) => {
@@ -484,7 +489,7 @@ export default ({
               </p>
             </div>
           </ModalBody>
-          <ModalFooter></ModalFooter>
+          {/* <ModalFooter></ModalFooter> */}
         </Modal>
       </>
     );
@@ -516,7 +521,7 @@ export default ({
     return (
       <>
         <Modal
-          className="bg-cool-gray-900 px-12 py-10 rounded-lg"
+          className="bg-gray-800 px-12 py-10 rounded-lg"
           isOpen={ispassmodal}
           onClose={() => setIspassmodal(false)}
         >
