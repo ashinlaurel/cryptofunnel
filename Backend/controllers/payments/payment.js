@@ -459,7 +459,7 @@ exports.getPaymentIntent = async (req, res) => {
 
 exports.getMangeSubscriptionURL = async (req, res) => {
   const { id } = req.body;
-  const returnUrl = "http://localhost:3000/app/myplan";
+  const returnUrl = `${process.env.FRONTEND_DOMAIN}/myplan`;
   // console.log(id);
 
   try {
