@@ -296,11 +296,11 @@ export default function InfluencerPage() {
         <CardBody>
           <div className="w-full -mt-20 z-30 flex items-center justify-center ">
             <div className="flex flex-col items-center justify-center">
-              <img className="h-32 w-32 bg-white" src={UserPng}></img>
-              <div className="mt-2 text-2xl font-sans font-semibold">
+              <img className="h-32 w-32 " src={UserPng}></img>
+              <div className="mt-2 text-2xl font-sans font-semibold text-white">
                 {values.userId ? values.userId.name : ""}
               </div>
-              <div className=" text-lg ">Influencer</div>
+              <div className=" text-lg text-white">Influencer</div>
             </div>
           </div>
         </CardBody>
