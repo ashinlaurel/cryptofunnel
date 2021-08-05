@@ -125,61 +125,74 @@ function Dashboard() {
         </>
       ) : null}
       {/* ------Plans Ad */}
-
-      <div className="text-xl xl:text-2xl text-gray-100 font-semibold">
-        Buy a Plan
-      </div>
-      <DashBoardPlans
-        subheading={<Subheading>Pricing</Subheading>}
-        setmodal={setMessageModal}
-        heading={
-          <>
-            Reasonable & Flexible <HighlightedText>Plans.</HighlightedText>
-          </>
-        }
-        plans={[
-          {
-            name: "Crypto 101",
-            price: "$175",
-            duration: "Lifetime",
-            mainFeature: "The Right Place To Start!",
-            features: [
-              "Beginners TA -live classes",
-              "Priority Support",
-              "Live Doubt Clearence",
-              "Trading Bots",
-            ],
-            featured: true,
-          },
-          {
-            name: "Crypto 201",
-            price: "$250",
-            duration: "Lifetime",
-            mainFeature: "For The Crypto Nerds",
-            features: [
-              "Advanced TA -live classes",
-              "Priority Support",
-              "Live Doubt Clearence",
-              "Trading Bots",
-              "5 Live Trading Sessions",
-            ],
-            featured: true,
-          },
-          {
-            name: "Signals & Analysis",
-            price: "$100",
-            duration: "Monthly",
-            mainFeature: "We'll Work For You",
-            features: [
-              "Daily 3 trading Signals",
-              "Spot/Margin/Future Based Calls",
-              "Report & Newsletter",
-              "weekly Live Trading Sessions",
-            ],
-            featured: true,
-          },
-        ]}
-      />
+      {UserProfile.getRole() == 3 ? (
+        <>
+          <Card className="mb-5 text-gray-100  rounded-lg">
+            <CardBody>
+              <div className="flex items-center"></div>
+              Go to MyPlan to see more details about your plan. For any queries
+              contact us at support@thecfsquad.com
+            </CardBody>
+          </Card>
+        </>
+      ) : (
+        <>
+          <div className="text-xl xl:text-2xl text-gray-100 font-semibold">
+            Buy a Plan
+          </div>
+          <DashBoardPlans
+            subheading={<Subheading>Pricing</Subheading>}
+            setmodal={setMessageModal}
+            heading={
+              <>
+                Reasonable & Flexible <HighlightedText>Plans.</HighlightedText>
+              </>
+            }
+            plans={[
+              {
+                name: "Crypto 101",
+                price: "$175",
+                duration: "Lifetime",
+                mainFeature: "The Right Place To Start!",
+                features: [
+                  "Beginners TA -live classes",
+                  "Priority Support",
+                  "Live Doubt Clearence",
+                  "Trading Bots",
+                ],
+                featured: true,
+              },
+              {
+                name: "Crypto 201",
+                price: "$250",
+                duration: "Lifetime",
+                mainFeature: "For The Crypto Nerds",
+                features: [
+                  "Advanced TA -live classes",
+                  "Priority Support",
+                  "Live Doubt Clearence",
+                  "Trading Bots",
+                  "5 Live Trading Sessions",
+                ],
+                featured: true,
+              },
+              {
+                name: "Signals & Analysis",
+                price: "$100",
+                duration: "Monthly",
+                mainFeature: "We'll Work For You",
+                features: [
+                  "Daily 3 trading Signals",
+                  "Spot/Margin/Future Based Calls",
+                  "Report & Newsletter",
+                  "weekly Live Trading Sessions",
+                ],
+                featured: true,
+              },
+            ]}
+          />
+        </>
+      )}
     </>
   );
 }
