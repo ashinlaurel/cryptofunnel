@@ -6,7 +6,8 @@ const refferal = require("../../models/refferal");
 const user = require("../../models/user");
 const logo = require("../../");
 const e = require("express");
-
+const nodemailer = require("nodemailer");
+const axios = require("axios");
 // app.use(express.static("."));
 
 // const YOUR_DOMAIN = "https://thecfsquad.com/app/ConfirmPayment";
@@ -49,7 +50,14 @@ let products = [
     quantity: 1,
   },
   {
-    price: process.env.SIGANDANALPRICEID,
+    price_data: {
+      currency: "usd",
+      product_data: {
+        name: "Signals & Analysis",
+        images: ["https://i.imgur.com/7JApXKO.png"],
+      },
+      unit_amount: 10000,
+    },
     quantity: 1,
   },
 ];
@@ -130,24 +138,24 @@ exports.paymentResolver = async (req, res) => {
     // get discount %
     let codedata = await refferal.findOne({ refCode: thecode });
 
-    console.log(codedata);
+    // console.log(codedata);
 
     if (codedata.discount != "") {
       discount = parseInt(codedata.discount);
     }
   }
-  if (plannumber <= 2) {
-    if (country == "notIN") {
-      finalamount = plans[plannumber] * (1 - discount / 100);
-      finalamount *= 100;
-      products[plannumber - 1].price_data.unit_amount = finalamount;
-    } else {
-      finalamount = indplans[plannumber] * (1 - discount / 100);
-      finalamount *= 100;
-      products[plannumber - 1].price_data.unit_amount = finalamount;
-      products[plannumber - 1].price_data.currency = "inr";
-    }
+  // if (plannumber <= 2) {
+  if (country == "notIN") {
+    finalamount = plans[plannumber] * (1 - discount / 100);
+    finalamount *= 100;
+    products[plannumber - 1].price_data.unit_amount = finalamount;
+  } else {
+    finalamount = indplans[plannumber] * (1 - discount / 100);
+    finalamount *= 100;
+    products[plannumber - 1].price_data.unit_amount = finalamount;
+    products[plannumber - 1].price_data.currency = "inr";
   }
+  // }
 
   console.log(discount, finalamount);
 
@@ -160,7 +168,7 @@ exports.paymentResolver = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [products[plannumber - 1]],
-      mode: plannumber == 3 ? "subscription" : "payment",
+      mode: "payment",
       // allow_promotion_codes: true,
       success_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/true/{CHECKOUT_SESSION_ID}/${thecode}/${codeStatus}`,
       cancel_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/paymentfailed`,
@@ -190,7 +198,7 @@ exports.paymentResolverBit = async (req, res) => {
     // get discount %
     let codedata = await refferal.findOne({ refCode: thecode });
 
-    console.log(codedata);
+    // console.log(codedata);
 
     if (codedata.discount != "") {
       bitproducts[plannumber - 1].metadata.refCode = thecode;
@@ -218,7 +226,7 @@ exports.paymentResolverBit = async (req, res) => {
 
   try {
     const charge = await Charge.create(bitproducts[plannumber - 1]);
-    console.log(charge);
+    // console.log(charge);
     // res.set("Access-Control-Allow-Origin", "*");
     res.status(200).send(charge);
     // res.redirect(303, session.url);
@@ -244,7 +252,7 @@ exports.confirmpayment = async (req, res) => {
     const customer = await stripe.customers.retrieve(session.customer);
     const status = session.payment_status;
     const product = session.line_items.data[0];
-    console.log(product);
+    // console.log(product);
     outproduct = product;
     outcustomer = customer;
     let payloadstatus = "Failed";
@@ -294,9 +302,9 @@ exports.confirmpayment = async (req, res) => {
 
           addPayable = theamt * thedisc;
 
-          console.log("thedisc", thedisc);
-          console.log("theamt", theamt);
-          console.log("thepayable", addPayable);
+          // console.log("thedisc", thedisc);
+          // console.log("theamt", theamt);
+          // console.log("thepayable", addPayable);
           // updating the influncer account
           await user.findByIdAndUpdate(
             { _id: codedata.creatorId },
@@ -310,6 +318,7 @@ exports.confirmpayment = async (req, res) => {
 
       // -----updating user role and plan -------------
       if (status == "paid") {
+        let grps = ["108186238", "108186247", "108186259"];
         let plannumber = 0;
         switch (product.description) {
           case "Crypto 101":
@@ -328,10 +337,27 @@ exports.confirmpayment = async (req, res) => {
         // console.log("plan=", plannumber);
 
         // updating the buyers account
-        await user.findByIdAndUpdate(
+        let userinfo = await user.findByIdAndUpdate(
           { _id: id },
           { role: 3, plan: plannumber, stripeCustomerId: customer.id }
         );
+        console.log("USERR", userinfo);
+        try {
+          const payload = { email: userinfo.email, name: userinfo.name };
+          const response = await axios({
+            url: `https://api.mailerlite.com/api/v2/groups/${
+              grps[plannumber - 1]
+            }/subscribers`,
+            method: "POST",
+            data: payload,
+            headers: {
+              "X-MailerLite-ApiKey": `${process.env.MAILERLITE_KEY}`,
+            },
+          });
+          // console.log(response);
+        } catch (err) {
+          console.log("MAILERLITE ERROR", err);
+        }
       }
     }
 
@@ -478,7 +504,76 @@ exports.getMangeSubscriptionURL = async (req, res) => {
   }
 };
 
+exports.deletePlan = async (req, res) => {
+  const { id } = req.body;
+  // console.log(id);
+
+  try {
+    let myuser = await user.findByIdAndUpdate(
+      id,
+      { role: 2, stripeCustomerId: 0, plan: 0 },
+      {
+        safe: true,
+        useFindAndModify: false,
+      }
+    );
+    console.log(myuser.plan, grps[myuser.plan - 1]);
+    let grps = ["Crypto 101", "Crypto 201", "Signals & Analysis"];
+
+    let message = ` User ${myuser.email} has cancelled plan ${
+      grps[myuser.plan - 1]
+    } `;
+    await sendSupportMail(message);
+    return res.status(200).json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
 // -----------------------Fuzzy Search Regex----------------
 function escapeRegex(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
+
+let sendSupportMail = (message) => {
+  let output = `
+   <h3> Hi, </h3>
+      <p>${message} </p>
+      <p></a></p>
+      <p></p>
+      <p>Crypto Funnel Team</p>
+  `;
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "infocareenquiry@gmail.com",
+      pass: "infocare12345",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: '"Crypto Funnel" <infocareenquiry@gmail.com>', // sender address
+    to: process.env.SUPPORT_EMAIL, // list of receivers
+    subject: "Plan Cancellation", // Subject line
+    text: message, // plain text body
+    html: output, // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      return res.send(error);
+    }
+    console.log("Message sent: %s", info.messageId);
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  });
+};

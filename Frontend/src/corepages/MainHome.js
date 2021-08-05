@@ -7,6 +7,7 @@ import Features from "../components/features/ThreeColWithSideImage.js";
 import MainFeature from "../components/features/TwoColWithButton.js";
 import MainFeature2 from "../components/features/TwoColWithTwoHorizontalFeaturesAndButton.js";
 import FeatureWithSteps from "../components/features/TwoColWithSteps.js";
+import AboutUs from "../components/features/TwoColWithButton";
 import Pricing from "../components/pricing/ThreePlans.js";
 import Testimonial from "../components/testimonials/TwoColumnWithImageAndRating.js";
 import FAQ from "../components/faqs/SingleCol.js";
@@ -19,6 +20,7 @@ import prototypeIllustrationImageSrc from "../images/prototype-illustration.svg"
 import valuespic from "../images/valuespic.png";
 import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
+import AboutUsIcon from "../images/contactus.png";
 import UserProfile from "../helper/auth/UserProfile.js";
 import {
   Modal,
@@ -200,6 +202,25 @@ export default () => {
         ]}
       />
       <div id="contactus"></div>
+      <AboutUs
+        subheading={<Subheading>Contact Us</Subheading>}
+        heading={
+          <>
+            <HighlightedText>Get In Touch Through Our Socials.</HighlightedText>
+          </>
+        }
+        textOnLeft={false}
+        imageSrc={AboutUsIcon}
+        description={
+          <>
+            Have any quesries? Feel free to PM us on any of our social media
+            handles. <br /> Contact us at{" "}
+            <HighlightedText>support@thecfsquad.com</HighlightedText>
+          </>
+        }
+        imageDecoratorBlob={true}
+        decoratorBlobCss={tw`xl:w-40 xl:h-40 opacity-15 -translate-x-1/2 left-1/2`}
+      />
       <FAQ
         subheading={<Subheading>FAQS</Subheading>}
         heading={

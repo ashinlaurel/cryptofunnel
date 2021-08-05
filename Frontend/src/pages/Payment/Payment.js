@@ -73,7 +73,7 @@ function Payment() {
     setThecode(e.target.value);
   };
   const handleRefferalCheck = async () => {
-    if (openTab == 3) {
+    if (openTab == 4) {
       setModalmessage(
         "You cannot avail a discount on this plan using this referral code. This code is appliable only for 'Crypto 101' and 'Crypto 201'."
       );
@@ -126,7 +126,7 @@ function Payment() {
     }
   };
   const handleBitSubmit = async () => {
-    if (openTab == 3) {
+    if (openTab == 4) {
       setModalmessage(
         "This plan can only be purchased with card as it is on a subscription basis. Please select Pay with crypto to continue"
       );
@@ -357,7 +357,7 @@ function Payment() {
                 ? "Crypto 101"
                 : openTab == 2
                 ? "Crypto 201"
-                : openTab == 3
+                : openTab == 4
                 ? "Signals & Analysis"
                 : ""}{" "}
               :
@@ -450,7 +450,7 @@ function Payment() {
                   loading
                     ? `bg-primary-700`
                     : `bg-gradient-to-r from-green-600 to-green-400 `
-                }  rounded hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600`}
+                }  rounded hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 transition-all duration-500`}
                 disabled={loading ? "true" : ""}
                 // disabled="true"
                 onClick={() => {
@@ -464,7 +464,7 @@ function Payment() {
                   loading
                     ? `bg-primary-700`
                     : `bg-gradient-to-r from-orange-600 to-orange-400 `
-                }  rounded hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-600`}
+                }  rounded hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-600 transition-all duration-500`}
                 // disabled="true"
                 onClick={() => {
                   handleBitSubmit();
@@ -473,7 +473,7 @@ function Payment() {
                 PURCHASE WITH CRYPTO
               </button>
               <p className=" mt-4 font-light text-sm text-gray-300 leading-4">
-                By cliking purchase options, you are agreeing to our{" "}
+                By clicking purchase options, you are agreeing to our{" "}
                 <Link to="/TermsAndConditions" className="font-semibold">
                   Terms and Conditions
                 </Link>

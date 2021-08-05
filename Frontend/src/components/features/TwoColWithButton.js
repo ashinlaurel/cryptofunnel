@@ -8,8 +8,13 @@ import {
 } from "../../components/misc/Headings.js";
 
 import { PrimaryButton as PrimaryButtonBase } from "../../components/misc/Buttons";
+import { ReactComponent as FacebookIcon } from "../../images/facebook-icon.svg";
+import { ReactComponent as TwitterIcon } from "../../images/twitter-icon.svg";
+import { ReactComponent as YoutubeIcon } from "../../images/youtube-icon.svg";
+import { ReactComponent as EmailIcon } from "../../images/mail-icon.svg";
+import { ReactComponent as InstaIcon } from "../../images/insta-icon.svg";
 
-import TeamIllustrationSrc from "../../images/team-illustration-2.svg";
+import TeamIllustrationSrc from "../../images/contactus.png";
 import { ReactComponent as SvgDotPattern } from "../../images/dot-pattern.svg";
 
 const Container = tw.div`relative`;
@@ -39,12 +44,20 @@ const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(
   SectionHeading
 )`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
-const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`;
+const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-gray-300`;
 
 const PrimaryButton = styled(PrimaryButtonBase)((props) => [
   tw`mt-8 md:mt-8 text-sm inline-block mx-auto md:mx-0`,
   props.buttonRounded && tw`rounded-full`,
 ]);
+
+const SocialLinksContainer = tw.div`mt-10`;
+const SocialLink = styled.a`
+  ${tw`cursor-pointer inline-block  hover:bg-green-400 transition duration-300 mx-4 bg-cool-gray-600 rounded-full p-5 text-white`}
+  svg {
+    ${tw`w-10 h-10`}
+  }
+`;
 
 export default ({
   subheading = "Our Expertise",
@@ -86,13 +99,30 @@ export default ({
             <Subheading>{subheading}</Subheading>
             <Heading>{heading}</Heading>
             <Description>{description}</Description>
-            <PrimaryButton
+            {/* <PrimaryButton
               buttonRounded={buttonRounded}
               as="a"
               href={primaryButtonUrl}
             >
               {primaryButtonText}
-            </PrimaryButton>
+            </PrimaryButton> */}
+            <SocialLinksContainer>
+              <SocialLink target="_blank" href="mailto:support@thecfsquad.com">
+                <EmailIcon />
+              </SocialLink>
+              <SocialLink
+                target="_blank"
+                href="https://twitter.com/thecryptofunnel"
+              >
+                <TwitterIcon />
+              </SocialLink>
+              <SocialLink
+                target="_blank"
+                href="https://www.instagram.com/cryptofunnel"
+              >
+                <InstaIcon />
+              </SocialLink>
+            </SocialLinksContainer>
           </TextContent>
         </TextColumn>
       </TwoColumn>

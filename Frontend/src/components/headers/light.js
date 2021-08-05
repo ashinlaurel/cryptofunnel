@@ -404,7 +404,7 @@ export default ({
             <div className="w-full">
               <div className="flex flex-row ">
                 <Label className="mt-4 mr-2 w-full">
-                  <span className="text-gray-100 ">Name</span>
+                  <span className="text-gray-100 ">*Name</span>
                   <Input
                     className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("name")}
@@ -414,7 +414,7 @@ export default ({
                   />
                 </Label>
                 <Label className="mt-4 w-full">
-                  <span className="text-gray-100 ">Email</span>
+                  <span className="text-gray-100 ">*Email</span>
                   <Input
                     className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("email")}
@@ -431,7 +431,7 @@ export default ({
               </div>
               <div className="flex flex-row">
                 <Label className="mt-4 w-full mr-2">
-                  <span className="text-gray-100 ">Password</span>
+                  <span className="text-gray-100 ">*Password</span>
                   <Input
                     className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("password")}
@@ -440,8 +440,8 @@ export default ({
                     placeholder="********"
                   />
                 </Label>
-                <Label className="mt-4 w-full">
-                  <span className="text-gray-100 "> Confirm Password</span>
+                <Label className="mt-4 w-full mb-10">
+                  <span className="text-gray-100 ">*Confirm Password</span>
                   <Input
                     className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
                     onChange={handleChange("confirmpassword")}
@@ -456,7 +456,7 @@ export default ({
                   ) : null}
                 </Label>
               </div>
-              <Label className="mt-4 mb-10 w-full">
+              {/* <Label className="mt-4 mb-10 w-full">
                 <span className="text-gray-100 ">Phone</span>
                 <Input
                   className="mt-1 bg-cool-gray-900 text-white border border-gray-700 placeholder-gray-700 p-2 rounded-md"
@@ -464,10 +464,10 @@ export default ({
                   type="text"
                   value={phone}
                 />
-              </Label>
+              </Label> */}
 
               <span
-                className=" bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded cursor-pointer"
+                className=" bg-green-500 hover:bg-green-700 text-white font-bold  py-2 px-4 rounded cursor-pointer "
                 block
                 onClick={() => {
                   signUpHandle();

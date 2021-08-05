@@ -39,10 +39,10 @@ const Heading = tw(
 
 const Steps = tw.ul`mt-12`;
 const Step = tw.li`mt-8 flex flex-col md:flex-row items-center md:items-start`;
-const StepNumber = tw.div`font-semibold text-4xl leading-none text-gray-400`;
+const StepNumber = tw.div`font-semibold text-4xl leading-none text-green-300`;
 const StepText = tw.div`mt-3 md:mt-0 md:ml-6 text-gray-100`;
 const StepHeading = tw.h6`leading-none text-xl font-semibold`;
-const StepDescription = tw.p`mt-3 max-w-xs leading-loose text-sm text-gray-500 font-medium`;
+const StepDescription = tw.p`mt-3 max-w-xs leading-loose text-sm text-gray-200 font-medium`;
 
 export default ({
   subheading = "Our Expertise",
@@ -72,8 +72,9 @@ export default ({
       description: "Select and get enrolled under one of the three plans.",
     },
     {
-      heading: "Make Money",
-      description: "Join our discord server and make money.",
+      heading: "Move Towards Financial Freedom",
+      description:
+        "We'll help you get there through a strong long term portfolio + consistent trading profits.",
     },
   ];
 

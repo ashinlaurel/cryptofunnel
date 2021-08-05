@@ -80,7 +80,7 @@ export default ({
       imageSrc: ShieldIconImage,
       title: "Live Classes",
       description:
-        "From basic blockchain knwoledge and candlestick patters to advanced leveraged trading.",
+        "From basic blockchain knowledge to advanced leveraged trading.",
     },
     {
       imageSrc: SupportIconImage,
@@ -104,7 +104,7 @@ export default ({
       imageSrc: FastIconImage,
       title: "Daily Trade Signals",
       description:
-        "Let us find the best trades for you (spot/futures/margin), so you can relax.",
+        "We'll find the best spot/ futures trades for you, so that you can relax.",
     },
     {
       imageSrc: SimpleIconImage,

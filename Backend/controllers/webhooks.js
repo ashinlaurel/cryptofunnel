@@ -159,7 +159,7 @@ exports.stripeWebhook = async (req, res) => {
   let data;
   let eventType;
   // Check if webhook signing is configured.
-  const webhookSecret = "whsec_WHoo2WwkYL4gtPv9IUeUahxlrVzSl4Xx";
+  const webhookSecret = process.env.STRIPE_SIGNIN_SECRET;
 
   if (webhookSecret) {
     // Retrieve the event by verifying the signature using the raw body and secret.

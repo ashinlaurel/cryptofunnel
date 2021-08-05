@@ -57,7 +57,7 @@ const FeatureIconContainer = styled.div`
 `;
 const FeatureHeading = tw.div`ml-3 font-bold text-xl text-gray-100 `;
 
-const FeatureDescription = tw.div`mt-4 text-center md:text-left text-gray-600 leading-relaxed`;
+const FeatureDescription = tw.div`mt-4 text-center md:text-left text-gray-200 leading-relaxed`;
 
 const PrimaryButton = styled(PrimaryButtonBase)((props) => [
   tw`mt-12 text-sm inline-block mx-auto md:mx-0 text-gray-100`,

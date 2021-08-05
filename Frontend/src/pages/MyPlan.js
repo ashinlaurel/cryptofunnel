@@ -5,6 +5,8 @@ import SectionTitle from "../components/Typography/SectionTitle";
 import CTA from "../components/CTA";
 import InfoCard from "../components/Cards/InfoCard";
 import { Card, CardBody, Button } from "@windmill/react-ui";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
+
 import { CartIcon, ChatIcon, MoneyIcon, PeopleIcon } from "../icons";
 import RoundIcon from "../components/RoundIcon";
 import Payment from "./Payment/Payment";
@@ -14,6 +16,9 @@ import { API } from "../backend";
 
 function Cards() {
   const [plan, setPlan] = useState(0);
+  const [deletePlanModal, setdeletePlanModal] = useState(false);
+  const [messageModal, setMessageModal] = useState(false);
+  const [modalmessage, setModalmessage] = useState("");
 
   const getCustomerInfo = async () => {
     // console.log(`getting customer info`, UserProfile.getId());
@@ -40,6 +45,65 @@ function Cards() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      let user = await Axios.post(
+        `${API}/payment/${UserProfile.getId()}/deletePlan`,
+        {
+          id: UserProfile.getId(),
+        }
+      );
+      setdeletePlanModal(false);
+      setModalmessage("Successfully deleted your plan");
+      setMessageModal(true);
+      setPlan(0);
+      UserProfile.setRole(2);
+    } catch (error) {
+      setModalmessage("Sorry and error occured");
+      setMessageModal(true);
+      console.log(error);
+    }
+  };
+
+  const deletePlanModalComponent = () => {
+    return (
+      <>
+        <Modal
+          isOpen={deletePlanModal}
+          onClose={() => setdeletePlanModal(false)}
+        >
+          <ModalHeader>You are perpemanently deleting your plan!</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => handleDelete(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
+  const messageModalComponent = () => {
+    return (
+      <>
+        <Modal isOpen={messageModal} onClose={() => setMessageModal(false)}>
+          <ModalHeader>{modalmessage}</ModalHeader>
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={() => setMessageModal(false)}
+            >
+              Okay!
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </>
+    );
+  };
   useEffect(() => {
     getCustomerInfo();
   }, []);
@@ -60,6 +124,8 @@ function Cards() {
   };
   return (
     <>
+      {deletePlanModalComponent()}
+      {messageModalComponent()}
       {UserProfile.getRole() == 2 ? (
         <div className="">
           {/* <PageTitle>You Haven't Purchased Any Plans</PageTitle> */}
@@ -90,11 +156,23 @@ function Cards() {
                       </p>
                     </>
                   ) : null}
-                  {plan == 3 ? (
-                    <Button className="my-4 " onClick={GetSubURL}>
+                  {plan == 4 ? (
+                    <Button
+                      className="my-4 "
+                      layout="outline"
+                      onClick={GetSubURL}
+                    >
                       Manage Subscription
                     </Button>
-                  ) : null}
+                  ) : (
+                    <Button
+                      className="my-4 "
+                      layout="outline"
+                      onClick={() => setdeletePlanModal(true)}
+                    >
+                      Delete Plan
+                    </Button>
+                  )}
                   <div></div>
                 </div>
 
