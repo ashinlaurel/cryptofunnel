@@ -10,11 +10,13 @@ import { Subheading } from "../../components/misc/Headings";
 import DashBoardPlans from "../../components/pricing/PricingPlans";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
 import { Label, Input, Button } from "@windmill/react-ui";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function Payment() {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-gray-100`;
   const HighlightedText = tw.span`text-green-300`;
+  const { ref } = useParams();
+  console.log(ref);
 
   let initCust = {
     name: "sadf",
@@ -50,6 +52,38 @@ function Payment() {
   //   };
   // }, []);
 
+  //get referrla from url
+  useEffect(async () => {
+    if (!ref) return;
+    setThecode(ref);
+    try {
+      console.log(thecode);
+      let response = await axios.post(
+        `${API}/refferal/${UserProfile.getId()}/checkIfExists`,
+        {
+          thecode: ref,
+        }
+      );
+      if (response.data.thestatus == false) throw "Error";
+      // console.log(response.data);
+      // console.log(response.data.codeData.discount);
+      // console.log(response.data.thestatus);
+      setDiscount(response.data.codeData.discount);
+      let discount = response.data.codeData.discount;
+      console.log(
+        plans[openTab] - (plans[openTab] * parseFloat(discount)) / 100
+      );
+      setCodeStatus(response.data.thestatus);
+      setCodeError(true);
+    } catch (err) {
+      setDiscount(0);
+      setCodeError(true);
+      setCodeStatus(false);
+      // setModalmessage("Sorry, code does not work");
+      // setMessageModal(true);
+    }
+  }, []);
+
   // styles for the stripe card element
   const cardElementOptions = {
     style: {},
@@ -73,7 +107,7 @@ function Payment() {
     setThecode(e.target.value);
   };
   const handleRefferalCheck = async () => {
-    if (openTab == 4) {
+    if (openTab == 3) {
       setModalmessage(
         "You cannot avail a discount on this plan using this referral code. This code is appliable only for 'Crypto 101' and 'Crypto 201'."
       );
@@ -126,7 +160,7 @@ function Payment() {
     }
   };
   const handleBitSubmit = async () => {
-    if (openTab == 4) {
+    if (openTab == 3) {
       setModalmessage(
         "This plan can only be purchased with card as it is on a subscription basis. Please select Pay with crypto to continue"
       );
@@ -357,7 +391,7 @@ function Payment() {
                 ? "Crypto 101"
                 : openTab == 2
                 ? "Crypto 201"
-                : openTab == 4
+                : openTab == 3
                 ? "Signals & Analysis"
                 : ""}{" "}
               :

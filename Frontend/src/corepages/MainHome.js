@@ -64,6 +64,7 @@ export default () => {
     <AnimationRevealPage>
       {ContactUsModal()}
       <Hero roundedHeaderButton={true} />
+      <GetStarted />
       <div id="aboutus"></div>
       <Features
         subheading={<Subheading>Why choose us ?</Subheading>}
@@ -256,7 +257,6 @@ export default () => {
           },
         ]}
       />
-      <GetStarted />
 
       <Footer />
     </AnimationRevealPage>

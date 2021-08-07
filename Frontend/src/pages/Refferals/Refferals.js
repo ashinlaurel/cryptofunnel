@@ -83,7 +83,7 @@ function Refferals() {
                   <input
                     value={discount}
                     onChange={(e) => setDiscount(e.target.value)}
-                    placeholder="Enter the discount %"
+                    placeholder=""
                     class="shadow-md z-20 my-2 appearance-none rounded border border-gray-600 border-b block pl-2 pr-6 py-2 placeholder-gray-100 w-full bg-cool-gray-900 text-sm placeholder-gray-410 text-gray-100  fne-none"
                   />
                 </label>
@@ -207,6 +207,7 @@ function Refferals() {
     setDiscount("");
     setRefresh(!refresh);
     setIsModalOpen(false);
+    closeModal();
   };
 
   const HandleDeleteRefferal = async (id) => {

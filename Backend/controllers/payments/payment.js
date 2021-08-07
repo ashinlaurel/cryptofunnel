@@ -50,14 +50,7 @@ let products = [
     quantity: 1,
   },
   {
-    price_data: {
-      currency: "usd",
-      product_data: {
-        name: "Signals & Analysis",
-        images: ["https://i.imgur.com/7JApXKO.png"],
-      },
-      unit_amount: 10000,
-    },
+    price: process.env.SIGANDANALPRICEID,
     quantity: 1,
   },
 ];
@@ -138,24 +131,24 @@ exports.paymentResolver = async (req, res) => {
     // get discount %
     let codedata = await refferal.findOne({ refCode: thecode });
 
-    // console.log(codedata);
+    console.log(codedata);
 
     if (codedata.discount != "") {
       discount = parseInt(codedata.discount);
     }
   }
-  // if (plannumber <= 2) {
-  if (country == "notIN") {
-    finalamount = plans[plannumber] * (1 - discount / 100);
-    finalamount *= 100;
-    products[plannumber - 1].price_data.unit_amount = finalamount;
-  } else {
-    finalamount = indplans[plannumber] * (1 - discount / 100);
-    finalamount *= 100;
-    products[plannumber - 1].price_data.unit_amount = finalamount;
-    products[plannumber - 1].price_data.currency = "inr";
+  if (plannumber <= 2) {
+    if (country == "notIN") {
+      finalamount = plans[plannumber] * (1 - discount / 100);
+      finalamount *= 100;
+      products[plannumber - 1].price_data.unit_amount = finalamount;
+    } else {
+      finalamount = indplans[plannumber] * (1 - discount / 100);
+      finalamount *= 100;
+      products[plannumber - 1].price_data.unit_amount = finalamount;
+      products[plannumber - 1].price_data.currency = "inr";
+    }
   }
-  // }
 
   console.log(discount, finalamount);
 
@@ -168,7 +161,7 @@ exports.paymentResolver = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [products[plannumber - 1]],
-      mode: "payment",
+      mode: plannumber == 3 ? "subscription" : "payment",
       // allow_promotion_codes: true,
       success_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/true/{CHECKOUT_SESSION_ID}/${thecode}/${codeStatus}`,
       cancel_url: `${process.env.FRONTEND_DOMAIN}/ConfirmPayment/paymentfailed`,
@@ -198,7 +191,7 @@ exports.paymentResolverBit = async (req, res) => {
     // get discount %
     let codedata = await refferal.findOne({ refCode: thecode });
 
-    // console.log(codedata);
+    console.log(codedata);
 
     if (codedata.discount != "") {
       bitproducts[plannumber - 1].metadata.refCode = thecode;
@@ -226,7 +219,7 @@ exports.paymentResolverBit = async (req, res) => {
 
   try {
     const charge = await Charge.create(bitproducts[plannumber - 1]);
-    // console.log(charge);
+    console.log(charge);
     // res.set("Access-Control-Allow-Origin", "*");
     res.status(200).send(charge);
     // res.redirect(303, session.url);
@@ -252,7 +245,7 @@ exports.confirmpayment = async (req, res) => {
     const customer = await stripe.customers.retrieve(session.customer);
     const status = session.payment_status;
     const product = session.line_items.data[0];
-    // console.log(product);
+    console.log(product);
     outproduct = product;
     outcustomer = customer;
     let payloadstatus = "Failed";
@@ -302,9 +295,9 @@ exports.confirmpayment = async (req, res) => {
 
           addPayable = theamt * thedisc;
 
-          // console.log("thedisc", thedisc);
-          // console.log("theamt", theamt);
-          // console.log("thepayable", addPayable);
+          console.log("thedisc", thedisc);
+          console.log("theamt", theamt);
+          console.log("thepayable", addPayable);
           // updating the influncer account
           await user.findByIdAndUpdate(
             { _id: codedata.creatorId },
@@ -318,7 +311,6 @@ exports.confirmpayment = async (req, res) => {
 
       // -----updating user role and plan -------------
       if (status == "paid") {
-        let grps = ["108186238", "108186247", "108186259"];
         let plannumber = 0;
         switch (product.description) {
           case "Crypto 101":
@@ -337,27 +329,10 @@ exports.confirmpayment = async (req, res) => {
         // console.log("plan=", plannumber);
 
         // updating the buyers account
-        let userinfo = await user.findByIdAndUpdate(
+        await user.findByIdAndUpdate(
           { _id: id },
           { role: 3, plan: plannumber, stripeCustomerId: customer.id }
         );
-        console.log("USERR", userinfo);
-        try {
-          const payload = { email: userinfo.email, name: userinfo.name };
-          const response = await axios({
-            url: `https://api.mailerlite.com/api/v2/groups/${
-              grps[plannumber - 1]
-            }/subscribers`,
-            method: "POST",
-            data: payload,
-            headers: {
-              "X-MailerLite-ApiKey": `${process.env.MAILERLITE_KEY}`,
-            },
-          });
-          // console.log(response);
-        } catch (err) {
-          console.log("MAILERLITE ERROR", err);
-        }
       }
     }
 
@@ -369,7 +344,6 @@ exports.confirmpayment = async (req, res) => {
     res.status(500).json({ statusCode: 500, message: err.message });
   }
 };
-
 exports.getAllPayHist = (req, res) => {
   let { pages, filters } = req.body;
 
@@ -517,8 +491,8 @@ exports.deletePlan = async (req, res) => {
         useFindAndModify: false,
       }
     );
-    console.log(myuser.plan, grps[myuser.plan - 1]);
     let grps = ["Crypto 101", "Crypto 201", "Signals & Analysis"];
+    console.log(myuser.plan, grps[myuser.plan - 1]);
 
     let message = ` User ${myuser.email} has cancelled plan ${
       grps[myuser.plan - 1]

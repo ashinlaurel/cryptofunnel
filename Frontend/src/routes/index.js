@@ -84,7 +84,11 @@ if (
       component: Dashboard, // view rendered
     },
     {
-      path: "/myplan", // the url
+      path: "/myplan/", // the url
+      component: MyPlan, // view rendered
+    },
+    {
+      path: "/myplan/:ref", // the url
       component: MyPlan, // view rendered
     },
     {

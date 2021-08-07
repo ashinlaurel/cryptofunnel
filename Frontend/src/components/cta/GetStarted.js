@@ -9,7 +9,7 @@ import axios from "axios";
 import { Button, Input, HelperText, Label } from "@windmill/react-ui";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
 import { API } from "../../backend";
-import mailerBg from "../../images/mailerlite.png";
+import mailerBg from "../../images/ebookmock.png";
 
 const ColumnContainer = tw.div`lg:w-1/2 max-w-lg`;
 
@@ -93,18 +93,22 @@ export default ({
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             {/* <!-- Col --> */}
             <div
-              className="w-full h-auto bg-cool-gray-700 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
+              className="w-full h-auto bg-cool-gray-700  hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
               // style="background-image: url('https://source.unsplash.com/Mv9hjnEUHR4/600x800')"
             >
-              <img src={mailerBg} alt="mailer Image" />
+              <img
+                src={mailerBg}
+                alt="mailer Image"
+                className="  my-auto mt-6 mx-auto  "
+              />
             </div>
             {/* <!-- Col --> */}
             {signedup == false ? (
               <div className="w-full lg:w-7/12 bg-cool-gray-700 p-5 rounded-lg lg:rounded-l-none">
-                <h3 className="pt-4 text-2xl text-center text-green-300 font-semibold">
+                <h3 className="pt-4 text-4xl text-center text-green-300 font-semibold">
                   Sign Up For Our Ebook!
                 </h3>
-                <h2 className="pt-4 text-Xl text-center text-gray-300 font-semibold">
+                <h2 className="pt-4 text-2xl text-center text-gray-300 font-semibold">
                   Hurry Up! First 1000 copies FREE!
                 </h2>
                 <form className="px-8 pt-6 pb-8 mb-4 bg-cool-gray-700 rounded">
@@ -117,7 +121,7 @@ export default ({
                         Name
                       </label>
                       <input
-                        className="w-full px-3 py-2 text-sm border-cool-gray-800 bg-cool-gray-900 leading-tight text-gray-100 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        className="w-full px-3 py-2 text-sm border-cool-gray-800 bg-cool-gray-800 leading-tight text-gray-100 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="firstName"
                         type="text"
                         placeholder="Name"
@@ -135,7 +139,7 @@ export default ({
                         Email
                       </label>
                       <input
-                        className="w-full px-3 py-2 text-sm border-cool-gray-800 bg-cool-gray-900 leading-tight text-gray-100 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        className="w-full px-3 py-2 text-sm border-cool-gray-800 bg-cool-gray-800 leading-tight text-gray-100 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="firstName"
                         type="email"
                         placeholder="Email"

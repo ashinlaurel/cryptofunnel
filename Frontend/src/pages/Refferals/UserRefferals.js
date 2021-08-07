@@ -322,17 +322,21 @@ function UserRefferals() {
         //   </Button>
         // </div>
       }
-      <div className=" w-1/2 mt-6 mb-4 text-gray-100">
-        <p>
-          You can get your own referal codes only with an Influencer account.
-          Click the button to apply and reach out to us at
-          support@thecfsquad.com with your resume to get your Influencer
-          account.
-        </p>
-        <Button onClick={applyInfluencer} size="small" className="mt-5">
-          Apply for Influencer
-        </Button>
-      </div>
+      {UserProfile.role != 4 ? (
+        <div className=" w-1/2 mt-6 mb-4 text-gray-100">
+          <p>
+            You can get your own referal codes only with an Influencer account.
+            Click the button to apply and reach out to us at
+            support@thecfsquad.com with your resume to get your Influencer
+            account.
+          </p>
+          <Button onClick={applyInfluencer} size="small" className="mt-5">
+            Apply for Influencer
+          </Button>
+        </div>
+      ) : (
+        <p className="text-white">You have been approved as an Influencer</p>
+      )}
     </>
   );
 }

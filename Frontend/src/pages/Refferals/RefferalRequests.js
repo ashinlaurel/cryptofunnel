@@ -160,6 +160,7 @@ function RefferalRequests() {
       setSelectedId("");
       setRefresh(!refresh);
       setIsModalOpen(false);
+      setIsRefferalModalOpen(false);
       setModalMessage("Referal Code Added");
       setMessageModal(true);
     } catch (err) {
@@ -184,7 +185,7 @@ function RefferalRequests() {
                 <input
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  placeholder="Enter the discount %"
+                  placeholder=""
                   class="shadow-md z-20 appearance-none rounded border border-gray-600 border-b block pl-8 pr-6 py-2 placeholder-gray-100 w-full bg-cool-gray-900 text-sm  text-gray-100  fne-none"
                 />
               </label>
@@ -196,7 +197,7 @@ function RefferalRequests() {
                 <input
                   value={discount}
                   onChange={(e) => setDiscount(e.target.value)}
-                  placeholder="Enter the discount %"
+                  placeholder=""
                   class="shadow-md z-20 appearance-none rounded border border-gray-600 border-b block pl-8 pr-6 py-2 placeholder-gray-100 w-full bg-cool-gray-900 text-sm  text-gray-100  fne-none"
                 />
               </label>

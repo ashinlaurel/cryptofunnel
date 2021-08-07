@@ -136,7 +136,7 @@ export default function InfluencerPage() {
     }
   };
   const codeGetter = async () => {
-    console.log("checker called");
+    // console.log("checker called");
     let payload = {
       pages: {
         page: 1,
@@ -156,7 +156,7 @@ export default function InfluencerPage() {
         data: payload,
       });
       // console.log(response);
-      console.log("the code getting", response.data.out[0]);
+      // console.log("the code getting", response.data.out[0]);
       setCodeDetails(response.data.out[0]);
 
       //   setTotalResults(response.data.total);
@@ -400,6 +400,12 @@ export default function InfluencerPage() {
             <p className="text-md text-gray-700 dark:text-gray-100 ">
               <span className="font-semibold"> Discount:</span>{" "}
               {codeDetails ? codeDetails.discount : null}%
+            </p>
+            <p className="text-md text-gray-700 dark:text-gray-100 ">
+              <span className="font-semibold"> Referral Link:</span>{" "}
+              <span className="bg-purple-900 rounded-lg px-2 py-1">
+                https://thecfsquad.com/app/myplan/{codeDetails.refCode}
+              </span>
             </p>
           </div>
         </CardBody>

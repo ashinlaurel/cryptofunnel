@@ -5,6 +5,7 @@ import PageTitle from "../../components/Typography/PageTitle";
 import SectionTitle from "../../components/Typography/SectionTitle";
 import DashBoardPlans from "../../components/pricing/DashboardPlans";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "@windmill/react-ui";
+import Axios from "axios";
 
 import UserProfile from "../../helper/auth/UserProfile";
 
@@ -22,6 +23,8 @@ import { Subheading } from "../../components/misc/Headings";
 
 function Dashboard() {
   const HighlightedText = tw.span`text-green-300`;
+  //   refferal code states
+  const [codeDetails, setCodeDetails] = useState([]);
   const [messageModal, setMessageModal] = useState(false);
   const [isEmailModal, setIsEmailModal] = useState(false);
   const handleVerifyEmail = async () => {
@@ -38,6 +41,46 @@ function Dashboard() {
       setIsEmailModal(true);
     } catch (err) {
       console.log("ERROR", err);
+    }
+  };
+  const resultsPerPage = 10;
+  useEffect(() => {
+    codeGetter();
+  }, []);
+  const codeGetter = async () => {
+    // console.log(UserProfile.getRole(0));
+    // if (UserProfile.getRole !== 4) return;
+    // console.log("checker called");
+    let payload = {
+      pages: {
+        page: 1,
+        limit: resultsPerPage,
+      },
+      filters: {
+        creatorId: UserProfile.getId(),
+        fromDate: "",
+        toDate: "",
+      },
+    };
+
+    try {
+      let response = await Axios({
+        url: `${API}/refferal/${UserProfile.getId()}/getbyuser`,
+        method: "POST",
+        data: payload,
+      });
+      // console.log(response);
+      // console.log("the code getting", response.data.out[0]);
+      setCodeDetails(response.data.out[0]);
+
+      //   setTotalResults(response.data.total);
+      //   setData(response.data.out);
+      //   if (response.data.out.length != 0) {
+      //     setCodeExists(true);
+      //   }
+      // console.log(codeExists);
+    } catch (error) {
+      throw error;
     }
   };
 
@@ -132,6 +175,38 @@ function Dashboard() {
               <div className="flex items-center"></div>
               Go to MyPlan to see more details about your plan. For any queries
               contact us at support@thecfsquad.com
+            </CardBody>
+          </Card>
+        </>
+      ) : UserProfile.getRole() == 4 ? (
+        <>
+          <Card className="mb-5 text-gray-100  rounded-lg">
+            <CardBody>
+              <div className="flex items-center"></div>
+              You have been acceptede as an influencer.
+            </CardBody>
+          </Card>
+          <Card className="mb-8  shadow-md overflow-visible">
+            <CardBody>
+              <div className="">
+                <p className="text-lg  text-gray-800 dark:text-gray-100">
+                  <span className="font-semibold"> Assigned Refferal Code</span>{" "}
+                </p>
+                <p className="text-md text-gray-700 dark:text-gray-100 pt-2">
+                  <span className="font-semibold"> Code:</span>{" "}
+                  {codeDetails ? codeDetails.refCode : null}
+                </p>
+                <p className="text-md text-gray-700 dark:text-gray-100 ">
+                  <span className="font-semibold"> Discount:</span>{" "}
+                  {codeDetails ? codeDetails.discount : null}%
+                </p>
+                <p className="text-md text-gray-700 dark:text-gray-100 ">
+                  <span className="font-semibold"> Referral Link:</span>{" "}
+                  <span className="bg-purple-900 rounded-lg px-2 py-1">
+                    https://thecfsquad.com/app/myplan/{codeDetails.refCode}
+                  </span>
+                </p>
+              </div>
             </CardBody>
           </Card>
         </>

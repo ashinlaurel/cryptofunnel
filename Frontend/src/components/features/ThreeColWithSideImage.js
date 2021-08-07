@@ -53,7 +53,7 @@ const Card = styled.div`
   }
 
   .description {
-    ${tw`mt-1 sm:mt-4 font-medium text-gray-500 leading-loose`}
+    ${tw`mt-1 sm:mt-4 font-medium text-gray-300 leading-loose`}
   }
 `;
 

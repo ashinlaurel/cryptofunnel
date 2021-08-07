@@ -138,7 +138,7 @@ function Cards() {
             <CardBody>
               <div className="flex items-center">
                 <div>
-                  {plan ? (
+                  {plan && plan > 0 ? (
                     <>
                       <p className="mb-4 font-semibold">Congratulations!</p>
                       <p>
@@ -156,7 +156,7 @@ function Cards() {
                       </p>
                     </>
                   ) : null}
-                  {plan == 4 ? (
+                  {plan == 3 ? (
                     <Button
                       className="my-4 "
                       layout="outline"

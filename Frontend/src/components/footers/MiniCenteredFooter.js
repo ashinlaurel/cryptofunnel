@@ -43,31 +43,21 @@ export default () => {
             <LogoText>CryptoFunnel</LogoText>
           </LogoContainer>
           <LinksContainer>
-            <ScrollLink activeClass="active" to="home" spy={true} smooth={true}>
+            <Link to="/">
               <span className="text-white font-semibold mx-5 cursor-pointer">
                 Home
               </span>
-            </ScrollLink>
-            <ScrollLink
-              activeClass="active"
-              to="aboutus"
-              spy={true}
-              smooth={true}
-            >
+            </Link>
+            <Link to="/#aboutus">
               <span className="text-white font-semibold mx-5 cursor-pointer">
                 About
               </span>
-            </ScrollLink>
-            <ScrollLink
-              activeClass="active"
-              to="aboutus"
-              spy={true}
-              smooth={true}
-            >
+            </Link>
+            <Link to="/#contactus">
               <span className="text-white font-semibold mx-5 cursor-pointer">
                 Contact Us
               </span>
-            </ScrollLink>
+            </Link>
             <ScrollLink activeClass="active" to="home" spy={true}>
               <Link to="/TermsAndConditions">
                 <span className="text-white font-semibold mx-5 cursor-pointer">
