@@ -73,11 +73,7 @@ if (UserProfile.getRole() == 1) {
 
 // 2 - non purchased used , 3- purchased user
 
-if (
-  UserProfile.getRole() == 2 ||
-  UserProfile.getRole() == 3 ||
-  UserProfile.getRole() == 4
-)
+if (UserProfile.getRole() == 2 || UserProfile.getRole() == 3)
   routes.push(
     {
       path: "/dashboard", // the url
@@ -110,6 +106,23 @@ if (
     {
       path: "/ConfirmPayment/paymentfailed", // the url
       component: FailedPayment, // view rendered
+    }
+  );
+
+if (UserProfile.getRole() == 4)
+  routes.push(
+    {
+      path: "/dashboard", // the url
+      component: Dashboard, // view rendered
+    },
+
+    {
+      path: "/info", // the url
+      component: UserInfo, // view rendered
+    },
+    {
+      path: "/paymenthistory", // the url
+      component: UserPaymentHistory, // view rendered
     }
   );
 
