@@ -203,7 +203,9 @@ function Dashboard() {
                 <p className="text-md text-gray-700 dark:text-gray-100 ">
                   <span className="font-semibold"> Referral Link:</span>{" "}
                   <span className="bg-purple-900 rounded-lg px-2 py-1">
-                    https://thecfsquad.com/app/myplan/{codeDetails.refCode}
+                    {codeDetails
+                      ? `https://thecfsquad.com/app/myplan/${codeDetails.refCode}`
+                      : null}
                   </span>
                 </p>
               </div>
