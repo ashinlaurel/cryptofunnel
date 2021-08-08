@@ -193,12 +193,18 @@ function Influencers(props) {
               <TableCell>User</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Created At</TableCell>
-              <TableCell>Plan</TableCell>
+              {/* <TableCell>Plan</TableCell> */}
             </tr>
           </TableHeader>
           <TableBody>
             {data.map((user, i) => (
-              <TableRow key={i}>
+              <TableRow
+                className="cursor-pointer hover:bg-cool-gray-900"
+                key={i}
+                onClick={() => {
+                  props.history.push(`/app/influencerpage/${user._id}`);
+                }}
+              >
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <Avatar
@@ -233,9 +239,9 @@ function Influencers(props) {
                     {new Date(user.createdAt).toLocaleDateString()}
                   </span>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <span className="text-sm  font-bold ">Gold</span>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

@@ -51,8 +51,8 @@ function App() {
             <Route path="/payment" component={Payment} />
 
             {/* Place new routes over this */}
-            <Route path="/signin" component={AdminLogin} />
-            <Route path="/signup" component={AdminSignup} />
+            {/* <Route path="/signin" component={AdminLogin} /> */}
+            {/* <Route path="/signup" component={AdminSignup} /> */}
             <Route path="/verifyemail/:token" component={VerifyEmail} />
             <Route
               path="/resetpassword/:token"

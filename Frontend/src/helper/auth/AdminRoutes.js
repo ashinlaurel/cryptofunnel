@@ -32,7 +32,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
         <Route
           {...rest}
           render={(props) =>
-            isAuth ? <Component {...props} /> : <Redirect to="/signin" />
+            isAuth ? <Component {...props} /> : <Redirect to="/#signup" />
           }
         />
       )}
